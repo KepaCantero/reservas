@@ -14,7 +14,7 @@ $('#formfecha').bind('change', function(event) {
 });
 
 $('#lista-horas').bind('change', function(event) {
-	var hora = $("#formfecha").val();
+	var hora = $("#lista-horas").val();
 	$.mobile.changePage ($("#reserva"));
 	$('#time_dt').val(hora);
 });
