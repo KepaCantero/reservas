@@ -15,7 +15,7 @@
   <script src="js/jqm-datebox.mode.flipbox.min.js"></script>
   <script src="js/jquery.validate.min.js"></script>
   
-  <script>
+  <!--<script>
   /* Fire Validate */
 	$(document).ready(function(){
 	   $("#formulario").validate({
@@ -29,7 +29,7 @@
 	     }     
 	   });
 	});
-  </script>
+  </script>-->
 </head>
  
 <body> 
@@ -42,7 +42,7 @@
     
 	<div data-role="content">	
 		
-		<input name="fecha" id="formfecha" type="date" data-role="datebox" data-options='{"mode": "flipbox", "useInline": true, "afterToday": true, "dateFieldOrder": ["d", "m", "y"] }'>
+		<input name="fecha" id="formfecha" type="date" data-role="datebox" data-options='{"mode": "flipbox", "useInline": true, "centerHoriz": true, "afterToday": true, "dateFieldOrder": ["d", "m", "y"] }'>
 		<!-- "dateFormat": %d-%m-%Y, "dateFieldOrder": ["d", "m", "y"], "calStartDay": 1, "daysOfWeekShort": ["L", "M", "X", "J", "V", "S", "D"] -->
 		<select id="lista-horas" data-native-menu=false></select>
 	
@@ -50,7 +50,7 @@
 	 
 </div>
 
-<div id="reserva" data-role="page">
+<div id="reserva" data-role="page" data-add-back-btn=true>
  
 	<div data-role="header">
 		<h1>Reserva</h1>
@@ -77,27 +77,5 @@
 </div>
 
 <script src="js/gethoras.js"></script>
-<script>
-	$('#formulario').submit(function() { 
-		if ($('#formulario').valid()){
-			var request = $.ajax({
-				url: 'http://kometa.pusku.com/form/insert.php',
-				type: 'POST',
-				data: { full_name: $("#full_name").val(),
-				        email_addr: $("#email_addr").val(),
-				        password: $("#password").val(),
-				        arrival_dt: $("#arrival_dt").val(),
-				        time_dt: $("#time_dt").val(),
-				        personas: $("#personas").val() },
-				success: function(obj){
-					alert("Reserva realizada");
-				},
-				error: function(error) {
-					alert(error);
-				}
-			});
-		}
-	});
-</script>
 </body>
 </html>

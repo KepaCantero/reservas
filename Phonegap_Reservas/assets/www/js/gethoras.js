@@ -1,5 +1,5 @@
-var horas;
 var url;
+var hora;
 
 /*$('#horasPage').bind('pageinit', function(event) {
 	var fecha = "2012-12-13";
@@ -13,19 +13,53 @@ $('#formfecha').bind('change', function(event) {
 	getHoras();
 });
 
-$('#lista-horas').bind('data', function(event) {
-	var hora = $("#lista-horas").val();
+$('#lista-horas').bind('change', function(event) {
+	hora = $("#lista-horas").val();
 	$.mobile.changePage ($("#reserva"));
-	$('#time_dt').val(hora);
+});
+
+$('#reserva').bind('pageshow', function(event) {
+	$("#formulario").validate({
+	      rules: {
+	         full_name: {
+	             required: true, minlength: 5
+	         }, 
+	         email_addr_repeat: {
+	        	 equalTo: email_addr
+	         }
+	     }     
+	   });
+	//$('#time_dt').val(hora);
+});
+
+$('#formulario').submit(function() { 
+	if ($('#formulario').valid()){
+		var request = $.ajax({
+			url: 'http://kometa.pusku.com/form/insert.php',
+			type: 'POST',
+			data: { full_name: $("#full_name").val(),
+			        email_addr: $("#email_addr").val(),
+			        password: $("#password").val(),
+			        arrival_dt: $("#arrival_dt").val(),
+			        time_dt: $("#time_dt").val(),
+			        personas: $("#personas").val() },
+			success: function(obj){
+				alert("Reserva realizada");
+			},
+			error: function(error) {
+				alert(error);
+			}
+		});
+	}
 });
 
 function getHoras() {
 	$.getJSON(url, function(data) {
 		
 		$('#lista-horas option').remove();
-		horas = data.items;
+		var horas = data.items;
 		$.each(horas, function(index, hora) {
-			$("#lista-horas").append('<option value=' + index +
+			$("#lista-horas").append('<option value=' + hora.hora +
 			'>' + hora.hora + 
 			'</option>');
 		});
