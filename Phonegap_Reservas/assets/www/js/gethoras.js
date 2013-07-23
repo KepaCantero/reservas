@@ -13,7 +13,7 @@ $('#formfecha').bind('change', function(event) {
 	getHoras();
 });
 
-$('#lista-horas').bind('change', function(event) {
+$('#lista-horas').bind('data', function(event) {
 	var hora = $("#lista-horas").val();
 	$.mobile.changePage ($("#reserva"));
 	$('#time_dt').val(hora);
