@@ -1,0 +1,136 @@
+#inputs input
+{
+    /*background: #C9C0BB;*/
+	border-left:8px solid red;
+    font: bold 15px Arial, Helvetica;
+    color: #8f5a0a;
+}
+
+/*Esto hace que la app no responda, y no sé por qué. 
+#inputs input.ui-input-text, .ui-input-search {
+
+    color : white; 
+
+    background-color : black;
+
+}*/
+
+#inputs input:focus
+{
+    background-color: #fff;
+    border-color: #e8c291;
+    outline: none;
+    border-left:8px solid #0600fa;
+    -moz-box-shadow: 0 0 0 1px #e8c291 inset;
+    -webkit-box-shadow: 0 0 0 1px #e8c291 inset;
+    box-shadow: 0 0 0 1px #e8c291 inset;
+}
+
+/*#formulario label.error {
+color:red;
+}*/
+
+#formulario input.error {
+border:1px solid red;
+}
+
+#formulario input.valid {
+	border-left:8px solid green;
+}
+/*--------------------*/
+#actions
+{
+    margin: 25px 0 0 0;
+}
+
+input[type=submit]
+{		
+    background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FD5542), to(#FF713D));
+    background-image: -webkit-linear-gradient(top, #FD5542, #FF713D);
+    background-image: -moz-linear-gradient(top, #FD5542, #FF713D);
+    background-image: -ms-linear-gradient(top, #FD5542, #FF713D);
+    background-image: -o-linear-gradient(top, #FD5542, #FF713D);
+    background-image: linear-gradient(top, #FD5542, #FF713D);
+    
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    
+    text-shadow: 0 1px 0 rgb(202,2,202);
+    
+     -moz-box-shadow: 0 0 1px rgb(0, 0, 0, 0.3), 0 1px 0 rgba(202,2,202) inset;
+     -webkit-box-shadow: 0 0 1px rgb(0, 0, 0, 0.3), 0 1px 0 rgba(202,2,202) inset;
+     box-shadow: 0 0 1px rgb(0, 0, 0, 0.3), 0 1px 0 rgba(202,2,202) inset;    
+    
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d69e31 #e3a037 #d5982d #e3a037;
+
+    float: left;
+    height: 35px;
+    padding: 0;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:15px;
+    padding-right:15px;
+    cursor: pointer;
+    font: bold 15px Arial, Helvetica;
+    color: #B5F5FF;
+}
+
+input[type=submit]:hover,#submit:focus
+{		
+    background-color: #fddb6f;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FF713D), to(#FD5542));
+    background-image: -webkit-linear-gradient(top, #FF713D, #FD5542);
+    background-image: -moz-linear-gradient(top, #FF713D, #FD5542);
+    background-image: -ms-linear-gradient(top, #FF713D, #FD5542);
+    background-image: -o-linear-gradient(top, #FF713D, #FD5542);
+    background-image: linear-gradient(top, #FF713D, #FD5542);
+}	
+
+input[type=submit]:active
+{		
+    outline: none;
+   
+     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+}
+
+input[type=submit]::-moz-focus-inner
+{
+  border: none;
+}
+
+#actions a
+{
+    color: #3151A2;    
+    float: right;
+    line-height: 35px;
+    margin-left: 10px;
+}
+
+/*--------------------*/
+
+#response
+{
+    text-align: center;
+    position: relative;
+    top: 60px;
+}
+form.active{
+	display:block;
+}
+
+
+#form_box a{
+	text-decoration:none;
+	color:#777;
+	font-size:12px;
+}
+#form_box a:hover{
+	color:#000;
+}
+
