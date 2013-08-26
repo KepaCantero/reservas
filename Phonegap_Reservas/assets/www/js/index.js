@@ -1,86 +1,56 @@
-var url;
-var hora;
-var fecha;
-/*Uso la variable "control" para que la página del formulario solo se cargue cuando se ha elegido una hora de la
-lista desplegable. Esta variable coge valor 0 cuando se inicia la página de selección de fecha y hora y se vuelve
-1 cuando se ha elegido una hora. 
-Si no se hace así, el evento "change" se llama en cuanto se cargan los valores de la lista,
-antes de seleccionar nada. Es una solución eficaz, eficiente e ingeniosa, típica del Code Gigolo.*/
-var control;
+var urlMenuItems;
+var menuElegido;
 
-//EVENTOS AL CARGARSE LAS PÁGINAS
+//EVENTOS AL CARGARSE LAS P�GINAS
 
-$('#horasPage').bind('pageinit', function(event) {
-	control = 0;
-});
-
-$('#reserva').bind('pageshow', function(event) {
-	$("#formulario").validate({
-	      rules: {
-	         full_name: {
-	             required: true, minlength: 5
-	         }, 
-	         email_addr_repeat: {
-	        	 equalTo: email_addr
-	         }
-	     }     
-	   });
-	$('#time_dt').val(hora);
-	$('#date_dt').val(fecha);
+$('#botonesPage').bind('pageinit', function(event) {
+	
 });
 
 
 //LISTENERS DE COMPONENTES 
 
-$('#formfecha').bind('change', function(event) {
-	fecha = $("#formfecha").val();
-	url = "http://kometa.pusku.com/form/gethoras.php" + "?fecha=" + fecha;
-	getHoras();
+$('#botMenuDia').bind('vclick', function(event) {
+	menuElegido = 1;
+	getMenuItems();
+	$.mobile.changePage ($("#listaPage"));
 });
 
-$('#lista-horas').bind('change', function(event) {
-	if (control == 1){
-		hora = $("#lista-horas").val();
-		$.mobile.changePage ($("#reserva"));
-	}
+$('#botMenuEspecial').bind('vclick', function(event) {
+	menuElegido = 2;
+	getMenuItems();
+	$.mobile.changePage ($("#listaPage"));
 });
 
-$('#formulario').submit(function() { 
-	if ($('#formulario').valid()){
-		var request = $.ajax({
-			url: 'http://kometa.pusku.com/form/insert.php',
-			type: 'POST',
-			data: { full_name: $("#full_name").val(),
-			        email_addr: $("#email_addr").val(),
-			        password: $("#password").val(),
-			        arrival_dt: $("#date_dt").val(),
-			        time_dt: $("#time_dt").val(),
-			        personas: $("#personas").val() },
-			success: function(obj){
-				alert("Reserva realizada");
-			},
-			error: function(error) {
-				alert(error);
-			}
-		});
-	}
+$('#botMenuCarta').bind('vclick', function(event) {
+	menuElegido = 3;
+	getMenuItems();
+	$.mobile.changePage ($("#listaPage"));
 });
+
 
 //FUNCIONES
 
-function getHoras() {
-	$.getJSON(url, function(data) {
+function getMenuItems() {
+
+	//urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php";
+	urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php" + "?tipomenu=" + menuElegido;
+	
+	$('#listaItems li').remove();
+
+	$.getJSON(urlMenuItems, function(data) {
 		
-		$('#lista-horas option').remove();
-		var horas = data.items;
-		$.each(horas, function(index, hora) {
-			$("#lista-horas").append('<option value=' + hora.hora +
-			'>' + hora.hora + 
-			'</option>');
+		var menuItems = data.items;		
+		$.each(menuItems, function(index, menuItem) {
+			$("#listaItems").append("<li>" +
+		        "<a href=#>" + 
+		        "<h1>" + menuItem.nombreItem + "</h1>" +
+		        "<p>" + menuItem.descItem + "</p>" + 
+		        "<h2>" + menuItem.precioItem + "</h2>" +
+		        "</a>" + 
+	        "</li>");
 		});
 		
-		$("#lista-horas").trigger("change");
-		control = 1;
-		$("#lista-horas").selectmenu("open");
+		$("#listaItems").listview ();
 	});
 }
