@@ -3,9 +3,9 @@ var menuElegido;
 
 //EVENTOS AL CARGARSE LAS PÁGINAS
 
-$('#botonesPage').bind('pageinit', function(event) {
-	
-});
+/*$('#listaPage').bind('pageload', function(event) {
+	$("#listaItems").listview();
+});*/
 
 
 //LISTENERS DE COMPONENTES 
@@ -33,24 +33,24 @@ $('#botMenuCarta').bind('vclick', function(event) {
 
 function getMenuItems() {
 
-	//urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php";
 	urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php" + "?tipomenu=" + menuElegido;
 	
 	$('#listaItems li').remove();
-
+	
 	$.getJSON(urlMenuItems, function(data) {
 		
 		var menuItems = data.items;		
 		$.each(menuItems, function(index, menuItem) {
-			$("#listaItems").append("<li>" +
-		        "<a href=#>" + 
-		        "<h1>" + menuItem.nombreItem + "</h1>" +
-		        "<p>" + menuItem.descItem + "</p>" + 
-		        "<h2>" + menuItem.precioItem + "</h2>" +
-		        "</a>" + 
-	        "</li>");
+			$("#listaItems").append(
+				"<li>" +
+			        /*"<a href=#>" +*/
+			        "<img class='imagen' src='img/cordova.png'>" +
+			        "<h1 class='txtnombre'>" + menuItem.nombreItem + "</h1>" +
+			        "<p class='txtdesc'>" + menuItem.descItem + "</p>" +
+			        "<h2 class='txtprecio'>" + menuItem.precioItem + " €" + "</h2>" +
+			        /*"</a>" +*/
+		        "</li>");
 		});
-		
-		$("#listaItems").listview ();
+		$("#listaItems").listview("refresh");
 	});
 }
