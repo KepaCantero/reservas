@@ -15,7 +15,42 @@
  
 <body> 
  
-	<div id="botonesPage" data-role="page">
+ 	<div id="inicioPage" data-role="page">
+		
+		<div data-role=header>
+			<h1>Inicio</h1>
+		</div>
+		
+		<input id="botElegirMenus" type=button value="Elegir menús" />
+		
+		<input id="botCrearPlatos"type=button value="Añadir platos" />
+		
+	</div>
+	
+	<div id="crearPlatosPage" data-role="page" data-add-back-btn=true>
+		
+		<div data-role=header>
+			<h1>Añadir platos</h1>
+		</div>
+		
+		<form id="formPlatos">
+			<input id="inputNombrePlato" type=text placeholder="Nombre del plato"></input>
+			<input id="inputDescPlato" type=text placeholder="Descripción"></input>
+			<input id="inputPrecioPlato" type="number" placeholder="Precio"></input>
+			<select id="inputCategoriaPlato" data-native-menu=false data-theme=c required>
+				<option data-placeholder="true">Categoría</option>
+			</select>
+			<select id="inputMenuPlato" data-native-menu=false data-theme=c required>
+				<option data-placeholder="true">Menú</option>
+			</select>
+			
+			<fieldset id="actions">
+				<input id="submitPlato" type="submit" value="Añadir plato" data-theme=a>
+			</fieldset>
+		</form>
+	</div>
+ 
+	<div id="menuSelecPage" data-role="page" data-add-back-btn=true>
 		
 		<div data-role=header>
 			<h1>Menús</h1>
@@ -23,13 +58,13 @@
 		
 		<input id="botMenuDia" type=button value="Menú del día" />
 		
-		<input id="botMenuEspecial"type=button value="Menú especial" />
+		<input id="botMenuEspecial" type=button value="Menú especial" />
 		
-		<input id="botMenuCarta"type=button value="Carta" />
+		<input id="botMenuCarta" type=button value="Carta" />
 		
 	</div>
 	
-	<div id="listaPage" data-role="page" data-add-back-btn=true>
+	<div id="menuListaPage" data-role="page" data-add-back-btn=true>
 	
 		<div data-role=header>
 			<h1>Platos</h1>
