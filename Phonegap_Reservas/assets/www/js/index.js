@@ -1,4 +1,5 @@
 var urlMenuItems;
+var urlItemsModificar;
 var menuElegido;
 var urlCategorias = "http://kometa.pusku.com/form/getcategorias.php";
 var urlMenus = "http://kometa.pusku.com/form/getmenus.php";
@@ -24,39 +25,60 @@ $('#inicioPage').bind('pageshow', function(event) {
 		$('#botCrearPlatos').unbind('vclick');
 		$.mobile.changePage ($("#crearPlatosPage"));
 	});
-});
-
-$('#crearPlatosPage').bind('pageshow', function(event) {
+	
+	$('#botModificarPlatos').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botModificarPlatos').unbind('vclick');
+		$.mobile.changePage ($("#listaModificarPage"));
+	});
+	
 	getCategorias();
 	getMenus();
+	
 });
 
-$('#menuListaPage').bind('pageshow', function(event) {
+
+$('#crearPlatosPage').bind('pageshow', function(event) {
+	/*getCategorias();
+	getMenus();*/
 });
 
+
+$('#menuListaPage').bind('pagebeforeshow', function(event) {
+	getMenuItems();
+});
+
+
+$('#listaModificarPage').bind('pagebeforeshow', function(event) {
+	getItemsModificar();
+});
 
 
 //LISTENERS DE COMPONENTES 
 
 $('#botMenuDia').bind('vclick', function(event) {
 	menuElegido = 1;
-	getMenuItems();
+	//getMenuItems();
 	$.mobile.changePage ($("#menuListaPage"));
 });
+
 
 $('#botMenuEspecial').bind('vclick', function(event) {
 	menuElegido = 2;
-	getMenuItems();
+	//getMenuItems();
 	$.mobile.changePage ($("#menuListaPage"));
 });
+
 
 $('#botMenuCarta').bind('vclick', function(event) {
 	menuElegido = 3;
-	getMenuItems();
+	//getMenuItems();
 	$.mobile.changePage ($("#menuListaPage"));
 });
 
-$('#formPlatos').submit(function() { 
+
+$('#submitPlato').bind('vclick', function(event) {
 	var request = $.ajax({
 		url: 'http://kometa.pusku.com/form/insertplato.php',
 		type: 'POST',
@@ -66,8 +88,8 @@ $('#formPlatos').submit(function() {
 		        categoria: $("#inputCategoriaPlato").val(),
 		        menu: $("#inputMenuPlato").val() },
 		success: function(obj){
+			cleanFormPlatos(); //Esto resetea el formulario tras hacer submit
 			alert("Plato añadido");
-			AddToCalendar();
 		},
 		error: function(error) {
 			alert(error);
@@ -81,7 +103,7 @@ $('#formPlatos').submit(function() {
 function getMenuItems() {
 
 	urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php" + "?tipomenu=" + menuElegido;
-	
+
 	$('#listaItems li').remove();
 	
 	$.getJSON(urlMenuItems, function(data) {
@@ -102,6 +124,54 @@ function getMenuItems() {
 	});
 }
 
+
+function getItemsModificar() {
+
+	urlItemsModificar = "http://kometa.pusku.com/form/getitemsmodificar.php";
+
+	$('#listaItemsModificar li').remove();
+	
+	$.getJSON(urlItemsModificar, function(data) {
+		
+		var itemsModificar = data.items;		
+		$.each(itemsModificar, function(index, itemModificar) {
+			$("#listaItemsModificar").append(
+				"<li menu='" + itemModificar.menuID + "'>" +
+			        "<a href=#>" +
+			        "<img class='imagen' src='img/cordova.png'>" +
+			        "<h1 class='txtnombre'>" + itemModificar.nombreItem + "</h1>" +
+			        "<p class='txtdesc'>" + itemModificar.descItem + "</p>" +
+			        "<h2 class='txtprecio'>" + itemModificar.precioItem + " €" + "</h2>" +
+			        "</a>" +
+		        "</li>");
+		});
+		//Esto pasa los valores del item pinchado al formulario de 
+		//modificación de plato.
+		$('#listaItemsModificar').children('li').bind('vclick', function(e) { 
+			$("#inputNombrePlatoMod").val(itemsModificar[$(this).index()].nombreItem);
+			$("#inputDescPlatoMod").val(itemsModificar[$(this).index()].descItem);
+			$("#inputPrecioPlatoMod").val(itemsModificar[$(this).index()].precioItem);
+			$("#inputCategoriaPlatoMod").val(itemsModificar[$(this).index()].categoriaID);
+			$("#inputMenuPlatoMod").val(itemsModificar[$(this).index()].menuID);
+			$.mobile.changePage ($("#modificarPlatosPage")); 
+		});
+		
+		$("#listaItemsModificar").listview("refresh");
+		/*Lo siguiente hace que la lista tenga autodividers en función
+		 * del menú de cada ítem. El problema es que los items 
+		 * no se ordenan.
+		 */
+		/*$("#listaItemsModificar").listview({
+            autodividers: true,
+            autodividersSelector: function (li) {
+                var out = li.attr('menu');
+                return out;
+            }
+        }).listview('refresh');*/
+	});
+}
+
+
 function getCategorias() {
 	$.getJSON(urlCategorias, function(data) {
 		
@@ -110,6 +180,9 @@ function getCategorias() {
 		var categorias = data.items;		
 		$.each(categorias, function(index, categoria) {
 			$("#inputCategoriaPlato").append('<option value=' + categoria.categoriaID +
+			'>' + categoria.nombreCategoria + 
+			'</option>');
+			$("#inputCategoriaPlatoMod").append('<option value=' + categoria.categoriaID +
 			'>' + categoria.nombreCategoria + 
 			'</option>');
 		});
@@ -128,7 +201,19 @@ function getMenus() {
 			$("#inputMenuPlato").append('<option value=' + menu.menuID +
 			'>' + menu.nombreMenu + 
 			'</option>');
+			$("#inputMenuPlatoMod").append('<option value=' + menu.menuID +
+			'>' + menu.nombreMenu + 
+			'</option>');
 		});
 		$("#inputMenuPlato").trigger("change");
 	});
+}
+
+
+function cleanFormPlatos(){
+	$("#inputNombrePlato").val("");
+	$("#inputDescPlato").val("");
+	$("#inputPrecioPlato").val("");
+	getCategorias();
+	getMenus();
 }
