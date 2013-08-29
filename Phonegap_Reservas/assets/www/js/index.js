@@ -1,6 +1,7 @@
 var urlMenuItems;
 var urlItemsModificar;
 var menuElegido;
+var modificarID;
 var urlCategorias = "http://kometa.pusku.com/form/getcategorias.php";
 var urlMenus = "http://kometa.pusku.com/form/getmenus.php";
 
@@ -98,6 +99,28 @@ $('#submitPlato').bind('vclick', function(event) {
 });
 
 
+$('#submitPlatoMod').bind('vclick', function(event) {
+	var request = $.ajax({
+		url: 'http://kometa.pusku.com/form/modificarplato.php',
+		type: 'POST',
+		data: { nombre: $("#inputNombrePlatoMod").val(),
+		        descripcion: $("#inputDescPlatoMod").val(),
+		        precio: $("#inputPrecioPlatoMod").val(),
+		        categoria: $("#inputCategoriaPlatoMod").val(),
+		        menu: $("#inputMenuPlatoMod").val(),
+		        id: modificarID },
+		success: function(obj){
+			cleanFormPlatos(); //Esto resetea el formulario tras hacer submit
+			alert("Plato modificado");
+			$.mobile.changePage ($("#listaModificarPage"));
+		},
+		error: function(error) {
+			alert(error);
+		}
+	});
+});
+
+
 //FUNCIONES
 
 function getMenuItems() {
@@ -153,7 +176,14 @@ function getItemsModificar() {
 			$("#inputPrecioPlatoMod").val(itemsModificar[$(this).index()].precioItem);
 			$("#inputCategoriaPlatoMod").val(itemsModificar[$(this).index()].categoriaID);
 			$("#inputMenuPlatoMod").val(itemsModificar[$(this).index()].menuID);
-			$.mobile.changePage ($("#modificarPlatosPage")); 
+			modificarID = itemsModificar[$(this).index()].menuItemID;
+		//Esto devuelve a la página de elegir los platos a modificar sin
+		//guardar en la historia la página de modificación, así al dar
+		//hacia atrás lleva a la página de inicio	
+			$.mobile.changePage ($("#modificarPlatosPage"), { 
+				reverse: false, 
+				changeHash: false 
+			}); 
 		});
 		
 		$("#listaItemsModificar").listview("refresh");
@@ -214,6 +244,9 @@ function cleanFormPlatos(){
 	$("#inputNombrePlato").val("");
 	$("#inputDescPlato").val("");
 	$("#inputPrecioPlato").val("");
+	$("#inputNombrePlatoMod").val("");
+	$("#inputDescPlatoMod").val("");
+	$("#inputPrecioPlatoMod").val("");
 	getCategorias();
 	getMenus();
 }
