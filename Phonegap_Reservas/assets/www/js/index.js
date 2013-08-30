@@ -155,6 +155,8 @@ $('#submitPlatoMod').bind('vclick', function(event) {
 
 function getMenuItems() {
 
+	$.mobile.showPageLoadingMsg();
+
 	urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php" + "?tipomenu=" + menuElegido;
 
 	$('#listaItems li').remove();
@@ -182,6 +184,7 @@ function getMenuItems() {
 		 * de cada categoría siga el orden autonumérico (en este caso del 1 al 4,
 		 * pero si estos valores cambiaran hay que buscar otra solución.
 		 */
+			cleanFormPlatos();
 			$("#nombreDetalle").html("<div id='nombreDetalle'>" + menuItems[$(this).index() - $(this).attr('categoriaid')].nombreItem + "</div>");
 			$("#descDetalle").html("<div id='descDetalle'>" + menuItems[$(this).index() - $(this).attr('categoriaid')].descItem + "</div>");
 			$("#fotoDetalle").html("<div id='fotoDetalle'>" + "<img class='imgDetalle' src='img/cordova.png'>" + "</div>");
@@ -203,6 +206,7 @@ function getMenuItems() {
                 return out;
             }
         }).listview('refresh');
+        $.mobile.hidePageLoadingMsg();
 	});
 }
 
@@ -232,12 +236,13 @@ function getItemsModificar() {
 		//Esto pasa los valores del item pinchado al formulario de 
 		//modificación de plato.
 		$('#listaItemsModificar').children('li').bind('vclick', function(e) { 
+			cleanFormPlatos();
 			$("#inputNombrePlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].nombreItem);
 			$("#inputDescPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].descItem);
 			$("#inputPrecioPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].precioItem);
 			$("#inputCategoriaPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].categoriaID);
 			$("#inputMenuPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuID);
-			modificarID = itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuItemID;
+			//modificarID = itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuItemID;
 		//Esto devuelve a la página de elegir los platos a modificar sin
 		//guardar en la historia la página de modificación, así al dar
 		//hacia atrás lleva a la página de inicio	
@@ -274,6 +279,7 @@ function getCategorias() {
 			arrayCategorias[index] = categoria.nombreCategoria;
 		});
 		$("#inputCategoriaPlato").trigger("change");
+		$("#inputCategoriaPlatoMod").trigger("change");
 	});
 }
 
@@ -293,6 +299,7 @@ function getMenus() {
 			arrayMenus[index] = menu.nombreMenu;
 		});
 		$("#inputMenuPlato").trigger("change");
+		$("#inputMenuPlatoMod").trigger("change");
 	});
 }
 
