@@ -1,6 +1,9 @@
+var arrayCategorias = [];
+var arrayMenus = [];
 var urlMenuItems;
 var urlItemsModificar;
 var menuElegido;
+var menuElegidoMod;
 var modificarID;
 var urlCategorias = "http://kometa.pusku.com/form/getcategorias.php";
 var urlMenus = "http://kometa.pusku.com/form/getmenus.php";
@@ -31,7 +34,7 @@ $('#inicioPage').bind('pageshow', function(event) {
 		event.preventDefault(); 
 		event.stopImmediatePropagation(); 
 		$('#botModificarPlatos').unbind('vclick');
-		$.mobile.changePage ($("#listaModificarPage"));
+		$.mobile.changePage ($("#modSelecPage"));
 	});
 	
 	getCategorias();
@@ -40,9 +43,57 @@ $('#inicioPage').bind('pageshow', function(event) {
 });
 
 
-$('#crearPlatosPage').bind('pageshow', function(event) {
-	/*getCategorias();
-	getMenus();*/
+$('#menuSelecPage').bind('pageshow', function(event) {
+	$('#botMenuDia').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botMenuDia').unbind('vclick');
+		menuElegido = 1;
+		$.mobile.changePage ($("#menuListaPage"));
+	});
+	
+	$('#botMenuEspecial').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botMenuEspecial').unbind('vclick');
+		menuElegido = 2;
+		$.mobile.changePage ($("#menuListaPage"));
+	});
+	
+	$('#botMenuCarta').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botMenuCarta').unbind('vclick');
+		menuElegido = 3;
+		$.mobile.changePage ($("#menuListaPage"));
+	});	
+});
+
+
+$('#modSelecPage').bind('pageshow', function(event) {
+	$('#botMenuDiaMod').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botMenuDiaMod').unbind('vclick');
+		menuElegidoMod = 1;
+		$.mobile.changePage ($("#listaModificarPage"));
+	});
+	
+	$('#botMenuEspecialMod').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botMenuEspecialMod').unbind('vclick');
+		menuElegidoMod = 2;
+		$.mobile.changePage ($("#listaModificarPage"));
+	});
+	
+	$('#botMenuCartaMod').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botMenuCartaMod').unbind('vclick');
+		menuElegidoMod = 3;
+		$.mobile.changePage ($("#listaModificarPage"));
+	});	
 });
 
 
@@ -56,28 +107,7 @@ $('#listaModificarPage').bind('pagebeforeshow', function(event) {
 });
 
 
-//LISTENERS DE COMPONENTES 
-
-$('#botMenuDia').bind('vclick', function(event) {
-	menuElegido = 1;
-	//getMenuItems();
-	$.mobile.changePage ($("#menuListaPage"));
-});
-
-
-$('#botMenuEspecial').bind('vclick', function(event) {
-	menuElegido = 2;
-	//getMenuItems();
-	$.mobile.changePage ($("#menuListaPage"));
-});
-
-
-$('#botMenuCarta').bind('vclick', function(event) {
-	menuElegido = 3;
-	//getMenuItems();
-	$.mobile.changePage ($("#menuListaPage"));
-});
-
+//LISTENERS DE BOTONES SUBMIT 
 
 $('#submitPlato').bind('vclick', function(event) {
 	var request = $.ajax({
@@ -134,7 +164,9 @@ function getMenuItems() {
 		var menuItems = data.items;		
 		$.each(menuItems, function(index, menuItem) {
 			$("#listaItems").append(
-				"<li>" +
+				"<li categoria='" + arrayCategorias[menuItem.categoriaID - 1] + 
+					"' categoriaid='" + menuItem.categoriaID +
+					"'>" +
 			        "<a href=#>" +
 			        "<img class='imagen' src='img/cordova.png'>" +
 			        "<h1 class='txtnombre'>" + menuItem.nombreItem + "</h1>" +
@@ -143,14 +175,41 @@ function getMenuItems() {
 			        "</a>" +
 		        "</li>");
 		});
-		$("#listaItems").listview("refresh");
+		
+		$('#listaItems').children('li').bind('vclick', function(e) {
+		/*Lo de restar categoriaid en el índice de menuItems es porque los autodividers
+		 * suman 1 al index de los items. Esta solución funciona mientras la categoriaID
+		 * de cada categoría siga el orden autonumérico (en este caso del 1 al 4,
+		 * pero si estos valores cambiaran hay que buscar otra solución.
+		 */
+			$("#nombreDetalle").html("<div id='nombreDetalle'>" + menuItems[$(this).index() - $(this).attr('categoriaid')].nombreItem + "</div>");
+			$("#descDetalle").html("<div id='descDetalle'>" + menuItems[$(this).index() - $(this).attr('categoriaid')].descItem + "</div>");
+			$("#fotoDetalle").html("<div id='fotoDetalle'>" + "<img class='imgDetalle' src='img/cordova.png'>" + "</div>");
+			$("#menuDetalle").html("<div id='menuDetalle'>" + arrayMenus[menuItems[$(this).index() - $(this).attr('categoriaid')].menuID - 1] + "</div>");
+			$("#categoriaDetalle").html("<div id='categoriaDetalle'>" + arrayCategorias[menuItems[$(this).index() - $(this).attr('categoriaid')].categoriaID - 1]  + "</div>");
+			$("#precioDetalle").html("<div id='precioDetalle'>" + "Precio:\n" + menuItems[$(this).index() - $(this).attr('categoriaid')].precioItem + " €" + "</div>");
+			$.mobile.changePage ($("#detallePlatoPage"));
+		});
+		
+		//$("#listaItems").listview("refresh");
+		
+		/*Lo siguiente hace que la lista tenga autodividers en función
+		 * de la categoría de cada ítem.
+		 */
+		$("#listaItems").listview({
+            autodividers: true,
+            autodividersSelector: function (li) {
+                var out = li.attr('categoria');
+                return out;
+            }
+        }).listview('refresh');
 	});
 }
 
 
 function getItemsModificar() {
 
-	urlItemsModificar = "http://kometa.pusku.com/form/getitemsmodificar.php";
+	urlItemsModificar = "http://kometa.pusku.com/form/getitemsmodificar.php" + "?tipomenumod=" + menuElegidoMod;;
 
 	$('#listaItemsModificar li').remove();
 	
@@ -159,7 +218,9 @@ function getItemsModificar() {
 		var itemsModificar = data.items;		
 		$.each(itemsModificar, function(index, itemModificar) {
 			$("#listaItemsModificar").append(
-				"<li menu='" + itemModificar.menuID + "'>" +
+				"<li categoria='" + arrayCategorias[itemModificar.categoriaID - 1] + 
+					"' categoriaid='" + itemModificar.categoriaID + 
+					"'>" +
 			        "<a href=#>" +
 			        "<img class='imagen' src='img/cordova.png'>" +
 			        "<h1 class='txtnombre'>" + itemModificar.nombreItem + "</h1>" +
@@ -171,12 +232,12 @@ function getItemsModificar() {
 		//Esto pasa los valores del item pinchado al formulario de 
 		//modificación de plato.
 		$('#listaItemsModificar').children('li').bind('vclick', function(e) { 
-			$("#inputNombrePlatoMod").val(itemsModificar[$(this).index()].nombreItem);
-			$("#inputDescPlatoMod").val(itemsModificar[$(this).index()].descItem);
-			$("#inputPrecioPlatoMod").val(itemsModificar[$(this).index()].precioItem);
-			$("#inputCategoriaPlatoMod").val(itemsModificar[$(this).index()].categoriaID);
-			$("#inputMenuPlatoMod").val(itemsModificar[$(this).index()].menuID);
-			modificarID = itemsModificar[$(this).index()].menuItemID;
+			$("#inputNombrePlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].nombreItem);
+			$("#inputDescPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].descItem);
+			$("#inputPrecioPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].precioItem);
+			$("#inputCategoriaPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].categoriaID);
+			$("#inputMenuPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuID);
+			modificarID = itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuItemID;
 		//Esto devuelve a la página de elegir los platos a modificar sin
 		//guardar en la historia la página de modificación, así al dar
 		//hacia atrás lleva a la página de inicio	
@@ -186,25 +247,20 @@ function getItemsModificar() {
 			}); 
 		});
 		
-		$("#listaItemsModificar").listview("refresh");
-		/*Lo siguiente hace que la lista tenga autodividers en función
-		 * del menú de cada ítem. El problema es que los items 
-		 * no se ordenan.
-		 */
-		/*$("#listaItemsModificar").listview({
+		//$("#listaItemsModificar").listview("refresh");
+		$("#listaItemsModificar").listview({
             autodividers: true,
             autodividersSelector: function (li) {
-                var out = li.attr('menu');
+                var out = li.attr('categoria');
                 return out;
             }
-        }).listview('refresh');*/
+        }).listview('refresh');
 	});
 }
 
 
 function getCategorias() {
-	$.getJSON(urlCategorias, function(data) {
-		
+	$.getJSON(urlCategorias, function(data) {		
 		$('#inputCategoriaPlato option').remove();
 		$("#inputCategoriaPlato").append('<option data-placeholder="true">Categoría</option>');
 		var categorias = data.items;		
@@ -215,6 +271,7 @@ function getCategorias() {
 			$("#inputCategoriaPlatoMod").append('<option value=' + categoria.categoriaID +
 			'>' + categoria.nombreCategoria + 
 			'</option>');
+			arrayCategorias[index] = categoria.nombreCategoria;
 		});
 		$("#inputCategoriaPlato").trigger("change");
 	});
@@ -222,18 +279,18 @@ function getCategorias() {
 
 
 function getMenus() {
-	$.getJSON(urlMenus, function(data) {
-		
+	$.getJSON(urlMenus, function(data) {		
 		$('#inputMenuPlato option').remove();
 		$("#inputMenuPlato").append('<option data-placeholder="true">Menú</option>');
 		var menus = data.items;		
 		$.each(menus, function(index, menu) {
 			$("#inputMenuPlato").append('<option value=' + menu.menuID +
-			'>' + menu.nombreMenu + 
-			'</option>');
+				'>' + menu.nombreMenu + 
+				'</option>');
 			$("#inputMenuPlatoMod").append('<option value=' + menu.menuID +
-			'>' + menu.nombreMenu + 
-			'</option>');
+				'>' + menu.nombreMenu + 
+				'</option>');
+			arrayMenus[index] = menu.nombreMenu;
 		});
 		$("#inputMenuPlato").trigger("change");
 	});
