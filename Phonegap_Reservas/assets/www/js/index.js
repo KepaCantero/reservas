@@ -242,7 +242,7 @@ function getItemsModificar() {
 			$("#inputPrecioPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].precioItem);
 			$("#inputCategoriaPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].categoriaID);
 			$("#inputMenuPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuID);
-			//modificarID = itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuItemID;
+			modificarID = itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuItemID;
 		//Esto devuelve a la página de elegir los platos a modificar sin
 		//guardar en la historia la página de modificación, así al dar
 		//hacia atrás lleva a la página de inicio	

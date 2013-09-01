@@ -18,10 +18,12 @@
  	<div id="inicioPage" data-role="page">		
 		<div data-role=header>
 			<h1>Inicio</h1>
-		</div>		
-		<input id="botElegirMenus" type=button value="Consultar menús" />		
-		<input id="botCrearPlatos"type=button value="Añadir platos" />
-		<input id="botModificarPlatos"type=button value="Modificar platos" />
+		</div>	
+		<div id="contenedorInicio" data-role="content">	
+			<input id="botElegirMenus" type=button value="Consultar menús" />		
+			<input id="botCrearPlatos"type=button value="Añadir platos" />
+			<input id="botModificarPlatos"type=button value="Modificar platos" />
+		</div>
 	</div>
 	
 	
@@ -29,9 +31,11 @@
 		<div data-role=header>
 			<h1>Menús</h1>
 		</div>
-		<input id="botMenuDia" type=button value="Menú del día" />		
-		<input id="botMenuEspecial" type=button value="Menú especial" />		
-		<input id="botMenuCarta" type=button value="Carta" />
+		<div id="contenedorMenuSelec" data-role="content">
+			<input id="botMenuDia" type=button value="Menú del día" />		
+			<input id="botMenuEspecial" type=button value="Menú especial" />		
+			<input id="botMenuCarta" type=button value="Carta" />
+		</div>
 	</div>
 	
 	
@@ -39,8 +43,10 @@
 		<div data-role=header>
 			<h1>Platos</h1>
 		</div>
-		<ul id="listaItems" data-role=listview data-inset="true" data-autodividers="true">
-		</ul>
+		<div id="contenedorMenuLista" data-role="content">
+			<ul id="listaItems" data-role=listview data-inset="true" data-autodividers="true">
+			</ul>
+		</div>
 	</div>
 	
 	
@@ -75,17 +81,19 @@
 		<div data-role=header>
 			<h1>Añadir platos</h1>
 		</div>
-		<input id="inputNombrePlato" type=text placeholder="Nombre del plato" data-clear-btn="true"></input>
-		<input id="inputDescPlato" type=text placeholder="Descripción" data-clear-btn="true"></input>
-		<input id="inputPrecioPlato" type="number" placeholder="Precio" data-clear-btn="true"></input>
-		<select id="inputCategoriaPlato" data-native-menu=false data-theme=c required>
-			<option data-placeholder="true">Categoría</option>
-		</select>
-		<select id="inputMenuPlato" data-native-menu=false data-theme=c required>
-			<option data-placeholder="true">Menú</option>
-		</select>
-		<div id="divSubmit">
-			<input id="submitPlato" type="button" value="Añadir plato" data-theme=a>
+		<div id="contenedorCrearPlatos" data-role="content">
+			<input id="inputNombrePlato" type=text placeholder="Nombre del plato" data-clear-btn="true"></input>
+			<input id="inputDescPlato" type=text placeholder="Descripción" data-clear-btn="true"></input>
+			<input id="inputPrecioPlato" type="number" placeholder="Precio" data-clear-btn="true"></input>
+			<select id="inputCategoriaPlato" data-native-menu=false data-theme=c required>
+				<option data-placeholder="true">Categoría</option>
+			</select>
+			<select id="inputMenuPlato" data-native-menu=false data-theme=c required>
+				<option data-placeholder="true">Menú</option>
+			</select>
+			<div id="divSubmit">
+				<input id="submitPlato" type="button" value="Añadir plato" data-theme=a>
+			</div>
 		</div>
 	</div>
  
@@ -94,17 +102,21 @@
 		<div data-role=header>
 			<h1>Menús</h1>
 		</div>
-		<input id="botMenuDiaMod" type=button value="Menú del día" />		
-		<input id="botMenuEspecialMod" type=button value="Menú especial" />		
-		<input id="botMenuCartaMod" type=button value="Carta" />
+		<div id="contenedorModSelec" data-role="content">
+			<input id="botMenuDiaMod" type=button value="Menú del día" />		
+			<input id="botMenuEspecialMod" type=button value="Menú especial" />		
+			<input id="botMenuCartaMod" type=button value="Carta" />
+		</div>
 	</div>
  
  	<div id="listaModificarPage" data-role="page" data-add-back-btn=true>
 		<div data-role=header>
 			<h1>Modificar platos</h1>
 		</div>
-		<ul id="listaItemsModificar" data-role=listview data-inset="true" data-autodividers="true"> <!--data-filter="true"-->
-		</ul>
+		<div id="contenedorListaModificar" data-role="content">
+			<ul id="listaItemsModificar" data-role=listview data-inset="true" data-autodividers="true"> <!--data-filter="true"-->
+			</ul>
+		</div>
 	</div>
  
  
@@ -112,17 +124,19 @@
 		<div data-role=header>
 			<h1>Modificar plato</h1>
 		</div>
-		<input id="inputNombrePlatoMod" type=text placeholder="Nombre del plato" data-clear-btn="true"></input>
-		<input id="inputDescPlatoMod" type=text placeholder="Descripción" data-clear-btn="true"></input>
-		<input id="inputPrecioPlatoMod" type="number" placeholder="Precio" data-clear-btn="true"></input>
-		<select id="inputCategoriaPlatoMod" data-native-menu=false data-theme=c required>
-			<option data-placeholder="true">Categoría</option>
-		</select>
-		<select id="inputMenuPlatoMod" data-native-menu=false data-theme=c required>
-			<option data-placeholder="true">Menú</option>
-		</select>
-		<div id="divSubmit">
-			<input id="submitPlatoMod" type="button" value="Modificar plato" data-theme=a>
+		<div id="contenedorModificarPlato" data-role="content">
+			<input id="inputNombrePlatoMod" type=text placeholder="Nombre del plato" data-clear-btn="true"></input>
+			<input id="inputDescPlatoMod" type=text placeholder="Descripción" data-clear-btn="true"></input>
+			<input id="inputPrecioPlatoMod" type="number" placeholder="Precio" data-clear-btn="true"></input>
+			<select id="inputCategoriaPlatoMod" data-native-menu=false data-theme=c required>
+				<option data-placeholder="true">Categoría</option>
+			</select>
+			<select id="inputMenuPlatoMod" data-native-menu=false data-theme=c required>
+				<option data-placeholder="true">Menú</option>
+			</select>
+			<div id="divSubmit">
+				<input id="submitPlatoMod" type="button" value="Modificar plato" data-theme=a>
+			</div>
 		</div>
 	</div>
 
