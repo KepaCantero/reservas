@@ -1,15 +1,11 @@
-.txtnombre{
-}
-
-.txtdesc{
-}
-
-.txtprecio{
-	color: blue;
-}
+/*
+ * Para que los nombres y descripciones de las listviews salgan en más de una línea
+ * hay que usar el estilo CSS white-space:pre-wrap o white-space:normal, pero esto
+ * solo funciona metiéndolo en el HTML que se inserta desde el js.
+ */
 
 /*Esto hace que las listas desplegables no se vuelvan fullscreen 
- * independientemente de su tamaño, lo que evita el jodido parpadeo.
+ * independientemente de su tamaÃ±o, lo que evita el jodido parpadeo.
  */
 .ui-selectmenu-list li .ui-btn-inner a.ui-link-inherit { 
 	padding: .5em 15px .5em 15px; 

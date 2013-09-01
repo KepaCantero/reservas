@@ -171,9 +171,9 @@ function getMenuItems() {
 					"'>" +
 			        "<a href=#>" +
 			        "<img class='imagen' src='img/cordova.png'>" +
-			        "<h1 class='txtnombre'>" + menuItem.nombreItem + "</h1>" +
-			        "<p class='txtdesc'>" + menuItem.descItem + "</p>" +
-			        "<h2 class='txtprecio'>" + menuItem.precioItem + " €" + "</h2>" +
+			        "<h1 style='white-space:normal; text-align: justify'>" + menuItem.nombreItem + "</h1>" +
+			        "<p style='white-space:normal; text-align: justify'>" + menuItem.descItem + "</p>" +
+			        "<h2 style='color:blue'>" + menuItem.precioItem + " €" + "</h2>" +
 			        "</a>" +
 		        "</li>");
 		});
@@ -227,9 +227,9 @@ function getItemsModificar() {
 					"'>" +
 			        "<a href=#>" +
 			        "<img class='imagen' src='img/cordova.png'>" +
-			        "<h1 class='txtnombre'>" + itemModificar.nombreItem + "</h1>" +
-			        "<p class='txtdesc'>" + itemModificar.descItem + "</p>" +
-			        "<h2 class='txtprecio'>" + itemModificar.precioItem + " €" + "</h2>" +
+			        "<h1 style='white-space:normal; text-align: justify'>" + itemModificar.nombreItem + "</h1>" +
+			        "<p style='white-space:normal; text-align: justify'>" + itemModificar.descItem + "</p>" +
+			        "<h2 style='color:blue'>" + itemModificar.precioItem + " €" + "</h2>" +
 			        "</a>" +
 		        "</li>");
 		});
