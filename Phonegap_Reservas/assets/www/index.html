@@ -1,69 +1,108 @@
-<!-- Port�til 20-ago-13, 21:14 -->
-<!DOCTYPE HTML> 
+<!DOCTYPE HTML>
 <html>
-<head>
-  <title>Horas</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  
-  <link rel="stylesheet" type="text/css" href="css/index3.css" />
-  <!-- <link rel="stylesheet" type="text/css" href="master.css" /> -->
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
-  <link rel="stylesheet" type="text/css" href="css/jqm-datebox.min.css" />
-    
-  <script src="cordova.js"></script>
-  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-  <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
-  <script src="js/jqm-datebox.core.min.js"></script>
-  <script src="js/jqm-datebox.mode.flipbox.min.js"></script>
-  <script src="js/jquery.validate.min.js"></script>
+	<head>
+		<title>Horas</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-</head>
- 
-<body> 
- 
-<div id="horasPage" data-role="page">
- 
-	<div data-role="header">
-		<h1>Horas</h1>
-	</div>
-    
-	<div data-role="content">	
-		
-		<input name="fecha" id="formfecha" type="date" data-role="datebox" data-options='{"mode": "flipbox", "useInline": true, "centerHoriz": true, "afterToday": true, "dateFieldOrder": ["d", "m", "y"] }'>
-		<!-- "dateFormat": %d-%m-%Y, "dateFieldOrder": ["d", "m", "y"], "calStartDay": 1, "daysOfWeekShort": ["L", "M", "X", "J", "V", "S", "D"] -->
-		<select id="lista-horas" data-native-menu=false></select>
-	
-	</div>
-	 
-</div>
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.1.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jqm-datebox.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
 
-<div id="reserva" data-role="page" data-add-back-btn=true>
- 
-	<div data-role="header">
-		<h1>Reserva</h1>
-	</div>
-    
-	<div data-role="content">	
-		<form id="formulario">
-	        <fieldset id="inputs">
-				<input type="text" id="full_name" name="full_name" placeholder="Nombre" required>
-				<input type="email" id="email_addr" name="email_addr" placeholder="Email" required>
-				<input type="email" id="email_addr_repeat" name="email_addr_repeat" placeholder="Repite Email" required>
-		 		<input type="password" id="password" name="password" placeholder="Password" required>
-		 		<input type="date" id="date_dt" name="arrival_dt" placeholder="Fecha" required>
-				<input type="time" id="time_dt" name="time_dt" placeholder="Hora" required>
-				<input type="number" id="personas" name="personas" min="1" max="5" placeholder="Comensales" required>
-		    </fieldset>
-      	
-	      	<fieldset id="actions">
-	      			<input type="submit" value="Reservar" id="botonLogin">
-	      	</fieldset>
-    	</form>		
-	</div>
-	 
-</div>
+		<script src="cordova.js"></script>
+		<script src="js/jquery-1.9.1.js"></script>
+		<script src="js/jquery.mobile-1.3.1.min.js"></script>
+		<script src="js/jqm-datebox.core.min.js"></script>
+		<script src="js/jqm-datebox.mode.calbox.min.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
 
-<script src="js/index.js"></script>
+		<!--Este script debe ir aquí para que cambie la configuración del datepicker-->
+		<script>
+			jQuery.extend(jQuery.mobile.datebox.prototype.options.lang, {
+				'es' : {
+					setDateButtonLabel : "Elija fecha",
+					setTimeButtonLabel : "Elija hora",
+					setDurationButtonLabel : "Elija duración",
+					calTodayButtonLabel : "Jump to Today",
+					titleDateDialogLabel : "Elija fecha",
+					titleTimeDialogLabel : "Elija hora",
+					daysOfWeek : ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+					daysOfWeekShort : ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+					monthsOfYear : ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+					monthsOfYearShort : ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+					durationLabel : ['Días', 'Horas', 'Minutos', 'Segundos'],
+					durationDays : ['Día', 'Días'],
+					tooltip : "Abrir selector de fecha",
+					nextMonth : "Mes siguiente",
+					prevMonth : "Mes anterior",
+					timeFormat : 24,
+					headerFormat : '%A, %B, %-d, %Y',
+					dateFieldOrder : ['d', 'm', 'y'],
+					timeFieldOrder : ['h', 'i', 'a'],
+					slideFieldOrder : ['d', 'm', 'y'],
+					dateFormat : '%d-%m-%Y',
+					useArabicIndic : false,
+					isRTL : false,
+					calStartDay : 1,
+					clearButton : 'limpiar',
+					durationOrder : ['d', 'h', 'i', 's'],
+					meridiem : ['AM', 'PM'],
+					timeOutput : '%k:%M', // 12hr: '%l:%M %p', 24hr: '%k:%M',
+					durationFormat : '%Dd %DA, %Dl:%DM:%DS',
+					calDateListLabel : 'Otras fechas'
+				}
+			});
 
-</body>
+			jQuery.extend(jQuery.mobile.datebox.prototype.options, {
+				useLang : 'es'
+			});
+
+		</script>
+
+	</head>
+
+	<body>
+<!-- Sobremesa, 20-ago-13, 19:26 -->
+		<div id="reserva" data-role="page">
+
+			<div data-role="header">
+				<h1>Reserva</h1>
+			</div>
+
+			<div data-role="content">
+				<form id="formulario">
+					<fieldset id="inputs">
+						<span> Fecha </span>
+						<input id="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c required data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
+
+						<span> Hora </span>
+						<select id="hora" name="hora" data-native-menu=false data-theme=c required>
+							<option data-placeholder="true">Elige una hora</option>
+						</select>
+
+						<span> Mesa </span>
+						<select id="mesa" name="mesa" data-native-menu=false data-theme=c required>
+							<option data-placeholder="true">Elige el n�mero de comensales</option>
+						</select>
+
+						<span> Nombre </span>
+						<input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+
+						<!--<input type="email" id="email_addr" name="email_addr" placeholder="Email" required>
+						<input type="email" id="email_addr_repeat" name="email_addr_repeat" placeholder="Repite Email" required>
+						<input type="password" id="password" name="password" placeholder="Password" required>
+						<input type="number" id="personas" name="personas" min="1" max="5" placeholder="Comensales" required>-->
+					</fieldset>
+
+					<fieldset id="actions">
+						<input type="submit" value="Reservar" id="botonLogin" data-theme=a>
+					</fieldset>
+				</form>
+
+			</div>
+
+		</div>
+
+		<script src="js/index.js"></script>
+
+	</body>
 </html>

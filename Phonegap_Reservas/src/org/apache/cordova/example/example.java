@@ -19,19 +19,65 @@
 
 package org.apache.cordova.example;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import org.apache.cordova.*;
-
+import android.util.Log;
 public class example extends DroidGap
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        // Set by <content src="index.html" /> in config.xml
-        //super.loadUrl(Config.getStartUrl());
-        super.loadUrl("file:///android_asset/www/index.html");
+        super.init(); 
+                
+        appView.addJavascriptInterface(this, "MainActivity");
+        
+        super.loadUrl("file:///android_asset/www/main.html");
     }
+
+
+    public void addEventToCalendarString(String sdate,String hora, String mesa){
+    	//Calendar cal = Calendar.getInstance();       
+    	//intent.putExtra("beginTime", componentTimeToTimestamp(year, month, day, hour, 0));
+    	
+    	long startMillis = 0; 
+    	sdate = sdate.replace('-','/');
+    	System.out.println("creando el calenar");
+        try
+        {
+        	System.out.println(sdate);
+        	Date startDate;
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            startDate= (Date)df.parse(sdate);
+            System.out.println(startDate);    
+           
+            System.out.println(startDate); 
+            Calendar cal = Calendar.getInstance();
+        	cal.setTime(startDate);
+        	cal.set(Calendar.HOUR_OF_DAY, 24);
+        	Intent intent = new Intent(Intent.ACTION_EDIT);
+        	intent.setType("vnd.android.cursor.item/event");
+        	intent.putExtra("beginTime", cal.getTimeInMillis());
+        	intent.putExtra("allDay", true);
+        	intent.putExtra("rrule", "FREQ=YEARLY");
+        	intent.putExtra("endTime", cal.getTimeInMillis());
+        	intent.putExtra("title", "Reserva de "+ mesa + " personas " + "a las " + hora );
+        	startActivity(intent);
+
+        }
+        catch (Exception e)
+        {}
+    } 
 }
+
+
+
+
+
 
