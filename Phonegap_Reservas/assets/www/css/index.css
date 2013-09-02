@@ -1,0 +1,88 @@
+#inputs input {
+	border-left:8px solid red;
+    font: bold 15px Arial, Helvetica;
+}
+
+#inputs select{
+	border-left:8px solid red;
+    font: bold 15px Arial, Helvetica;
+}
+
+#formulario input.error {
+border:1px solid red;
+}
+
+#formulario input.valid {
+	border-left:8px solid green;
+}
+
+/*--------------------*/
+
+/*Input (antes de pulsar y sacar el datebox)*/ 
+.ui-input-datebox{
+	width:98%;
+	background-image:none;
+	border-left:8px solid red;
+    font: bold 15px Arial, Helvetica;
+	padding:.4em;
+	line-height:1;
+	display:block;
+	padding-top:0;
+	padding-bottom:0;
+	background-color:transparent
+}
+
+/*Ventana modal que contiene el datepicker (contenedor de todos los botones y el header)*/
+.ui-datebox-container{
+	border:2px solid #111!important;
+	width:280px;
+	background-color:white;
+	-webkit-transform:translate3d(0,0,0)
+}
+
+/*Días no correspondientes al mes*/
+.ui-datebox-griddate-empty{
+	border:1px solid transparent;
+	color:#dbdbdb
+}
+
+/*Días del mes no seleccionables*/
+.ui-datebox-griddate-disable{
+	color:#dbdbdb;
+	border:1px solid transparent;
+}
+
+/*Etiqueta de los días de la semana (L, M, X...)*/
+.ui-datebox-griddate-label{
+	height:15px!important;
+	line-height:15px!important;
+	color:black
+}
+
+/*Botones del calendario de los días festivos(o los que sean)*/
+.ui-btn-up-verde { 
+    background-color:green; 
+    background-image:none;
+    color : white;
+    border:1px solid #dbdbdb;
+}
+
+/*Botones del calendario de fulldays*/
+.ui-btn-up-rojo {
+    background-color:red; 
+    background-image:none;
+    color : white;
+    border:1px solid #dbdbdb;
+}
+
+/*Esto hace que las listas desplegables no se vuelvan fullscreen independientemente de su tamaño, 
+lo que evita el jodido parpadeo.*/
+.ui-selectmenu-list li .ui-btn-inner a.ui-link-inherit { 
+	padding: .5em 15px .5em 15px; 
+}
+
+/*Esto cambia el grosor del borde de los desplegables de los select, ya que no es un borde, sino un padding
+sobre un fondo gris.*/
+.ui-selectmenu {
+	padding : 3px;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>jQueryMobile - DateBox Demos</title>
+    
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.1.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/jqm-datebox.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+    
+	<style>
+		.ui-btn-up-b {
+		    background-color:green; 
+		    background-image:none;
+		    color : white;
+		}
+		.ui-btn-up-c {
+		    background-color:red; 
+		    background-image:none;
+		    color : white;
+		}
+    </style>
+    
+    <!-- NOTE: Script load order is significant! -->
+    <script src="cordova.js"></script>
+    <script src="js/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $( document ).bind( "mobileinit", function(){ $.mobile.page.prototype.options.degradeInputs.date = 'text'; });
+    </script>
+    <script src="js/jquery.mobile-1.3.1.min.js"></script>
+    <script src="js/jqm-datebox.core.min.js"></script>
+  <script src="js/jqm-datebox.mode.calbox.min.js"></script>
+
+</head>
+
+<body>
+	<div id="page" data-role="page">
+		<div data-role="content">
+			<input name="mydate" id="mydate" type="date" data-role="datebox" data-options='{"mode": "calbox", "calHighToday": false, "calHighPicked": false, "useInline": true, "useInlineHideInput": true, "highDates": ["2011-06-25", "2011-06-27", "2011-07-04"]}'></input>
+		</div>
+	</div>
+	<script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQueryMobile - DateBox Demos</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
+    <link type="text/css" href="http://dev.jtsage.com/cdn/datebox/latest/jquery.mobile.datebox.min.css" rel="stylesheet" />
+    <style>
+ 
+	.ui-btn-up-b {
+     background-color:green; 
+    background-image:none;
+    color : white;
+	}
+	.ui-btn-up-c {
+     background-color:red; 
+    background-image:none;
+    color : white;
+	}
+	 
+    </style>
+    <!-- NOTE: Script load order is significant! -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript">
+        $( document ).bind( "mobileinit", function(){ $.mobile.page.prototype.options.degradeInputs.date = 'text'; });
+    </script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+    <script type="text/javascript" src="http://dev.jtsage.com/cdn/datebox/latest/jquery.mobile.datebox.min.js"></script>
+    <script type="text/javascript">
+    $('#page').live('pagecreate', function(event) {
+        $('#mydate').bind('change', function () {
+            alert($(this).val());
+        });
+    });
+    </script>
+    <script type="text/javascript">
+$('#page').live('pagecreate', function(event) {
+
+    $('#mydate').bind('change', function () {
+        //alert($(this).val());
+     //   alert($('#mydate').data('datebox').theDate);
+    });
+    setColours();
+
+    $('#mydate').bind('datebox', function (e, pressed) {
+    	//alert("setcolors1"); 
+    	setColours();
+    });
+
+    $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('vclick', function(){
+         // To handle changing months
+               setColours();
+         //alert($('#mydate').data('datebox').theDate);
+    });
+
+    function setColours(){
+    /*	
+    var url = "http://kometa.pusku.com/form/getblackdates.php"
+	var blackdates = new Array();
+	$.getJSON(url, function(data) {		
+		var datos = data.items;
+		
+		$.each(datos, function(index, dato) {
+		alert(datos[index].dias);
+		blackdates[index] = dato.dias;
+		});
+	});
+	*/
+	var festivos = new Array(2,10,15,25 );
+	var fulldays = new Array(4,13,18,25 );
+	
+    var cycle = ["ui-btn-up-a", "ui-btn-up-b", "ui-btn-up-c"];
+   	$('.ui-datebox-griddate') 
+	   	.each(function () {
+    		$(this).data("ui-btn-cycle", cycle); 
+    		var data= $(this).data();   		 
+    		
+    			 if (jQuery.inArray(data["date"], festivos) > -1)	
+    			 { $(this).data("ui-btn-cycle", cycle);
+	     	  		this.className = this.className.replace(/ui-btn-up-./, cycle[1]);
+    	 	  		}
+    			 if (jQuery.inArray(data["date"], fulldays) > -1)	
+    			 { $(this).data("ui-btn-cycle", cycle);
+	    	  		this.className = this.className.replace(/ui-btn-up-./, cycle[2]);
+    		  		}
+    	
+    		
+    	})
+    	.click(function (e) {
+    	  var cycle = $(this).data("ui-btn-cycle");
+    	  $(this).removeClass(cycle[0]).addClass(cycle[1]);
+    	  cycle.push(cycle.shift());
+    	  e.preventDefault(); 
+    	}); 
+    
+    }
+});
+</script>
+</head>
+<body>
+<div id="page" data-role="page">
+<div data-role="content">
+<input name="mydate" id="mydate" type="date" data-role="datebox" data-options='{"mode": "calbox", "calHighToday": false, "calHighPicked": false, "useInline": true, "useInlineHideInput": true, "highDates": ["2011-06-25", "2011-06-27", "2011-07-04"]}'></input>
+</div>
+</div>
+</html>
