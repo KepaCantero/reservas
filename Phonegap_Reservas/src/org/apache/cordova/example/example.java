@@ -38,7 +38,7 @@ public class example extends DroidGap
                 
         appView.addJavascriptInterface(this, "MainActivity");
         
-        super.loadUrl("file:///android_asset/www/main.html");
+        super.loadUrl("file:///android_asset/www/index.html");
     }
 
 

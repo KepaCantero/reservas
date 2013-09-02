@@ -76,7 +76,8 @@ $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
      setColours();
 });*/
 
-$('#formulario').submit(function() { 
+//$('#formulario').submit(function() {
+$('#botonReservar').bind('vclick', function(event) { 
 	if ($('#formulario').valid()){
 		var request = $.ajax({
 			url: 'http://kometa.pusku.com/form/insert.php',

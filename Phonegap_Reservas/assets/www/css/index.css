@@ -16,6 +16,10 @@ border:1px solid red;
 	border-left:8px solid green;
 }
 
+#divSubmit{
+	margin-top: 50px;
+}
+
 /*--------------------*/
 
 /*Input (antes de pulsar y sacar el datebox)*/ 

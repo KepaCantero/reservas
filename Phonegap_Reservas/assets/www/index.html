@@ -70,32 +70,26 @@
 
 			<div data-role="content">
 				<form id="formulario">
-					<fieldset id="inputs">
-						<span> Fecha </span>
-						<input id="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c required data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
+					<span> Fecha </span>
+					<input id="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c required data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
 
-						<span> Hora </span>
-						<select id="hora" name="hora" data-native-menu=false data-theme=c required>
-							<option data-placeholder="true">Elige una hora</option>
-						</select>
+					<span> Hora </span>
+					<select id="hora" name="hora" data-native-menu=false data-theme=c required>
+						<option data-placeholder="true">Elige una hora</option>
+					</select>
 
-						<span> Mesa </span>
-						<select id="mesa" name="mesa" data-native-menu=false data-theme=c required>
-							<option data-placeholder="true">Elige el número de comensales</option>
-						</select>
+					<span> Mesa </span>
+					<select id="mesa" name="mesa" data-native-menu=false data-theme=c required>
+						<option data-placeholder="true">Elige el número de comensales</option>
+					</select>
 
-						<span> Nombre </span>
-						<input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+					<span> Nombre </span>
+					<input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-						<!--<input type="email" id="email_addr" name="email_addr" placeholder="Email" required>
-						<input type="email" id="email_addr_repeat" name="email_addr_repeat" placeholder="Repite Email" required>
-						<input type="password" id="password" name="password" placeholder="Password" required>
-						<input type="number" id="personas" name="personas" min="1" max="5" placeholder="Comensales" required>-->
-					</fieldset>
 
-					<fieldset id="actions">
-						<input type="submit" value="Reservar" id="botonLogin" data-theme=a>
-					</fieldset>
+					<div id="divSubmit">
+						<input id="botonReservar" type="button" value="Reservar" data-theme=a>
+					</div>
 				</form>
 
 			</div>
