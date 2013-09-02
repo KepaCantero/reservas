@@ -8,6 +8,8 @@ var horaElegida = false;
 
 $('#reserva').bind('pagebeforeshow', function(event) {
 	setBlackDates();
+	$("#hora").selectmenu('disable');
+	$("#mesa").selectmenu('disable');
 });
 
 $('#reserva').bind('pageshow', function(event) {
@@ -56,6 +58,7 @@ $('#fecha').bind('change', function(event) {
 	fecha = $("#fecha").val();
 	urlHoras = "http://kometa.pusku.com/form/gethoras.php" + "?fecha=" + fecha;
 	getHoras();
+	$("#hora").selectmenu('enable');
 });
 
 $('#hora').bind('change', function(event) {
@@ -64,8 +67,12 @@ $('#hora').bind('change', function(event) {
 		hora = parseInt($("#hora").val());
 		urlMesas = "http://kometa.pusku.com/form/getmesas.php" + "?fecha=" + fecha + "&hora=" + hora;
 		getMesas();
-		
+		$("#mesa").selectmenu('enable');
 	}
+});
+
+$('#mesa').bind('change', function(event) {
+	$('#nombre').focus();
 });
 
 /*$('#fecha').bind('datebox', function (e, pressed) {
@@ -88,12 +95,19 @@ $('#botonReservar').bind('vclick', function(event) {
 			        hora: $("#hora").val() },
 			success: function(obj){
 				alert("Reserva realizada");
-				AddToCalendar();
+				addToCalendar();
+				cleanFormReservas();
 			},
 			error: function(error) {
 				alert(error);
 			}
 		});
+	} else {
+		//$("#botonReservar").button("disable");
+		//$("#botonReservar").button("enable");
+		//$('#botonReservar').removeClass('.ui-btn-down-a');
+		//$('#botonReservar').button("refresh");
+		//$('#botonReservar').toggleClass(".ui-btn-active");
 	}
 });
 
@@ -184,13 +198,33 @@ function setBlackDates(){
 }
 
 
-function AddToCalendar() {
-	
+function addToCalendar() {
 	//var nombre= $("#nombre").val();
     var fecha= $("#fecha").val();
     var mesa= $("#mesa").val();
     var hora= $("#hora").val(); 
 	window.MainActivity.addEventToCalendarString(fecha,hora,mesa);
-    }
+}
 
 
+function cleanFormReservas(){
+		//Resetea el selector de fecha
+	$("#fecha").val("");
+		//Resetea la select list "hora"
+	$('#hora option').remove();
+	$("#hora").append("<option data-placeholder='true'>Elige una hora</option>");
+	$('#hora').trigger("change");
+	horaElegida = false;
+		//Resetea la select list "mesa"
+	$('#mesa option').remove();
+	$("#mesa").append("<option data-placeholder='true'>Elige el número de comensales</option>");
+	$('#mesa').trigger("change");
+		//Resetea el input del nombre
+	$("#nombre").val("");
+	$("#nombre").css("border-left","8px solid red");
+		//Deshabilita las select lists
+	$("#hora").selectmenu('disable');
+	$("#mesa").selectmenu('disable');
+		//Refresca el aspecto del botón
+	$("#botonReservar").button("refresh");
+}
