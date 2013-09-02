@@ -157,12 +157,14 @@ function getMenuItems() {
 
 	$.mobile.showPageLoadingMsg();
 
-	urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php" + "?tipomenu=" + menuElegido;
+	//urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php" + "?tipomenu=" + menuElegido;
+	urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php";
 
 	$('#listaItems li').remove();
-	
-	$.getJSON(urlMenuItems, function(data) {
 		
+	//$.getJSON(urlMenuItems, function(data) {
+	$.post(urlMenuItems, { tipomenu : menuElegido }, function(data, textStatus) {	
+	
 		var menuItems = data.items;		
 		$.each(menuItems, function(index, menuItem) {
 			$("#listaItems").append(
@@ -207,18 +209,21 @@ function getMenuItems() {
             }
         }).listview('refresh');
         $.mobile.hidePageLoadingMsg();
-	});
+	//});
+	}, "json");
 }
 
 
 function getItemsModificar() {
 
-	urlItemsModificar = "http://kometa.pusku.com/form/getitemsmodificar.php" + "?tipomenumod=" + menuElegidoMod;;
+	//urlItemsModificar = "http://kometa.pusku.com/form/getitemsmodificar.php" + "?tipomenumod=" + menuElegidoMod;
+	urlItemsModificar = "http://kometa.pusku.com/form/getitemsmodificar.php";
 
 	$('#listaItemsModificar li').remove();
 	
-	$.getJSON(urlItemsModificar, function(data) {
-		
+	//$.getJSON(urlItemsModificar, function(data) {
+	$.post(urlItemsModificar, { tipomenumod : menuElegidoMod }, function(data, textStatus) {
+	
 		var itemsModificar = data.items;		
 		$.each(itemsModificar, function(index, itemModificar) {
 			$("#listaItemsModificar").append(
@@ -260,12 +265,17 @@ function getItemsModificar() {
                 return out;
             }
         }).listview('refresh');
-	});
+	//});
+	}, "json");
 }
 
 
 function getCategorias() {
-	$.getJSON(urlCategorias, function(data) {		
+	
+	$.post(urlCategorias, null, function(data, textStatus) { 
+		//data contiene el JSON
+		//textStatus contiene el status: success, error, etc. 
+		//El segundo parámetro (el que es null) es la info que se le pasa al post 
 		$('#inputCategoriaPlato option').remove();
 		$("#inputCategoriaPlato").append('<option data-placeholder="true">Categoría</option>');
 		var categorias = data.items;		
@@ -280,12 +290,30 @@ function getCategorias() {
 		});
 		$("#inputCategoriaPlato").trigger("change");
 		$("#inputCategoriaPlatoMod").trigger("change");
-	});
+	}, "json");
+	
+	/*$.getJSON(urlCategorias, function(data) {		
+		$('#inputCategoriaPlato option').remove();
+		$("#inputCategoriaPlato").append('<option data-placeholder="true">Categoría</option>');
+		var categorias = data.items;		
+		$.each(categorias, function(index, categoria) {
+			$("#inputCategoriaPlato").append('<option value=' + categoria.categoriaID +
+			'>' + categoria.nombreCategoria + 
+			'</option>');
+			$("#inputCategoriaPlatoMod").append('<option value=' + categoria.categoriaID +
+			'>' + categoria.nombreCategoria + 
+			'</option>');
+			arrayCategorias[index] = categoria.nombreCategoria;
+		});
+		$("#inputCategoriaPlato").trigger("change");
+		$("#inputCategoriaPlatoMod").trigger("change");
+	});*/
 }
 
 
 function getMenus() {
-	$.getJSON(urlMenus, function(data) {		
+	
+	$.post(urlMenus, null, function(data, textStatus) {
 		$('#inputMenuPlato option').remove();
 		$("#inputMenuPlato").append('<option data-placeholder="true">Menú</option>');
 		var menus = data.items;		
@@ -300,7 +328,25 @@ function getMenus() {
 		});
 		$("#inputMenuPlato").trigger("change");
 		$("#inputMenuPlatoMod").trigger("change");
-	});
+	}, "json");
+	
+	
+	/*$.getJSON(urlMenus, function(data) {		
+		$('#inputMenuPlato option').remove();
+		$("#inputMenuPlato").append('<option data-placeholder="true">Menú</option>');
+		var menus = data.items;		
+		$.each(menus, function(index, menu) {
+			$("#inputMenuPlato").append('<option value=' + menu.menuID +
+				'>' + menu.nombreMenu + 
+				'</option>');
+			$("#inputMenuPlatoMod").append('<option value=' + menu.menuID +
+				'>' + menu.nombreMenu + 
+				'</option>');
+			arrayMenus[index] = menu.nombreMenu;
+		});
+		$("#inputMenuPlato").trigger("change");
+		$("#inputMenuPlatoMod").trigger("change");
+	});*/
 }
 
 
