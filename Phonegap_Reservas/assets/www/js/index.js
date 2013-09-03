@@ -89,9 +89,7 @@ $('#hora').bind('change', function(event) {
 
 $('#mesa').bind('change', function(event) {	
 	$('#nombre').textinput('enable');
-	$('#nombre').focus().select(); 
-	$('#nombre').trigger('change');
-	$('#nombre').trigger("tap");
+	$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.
 });
 
 
@@ -263,5 +261,4 @@ function cleanFormReservas(){
 		reverse: false, 
 		changeHash: false 
 	});
-	
 }

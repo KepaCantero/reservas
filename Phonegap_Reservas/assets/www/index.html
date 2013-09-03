@@ -73,21 +73,21 @@
 					<input id="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c required data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
 
 					<span> Hora </span>
-					<select id="hora" name="hora" data-native-menu=false data-theme=c required>
+					<select id="hora" data-theme=c data-native-menu=false required>
 						<option data-placeholder="true">Elige una hora</option>
 					</select>
 
 					<span> Mesa </span>
-					<select id="mesa" name="mesa" data-native-menu=false data-theme=c required>
+					<select id="mesa" data-theme=c data-native-menu=false required>
 						<option data-placeholder="true">Elige el número de comensales</option>
 					</select>
 
 					<span> Nombre </span>
-					<input id="nombre" name="nombre" type="text"  placeholder="Nombre" required>
+					<input id="nombre" data-theme=c type="text" pattern="(\w(\s)?)+" placeholder="Nombre" required>
 
 
 					<div id="divSubmit">
-						<input id="botonReservar" type="button" value="Reservar" data-theme=a>
+						<input id="botonReservar" data-theme=a type="button" value="Reservar">
 					</div>
 				</form>
 

@@ -23,11 +23,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import org.apache.cordova.*;
-import android.util.Log;
+
+
 public class example extends DroidGap
 {
     @Override
@@ -73,7 +73,7 @@ public class example extends DroidGap
         }
         catch (Exception e)
         {}
-    } 
+    }
 }
 
 
