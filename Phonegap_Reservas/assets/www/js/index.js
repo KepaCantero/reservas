@@ -3,26 +3,28 @@ var fecha;
 var urlHoras;
 var urlMesas;
 var horaElegida = false;
+var blackdates = [];
 
 //EVENTOS AL CARGARSE LAS PÃƒï¿½GINAS
 
-$('#reserva').bind('pagebeforeshow', function(event) {
-	setBlackDates();
-	$("#hora").selectmenu('disable');
-	$("#mesa").selectmenu('disable');
+$('#reservaPage').bind('pagebeforeshow', function(event) {
+	setBlackDates();	
 });
 
-$('#reserva').bind('pageshow', function(event) {
-	$("#formulario").validate({
-	      rules: {
-	         nombre: {
-	             required: true, minlength: 5
-	         }/*, 
-	         email_addr_repeat: {
-	        	 equalTo: email_addr
-	         }*/
-	     }     
+
+$('#reservaPage').bind('pageshow', function(event) {
+	var validator = $("#formulario").validate({
+	    rules: {
+	        nombre: {
+	            required: true, minlength: 5
+	        }
+	    }     
 	});
+	validator.resetForm();
+	
+	$("#hora").selectmenu('disable');
+	$("#mesa").selectmenu('disable');
+	$("#nombre").textinput('disable');
 	
 	/*Digan lo que digan los ejemplos por ahÃƒÂ­, lo que va en el segundo parÃƒÂ©ntesis debe ser "mobile-datebox"
 	y no solo "datebox". Esto se debe a un cambio introducido en JQuery Mobile 1.2 o algo asÃƒÂ­.*/
@@ -37,6 +39,18 @@ $('#reserva').bind('pageshow', function(event) {
 });
 
 
+/*Esta pequeña chapuza la hago para que el botón de submit se resetee tras enviar
+ * la info. He probado sin éxito un montón de sistemas con los que se supone que
+ * debería funcionar.
+ */
+$('#resetPage').bind('pagebeforeshow', function(event) {
+	$.mobile.changePage ($("#reservaPage"), { 
+		reverse: false, 
+		changeHash: false 
+	});
+});
+
+
 //LISTENERS DE COMPONENTES 
 
 /*Estos tres listeners evitan que el select de mesas se despligue indebidamente (horaElegida solo es true tras 
@@ -45,9 +59,11 @@ $('#fecha').bind('vclick', function(event) {
 	horaElegida = false;
 });
 
+
 $('#hora').bind('vclick', function(event) {
 	horaElegida = false;
 });
+
 
 $('#mesa').bind('vclick', function(event) {
 	horaElegida = false;
@@ -56,24 +72,28 @@ $('#mesa').bind('vclick', function(event) {
 
 $('#fecha').bind('change', function(event) {
 	fecha = $("#fecha").val();
-	urlHoras = "http://kometa.pusku.com/form/gethoras.php" + "?fecha=" + fecha;
 	getHoras();
 	$("#hora").selectmenu('enable');
 });
+
 
 $('#hora').bind('change', function(event) {
 	if (horaElegida == true){
 		fecha = $("#fecha").val();
 		hora = parseInt($("#hora").val());
-		urlMesas = "http://kometa.pusku.com/form/getmesas.php" + "?fecha=" + fecha + "&hora=" + hora;
 		getMesas();
 		$("#mesa").selectmenu('enable');
 	}
 });
 
-$('#mesa').bind('change', function(event) {
-	$('#nombre').focus();
+
+$('#mesa').bind('change', function(event) {	
+	$('#nombre').textinput('enable');
+	$('#nombre').focus().select(); 
+	$('#nombre').trigger('change');
+	$('#nombre').trigger("tap");
 });
+
 
 /*$('#fecha').bind('datebox', function (e, pressed) {
 	setColours();
@@ -82,6 +102,7 @@ $('#mesa').bind('change', function(event) {
 $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
      setColours();
 });*/
+
 
 //$('#formulario').submit(function() {
 $('#botonReservar').bind('vclick', function(event) { 
@@ -115,8 +136,10 @@ $('#botonReservar').bind('vclick', function(event) {
 //FUNCIONES
 
 function getHoras() {
-	$.getJSON(urlHoras, function(data) {
-		
+	//urlHoras = "http://kometa.pusku.com/form/gethoras.php" + "?fecha=" + fecha;
+	urlHoras = "http://kometa.pusku.com/form/gethoras.php";
+	//$.getJSON(urlHoras, function(data) {
+	$.post(urlHoras, { fecha : fecha }, function(data, textStatus) {	
 		$('#hora option').remove();
 		$("#hora").append('<option data-placeholder="true">Hora</option>');
 		var horas = data.items;		
@@ -129,13 +152,16 @@ function getHoras() {
 		$("#hora").trigger("change");
 		$("#hora").selectmenu("open");
 		horaElegida = true;
-	});
+	//});
+	}, "json");
 }
 
+
 function getMesas() {
-	
-	
-	$.getJSON(urlMesas, function(data) {
+	//urlMesas = "http://kometa.pusku.com/form/getmesas.php" + "?fecha=" + fecha + "&hora=" + hora;
+	urlMesas = "http://kometa.pusku.com/form/getmesas.php";
+	//$.getJSON(urlMesas, function(data) {
+	$.post(urlMesas, { fecha : fecha, hora : hora }, function(data, textStatus) {
 		$('#mesa option').remove();
 		$("#mesa").append('<option data-placeholder="true">Mesa</option>');
 		var mesas = data.items;		
@@ -147,8 +173,10 @@ function getMesas() {
 		});
 		$('#mesa').trigger("change");
 		$('#mesa').selectmenu("open");
-	});
+	//});
+	}, "json");
 }
+
  
 /*function setColours(){
 			
@@ -179,15 +207,17 @@ function getMesas() {
 	}); 
 }*/
 
+
 function setBlackDates(){
-	url = "http://kometa.pusku.com/form/getblackdates-miguel.php";
-	var blackdates = new Array();
-	$.getJSON(url, function(data) {		
+	var urlBlackDates = "http://kometa.pusku.com/form/getblackdates-miguel.php";
+	//$.getJSON(urlBlackDates, function(data) {
+	$.post(urlBlackDates, null, function(data, textStatus) {		
 		var datos = data.items;		
 		$.each(datos, function(index, dato) {
 			blackdates[index] = dato.fecha;
 		});
-	});
+	//});
+	}, "json");
 	
 	/*Estas son las opciones que he podido estilar. La pega de los highDates y highDatesAlt es que puede 
 	pincharse en ellos. Hay que conseguir estilar mejor los blackdates (en el CSS)*/
@@ -221,10 +251,17 @@ function cleanFormReservas(){
 	$('#mesa').trigger("change");
 		//Resetea el input del nombre
 	$("#nombre").val("");
-	$("#nombre").css("border-left","8px solid red");
+	$("#nombre").removeClass('valid'); //Así se quita el borde verde tras resetear
+	$("#nombre").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
 		//Deshabilita las select lists
 	$("#hora").selectmenu('disable');
 	$("#mesa").selectmenu('disable');
-		//Refresca el aspecto del botón
-	$("#botonReservar").button("refresh");
+	
+	//Esto manda a resetPage, una página en blanco, que inmediatamente devuelve a
+	//reservaPage. Es el único modo de resetear el estilo del botón.
+	$.mobile.changePage ($("#resetPage"), { 
+		reverse: false, 
+		changeHash: false 
+	});
+	
 }
