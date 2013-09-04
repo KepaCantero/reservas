@@ -13,14 +13,8 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 
 
 $('#reservaPage').bind('pageshow', function(event) {
-	var validator = $("#formulario").validate({
-	    rules: {
-	        nombre: {
-	            required: true, minlength: 5
-	        }
-	    }     
-	});
-	validator.resetForm();
+	
+	validateFormReservas();
 	
 	$("#hora").selectmenu('disable');
 	$("#mesa").selectmenu('disable');
@@ -102,10 +96,10 @@ $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
 });*/
 
 
-//$('#formulario').submit(function() {
+//$('#formReserva').submit(function() {
 $('#botonReservar').bind('vclick', function(event) { 
-	if ($('#formulario').valid()){
-		var request = $.ajax({
+	if ( $('#formReserva').valid() ){
+		/*var request = $.ajax({
 			url: 'http://kometa.pusku.com/form/insert.php',
 			type: 'POST',
 			data: { nombre: $("#nombre").val(),
@@ -120,14 +114,11 @@ $('#botonReservar').bind('vclick', function(event) {
 			error: function(error) {
 				alert(error);
 			}
-		});
-	} else {
-		//$("#botonReservar").button("disable");
-		//$("#botonReservar").button("enable");
-		//$('#botonReservar').removeClass('.ui-btn-down-a');
-		//$('#botonReservar').button("refresh");
-		//$('#botonReservar').toggleClass(".ui-btn-active");
+		});*/
+		alert("Formulario válido");
+		cleanFormReservas();
 	}
+	
 });
 
  
@@ -261,4 +252,19 @@ function cleanFormReservas(){
 		reverse: false, 
 		changeHash: false 
 	});
+}
+
+function validateFormReservas(){
+	var validator = $('#formReserva').validate({
+		rules: {
+			fecha: {
+				required: true
+			},
+			nombre: {
+				required: true,
+				minlength: 5
+			}
+		}
+	});
+	validator.resetForm();
 }

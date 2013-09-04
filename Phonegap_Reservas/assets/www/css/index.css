@@ -1,18 +1,18 @@
-#inputs input {
+#formReserva input {
 	border-left:8px solid red;
     font: bold 15px Arial, Helvetica;
 }
 
-#inputs select{
+#formReserva select{
 	border-left:8px solid red;
     font: bold 15px Arial, Helvetica;
 }
 
-#formulario input.error {
+#formReserva input.error {
 border:1px solid red;
 }
 
-#formulario input.valid {
+#formReserva input.valid {
 	border-left:8px solid green;
 }
 
