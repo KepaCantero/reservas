@@ -9,7 +9,7 @@
 }
 
 #formReserva input.error {
-border:1px solid red;
+	border:1px solid red;
 }
 
 #formReserva input.valid {
@@ -20,6 +20,9 @@ border:1px solid red;
 	margin-top: 50px;
 }
 
+#botonReservar{
+	border-left: none!important;	
+}
 
 /*--------------------*/
 

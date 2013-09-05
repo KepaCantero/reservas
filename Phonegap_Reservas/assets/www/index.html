@@ -69,22 +69,28 @@
 
 			<div data-role="content">
 				<form id="formReserva">
-					<span> Fecha </span>
+					<label for="fecha">Fecha</label>
+					<!--<input id="fecha" name="fecha" placeholder="Fecha" data-theme=c>-->
 					<input id="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
 
-					<span> Hora </span>
+					<label for="hora">Hora</label>
+					<!--<input id="hora" name="hora" placeholder="Hora" data-theme=c>-->
 					<select id="hora" name="hora" data-native-menu=false data-theme=c>
 						<option data-placeholder="true">Elige una hora</option>
 					</select>
 
-					<span> Mesa </span>
+					<label for="mesa">Mesa</label>
+					<!--<input id="mesa" name="mesa" placeholder="Mesa" data-theme=c>-->
 					<select id="mesa" name="mesa" data-native-menu=false data-theme=c>
 						<option data-placeholder="true">Elige el número de comensales</option>
 					</select>
 
-					<span> Nombre </span>
-					<input id="nombre" name="nombre" type="text" placeholder="Nombre" data-theme=c>
+					<label for="nombre">Nombre</label>
+					<input id="nombre" name="nombre" type="text" maxlength="30" placeholder="Nombre" data-theme=c>
 					
+					<label for="email">Email</label>
+					<input id="email" name="email" type="email" maxlength="50" placeholder="Email" data-theme=c>
+										
 					<div id="divSubmit">
 						<input id="botonReservar" data-theme=a type="button" value="Reservar">
 					</div>

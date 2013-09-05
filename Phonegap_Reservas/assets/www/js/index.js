@@ -4,6 +4,7 @@ var urlHoras;
 var urlMesas;
 var horaElegida = false;
 var blackdates = [];
+var reseteoParcial = false;
 
 //EVENTOS AL CARGARSE LAS PÃƒï¿½GINAS
 
@@ -13,12 +14,22 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 
 
 $('#reservaPage').bind('pageshow', function(event) {
+	/*Con este if solo se resetea del todo la página si se ha introducido el registro
+	 * en la base de datos. Esto es para conseguir que si se ha pulsado el botón de
+	 * submit y hay un error de validación, el botón vuelva a su estilo normal.
+	 * La pega de esto es que al cargar la página de reseteo y volverse a cargar esta,
+	 * se produce un montón de parpadeo. La otra opción es que el botón se quede azul.
+	 */	 
+	if (reseteoParcial == false){
+		validateFormReservas();
+		$("#hora").selectmenu('disable');
+		$("#mesa").selectmenu('disable');
+		$("#nombre").textinput('disable');
+		$("#email").textinput('disable');
+	} else {
+		reseteoParcial = false;
+	}
 	
-	validateFormReservas();
-	
-	$("#hora").selectmenu('disable');
-	$("#mesa").selectmenu('disable');
-	$("#nombre").textinput('disable');
 	
 	/*Digan lo que digan los ejemplos por ahÃƒÂ­, lo que va en el segundo parÃƒÂ©ntesis debe ser "mobile-datebox"
 	y no solo "datebox". Esto se debe a un cambio introducido en JQuery Mobile 1.2 o algo asÃƒÂ­.*/
@@ -86,6 +97,11 @@ $('#mesa').bind('change', function(event) {
 	$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.
 });
 
+$('#nombre').bind('change', function(event) {	
+	$('#email').textinput('enable');
+	$('#email').focus(); //Este comando funciona en iOS pero no en Android.
+});
+
 
 /*$('#fecha').bind('datebox', function (e, pressed) {
 	setColours();
@@ -99,26 +115,40 @@ $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
 //$('#formReserva').submit(function() {
 $('#botonReservar').bind('vclick', function(event) { 
 	if ( $('#formReserva').valid() ){
-		/*var request = $.ajax({
+		var request = $.ajax({
 			url: 'http://kometa.pusku.com/form/insert.php',
 			type: 'POST',
 			data: { nombre: $("#nombre").val(),
 			        fecha: $("#fecha").val(),
 			        mesa: $("#mesa").val(),
-			        hora: $("#hora").val() },
+			        hora: $("#hora").val(),
+			        email: $("#email").val()
+			       },
 			success: function(obj){
-				alert("Reserva realizada");
-				addToCalendar();
-				cleanFormReservas();
+				if (obj == ""){
+					alert("Reserva realizada");
+					addToCalendar();
+					cleanFormReservas();
+				} else {
+					alert(obj); //Esto muestra los errores de validación en PHP, es solo para desarrollo
+				}
 			},
 			error: function(error) {
 				alert(error);
+				reseteoParcial = true;
+				$.mobile.changePage ($("#resetPage"), { 
+					reverse: false, 
+					changeHash: false 
+				});
 			}
-		});*/
-		alert("Formulario válido");
-		cleanFormReservas();
-	}
-	
+		});
+	} else {
+		reseteoParcial = true;
+		$.mobile.changePage ($("#resetPage"), { 
+			reverse: false, 
+			changeHash: false 
+		});
+	}	
 });
 
  
@@ -242,6 +272,10 @@ function cleanFormReservas(){
 	$("#nombre").val("");
 	$("#nombre").removeClass('valid'); //Así se quita el borde verde tras resetear
 	$("#nombre").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
+		//Resetea el input del email
+	$("#email").val("");
+	$("#email").removeClass('valid'); //Así se quita el borde verde tras resetear
+	$("#email").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
 		//Deshabilita las select lists
 	$("#hora").selectmenu('disable');
 	$("#mesa").selectmenu('disable');
@@ -254,7 +288,15 @@ function cleanFormReservas(){
 	});
 }
 
+
 function validateFormReservas(){
+	
+	$.validator.addMethod("textOnly", 
+		function(value, element) {
+			return /^([a-zA-Z]+)$/.test(value); //Solo letras
+		}, "Introduce solo letras mayúsculas o minúsculas."
+	);
+	
 	var validator = $('#formReserva').validate({
 		rules: {
 			fecha: {
@@ -262,9 +304,34 @@ function validateFormReservas(){
 			},
 			nombre: {
 				required: true,
-				minlength: 5
+				minlength: 5,
+				maxlength: 30,
+				textOnly: true
+			},
+			email: {
+				required: true,
+				minlength: 5,
+				maxlength: 50,
+				email: true
+			}
+		},
+		messages: {
+			fecha: {
+				required: "Este campo es obligatorio"
+			},
+			nombre: {
+				required: "Este campo es obligatorio",
+				minlength: "Introduce al menos 5 caracteres",
+				maxlength: "Introduce un máximo de 30 caracteres"
+			},
+			email: {
+				required: "Este campo es obligatorio",
+				minlength: "Introduce al menos 5 caracteres",
+				maxlength: "Introduce un máximo de 50 caracteres",
+				email: "Introduce un email correcto"
 			}
 		}
 	});
+	
 	validator.resetForm();
 }
