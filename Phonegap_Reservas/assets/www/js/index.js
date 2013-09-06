@@ -26,6 +26,8 @@ $('#reservaPage').bind('pageshow', function(event) {
 		$("#mesa").selectmenu('disable');
 		$("#nombre").textinput('disable');
 		$("#email").textinput('disable');
+		$("#telefono").textinput('disable');
+		$('#fecha').datebox('open');
 	} else {
 		reseteoParcial = false;
 	}
@@ -92,14 +94,14 @@ $('#hora').bind('change', function(event) {
 });
 
 
-$('#mesa').bind('change', function(event) {	
-	$('#nombre').textinput('enable');
-	$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.
-});
-
-$('#nombre').bind('change', function(event) {	
-	$('#email').textinput('enable');
-	$('#email').focus(); //Este comando funciona en iOS pero no en Android.
+$('#mesa').bind('change', function(event) {
+	if ( $('#mesa').val().length < 4 ) { //Comprueba que hay una selección y el valor no es el placeholder
+		$('#nombre').textinput('enable');
+		$('#email').textinput('enable');
+		$('#telefono').textinput('enable');
+		$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.
+		$('#formReserva').valid();		
+	}
 });
 
 
@@ -122,7 +124,8 @@ $('#botonReservar').bind('vclick', function(event) {
 			        fecha: $("#fecha").val(),
 			        mesa: $("#mesa").val(),
 			        hora: $("#hora").val(),
-			        email: $("#email").val()
+			        email: $("#email").val(),
+			        telefono: $("#telefono").val()
 			       },
 			success: function(obj){
 				if (obj == ""){
@@ -276,6 +279,10 @@ function cleanFormReservas(){
 	$("#email").val("");
 	$("#email").removeClass('valid'); //Así se quita el borde verde tras resetear
 	$("#email").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
+		//Resetea el input del teléfono
+	$("#telefono").val("");
+	$("#telefono").removeClass('valid'); //Así se quita el borde verde tras resetear
+	$("#telefono").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
 		//Deshabilita las select lists
 	$("#hora").selectmenu('disable');
 	$("#mesa").selectmenu('disable');
@@ -298,8 +305,15 @@ function validateFormReservas(){
 	);
 	
 	var validator = $('#formReserva').validate({
+		onfocusout: false,
 		rules: {
 			fecha: {
+				required: true
+			},
+			hora: {
+				required: true
+			},
+			mesa: {
 				required: true
 			},
 			nombre: {
@@ -313,10 +327,22 @@ function validateFormReservas(){
 				minlength: 5,
 				maxlength: 50,
 				email: true
+			}, 
+			telefono: {
+				required: true,
+				minlength: 7,
+				maxlength: 11,
+				number: true				
 			}
 		},
 		messages: {
 			fecha: {
+				required: "Este campo es obligatorio"
+			},
+			hora: {
+				required: "Este campo es obligatorio"
+			},
+			mesa: {
 				required: "Este campo es obligatorio"
 			},
 			nombre: {
@@ -329,6 +355,12 @@ function validateFormReservas(){
 				minlength: "Introduce al menos 5 caracteres",
 				maxlength: "Introduce un máximo de 50 caracteres",
 				email: "Introduce un email correcto"
+			},
+			telefono: {
+				required: "Este campo es obligatorio",
+				minlength: "Introduce al menos 7 números",
+				maxlength: "Introduce un máximo de 11 números",
+				number: "Introduce solo números"				
 			}
 		}
 	});
