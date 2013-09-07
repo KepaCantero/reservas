@@ -5,11 +5,15 @@ var urlMesas;
 var horaElegida = false;
 var blackdates = [];
 var reseteoParcial = false;
+var blackdatesPuestas = false; //Controla cuándo deben buscarse las blackdates y abrir el calendario
 
 //EVENTOS AL CARGARSE LAS PÃƒï¿½GINAS
 
 $('#reservaPage').bind('pagebeforeshow', function(event) {
-	setBlackDates();	
+	if (blackdatesPuestas == false){
+		blackdatesPuestas = true;
+		setBlackDates(); //Carga las blackdates y abre el calendario
+	}
 });
 
 
@@ -22,12 +26,16 @@ $('#reservaPage').bind('pageshow', function(event) {
 	 */	 
 	if (reseteoParcial == false){
 		validateFormReservas();
-		$("#hora").selectmenu('disable');
+		/*$("#hora").selectmenu('disable');
 		$("#mesa").selectmenu('disable');
 		$("#nombre").textinput('disable');
 		$("#email").textinput('disable');
-		$("#telefono").textinput('disable');
-		$('#fecha').datebox('open');
+		$("#telefono").textinput('disable');*/
+		$("#boxHora").hide();
+		$("#boxMesa").hide();
+		$("#boxNombre").hide();
+		$("#boxEmail").hide();
+		$("#boxTelefono").hide();
 	} else {
 		reseteoParcial = false;
 	}
@@ -80,7 +88,8 @@ $('#mesa').bind('vclick', function(event) {
 $('#fecha').bind('change', function(event) {
 	fecha = $("#fecha").val();
 	getHoras();
-	$("#hora").selectmenu('enable');
+	//$("#hora").selectmenu('enable');
+	$("#boxHora").show();
 });
 
 
@@ -89,18 +98,26 @@ $('#hora').bind('change', function(event) {
 		fecha = $("#fecha").val();
 		hora = parseInt($("#hora").val());
 		getMesas();
-		$("#mesa").selectmenu('enable');
+		//$("#mesa").selectmenu('enable');
+		$("#boxMesa").show();
 	}
 });
 
 
 $('#mesa').bind('change', function(event) {
 	if ( $('#mesa').val().length < 4 ) { //Comprueba que hay una selección y el valor no es el placeholder
-		$('#nombre').textinput('enable');
+		/*$('#nombre').textinput('enable');
 		$('#email').textinput('enable');
-		$('#telefono').textinput('enable');
+		$('#telefono').textinput('enable');*/
+		$('#boxNombre').show();
+		$('#boxEmail').show();
+		$('#boxTelefono').show();
 		$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.
-		$('#formReserva').valid();		
+		//$('#formReserva').valid(); 
+		/*Con esta última línea se validan los tres inputs de texto
+		una vez se han activado. Sin esto, la validación positiva no se 
+		produce hasta pinchar en otro lado. Como pega, los tres campos se 
+		marcan como error cuando aún están vacíos. Debo buscar una solución mejor.*/		
 	}
 });
 
@@ -132,8 +149,14 @@ $('#botonReservar').bind('vclick', function(event) {
 					alert("Reserva realizada");
 					addToCalendar();
 					cleanFormReservas();
+					blackdatesPuestas = false; //Esto hace que tras el reinicio se esatablezcan las blackdates y se abra el calendario
 				} else {
 					alert(obj); //Esto muestra los errores de validación en PHP, es solo para desarrollo
+					reseteoParcial = true;
+					$.mobile.changePage ($("#resetPage"), { 
+						reverse: false, 
+						changeHash: false 
+					});
 				}
 			},
 			error: function(error) {
@@ -238,15 +261,19 @@ function setBlackDates(){
 		$.each(datos, function(index, dato) {
 			blackdates[index] = dato.fecha;
 		});
+		
+		/*Estas son las opciones que he podido estilar. La pega de los highDates 
+		y highDatesAlt es que puede pincharse en ellos. Hay que conseguir estilar 
+		mejor los blackdates (en el CSS)*/
+		
+		//$('#fecha').data('mobile-datebox').options.highDates = blackdates;
+		//$('#fecha').data('mobile-datebox').options.highDatesAlt = blackdates;
+		$('#fecha').data('mobile-datebox').options.blackDates = blackdates;
+		
+		$('#fecha').datebox('open'); //Abre el datebox tras cargar las blackdates
+		
 	//});
 	}, "json");
-	
-	/*Estas son las opciones que he podido estilar. La pega de los highDates y highDatesAlt es que puede 
-	pincharse en ellos. Hay que conseguir estilar mejor los blackdates (en el CSS)*/
-	
-	//$('#fecha').data('mobile-datebox').options.highDates = blackdates;
-	//$('#fecha').data('mobile-datebox').options.highDatesAlt = blackdates;
-	$('#fecha').data('mobile-datebox').options.blackDates = blackdates;
 }
 
 
@@ -284,8 +311,8 @@ function cleanFormReservas(){
 	$("#telefono").removeClass('valid'); //Así se quita el borde verde tras resetear
 	$("#telefono").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
 		//Deshabilita las select lists
-	$("#hora").selectmenu('disable');
-	$("#mesa").selectmenu('disable');
+	/*$("#hora").selectmenu('disable');
+	$("#mesa").selectmenu('disable');*/
 	
 	//Esto manda a resetPage, una página en blanco, que inmediatamente devuelve a
 	//reservaPage. Es el único modo de resetear el estilo del botón.
@@ -305,16 +332,22 @@ function validateFormReservas(){
 	);
 	
 	var validator = $('#formReserva').validate({
-		onfocusout: false,
+		submitHandler: function(form) { //Esto evita el problema de que al dar al botón "ir" en el teclado active el submit por defecto. Ahora lo activa, pero no hace nada.
+		},
+		//onkeyup: false,
+		//onfocusout: false,
+		//onsubmit: false,
 		rules: {
 			fecha: {
 				required: true
 			},
 			hora: {
-				required: true
+				required: true,
+				number: true
 			},
 			mesa: {
-				required: true
+				required: true,
+				number: true
 			},
 			nombre: {
 				required: true,

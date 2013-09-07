@@ -3,6 +3,11 @@
     font: bold 15px Arial, Helvetica;
 }
 
+.placeholder {
+	border-left:8px solid red;
+    font: 15px Arial, Helvetica;
+}
+
 #formReserva select{
 	border-left:8px solid red;
     font: bold 15px Arial, Helvetica;
