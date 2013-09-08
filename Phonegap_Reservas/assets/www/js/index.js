@@ -9,6 +9,17 @@ var blackdatesPuestas = false; //Controla cuándo deben buscarse las blackdates y
 
 //EVENTOS AL CARGARSE LAS PÃƒï¿½GINAS
 
+//Esto hace que se muestre el spinner de carga durante todas las operaciones ajax
+$(document).delegate('#reservaPage', 'pagecreate', function () { 
+	}).ajaxStart(function () { 
+		//$.mobile.showPageLoadingMsg(); 
+		$.mobile.loading('show');
+	}).ajaxComplete(function () { 
+		//$.mobile.hidePageLoadingMsg();
+		$.mobile.loading('hide'); 
+});
+
+
 $('#reservaPage').bind('pagebeforeshow', function(event) {
 	if (blackdatesPuestas == false){
 		blackdatesPuestas = true;
@@ -36,6 +47,7 @@ $('#reservaPage').bind('pageshow', function(event) {
 		$("#boxNombre").hide();
 		$("#boxEmail").hide();
 		$("#boxTelefono").hide();
+		$("#botonReservar").button('disable');
 	} else {
 		reseteoParcial = false;
 	}
@@ -122,6 +134,16 @@ $('#mesa').bind('change', function(event) {
 });
 
 
+$(':input').bind('keyup', function(event) {
+	$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
+	//Y esto valida todo el formulario solo cuando ya se ha metido info en los tres text inputs.
+	if ($('#nombre').val().length > 1 && $('#email').val().length > 1 && $('#telefono').val().length > 1 ){
+		if ( $('#formReserva').valid() ) {
+			$("#botonReservar").button('enable');
+		}
+	}
+}); 
+
 /*$('#fecha').bind('datebox', function (e, pressed) {
 	setColours();
 });
@@ -133,8 +155,11 @@ $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
 
 //$('#formReserva').submit(function() {
 $('#botonReservar').bind('vclick', function(event) { 
+	//loadingSpinner('on');
 	if ( $('#formReserva').valid() ){
 		var request = $.ajax({
+			beforeSend: function() { $.mobile.showPageLoadingMsg(); }, 
+			complete: function() { $.mobile.hidePageLoadingMsg(); },
 			url: 'http://kometa.pusku.com/form/insert.php',
 			type: 'POST',
 			data: { nombre: $("#nombre").val(),
@@ -150,6 +175,7 @@ $('#botonReservar').bind('vclick', function(event) {
 					addToCalendar();
 					cleanFormReservas();
 					blackdatesPuestas = false; //Esto hace que tras el reinicio se esatablezcan las blackdates y se abra el calendario
+					//loadingSpinner('off');
 				} else {
 					alert(obj); //Esto muestra los errores de validación en PHP, es solo para desarrollo
 					reseteoParcial = true;
@@ -157,6 +183,7 @@ $('#botonReservar').bind('vclick', function(event) {
 						reverse: false, 
 						changeHash: false 
 					});
+					//loadingSpinner('off');
 				}
 			},
 			error: function(error) {
@@ -166,6 +193,7 @@ $('#botonReservar').bind('vclick', function(event) {
 					reverse: false, 
 					changeHash: false 
 				});
+				//loadingSpinner('off');
 			}
 		});
 	} else {
@@ -174,6 +202,7 @@ $('#botonReservar').bind('vclick', function(event) {
 			reverse: false, 
 			changeHash: false 
 		});
+		//loadingSpinner('off');
 	}	
 });
 
@@ -181,6 +210,7 @@ $('#botonReservar').bind('vclick', function(event) {
 //FUNCIONES
 
 function getHoras() {
+	//loadingSpinner('on');
 	//urlHoras = "http://kometa.pusku.com/form/gethoras.php" + "?fecha=" + fecha;
 	urlHoras = "http://kometa.pusku.com/form/gethoras.php";
 	//$.getJSON(urlHoras, function(data) {
@@ -197,12 +227,14 @@ function getHoras() {
 		$("#hora").trigger("change");
 		$("#hora").selectmenu("open");
 		horaElegida = true;
+		//loadingSpinner('off');
 	//});
 	}, "json");
 }
 
 
 function getMesas() {
+	//loadingSpinner('on');
 	//urlMesas = "http://kometa.pusku.com/form/getmesas.php" + "?fecha=" + fecha + "&hora=" + hora;
 	urlMesas = "http://kometa.pusku.com/form/getmesas.php";
 	//$.getJSON(urlMesas, function(data) {
@@ -218,6 +250,7 @@ function getMesas() {
 		});
 		$('#mesa').trigger("change");
 		$('#mesa').selectmenu("open");
+		//loadingSpinner('off');
 	//});
 	}, "json");
 }
@@ -254,6 +287,7 @@ function getMesas() {
 
 
 function setBlackDates(){
+	//loadingSpinner('on');
 	var urlBlackDates = "http://kometa.pusku.com/form/getblackdates-miguel.php";
 	//$.getJSON(urlBlackDates, function(data) {
 	$.post(urlBlackDates, null, function(data, textStatus) {		
@@ -271,7 +305,7 @@ function setBlackDates(){
 		$('#fecha').data('mobile-datebox').options.blackDates = blackdates;
 		
 		$('#fecha').datebox('open'); //Abre el datebox tras cargar las blackdates
-		
+		//loadingSpinner('off');
 	//});
 	}, "json");
 }
@@ -334,9 +368,6 @@ function validateFormReservas(){
 	var validator = $('#formReserva').validate({
 		submitHandler: function(form) { //Esto evita el problema de que al dar al botón "ir" en el teclado active el submit por defecto. Ahora lo activa, pero no hace nada.
 		},
-		//onkeyup: false,
-		//onfocusout: false,
-		//onsubmit: false,
 		rules: {
 			fecha: {
 				required: true
