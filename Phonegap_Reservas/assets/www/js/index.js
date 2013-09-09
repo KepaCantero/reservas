@@ -9,6 +9,11 @@ var blackdatesPuestas = false; //Controla cuándo deben buscarse las blackdates y
 
 //EVENTOS AL CARGARSE LAS PÃƒï¿½GINAS
 
+//Implementación de fastclick
+window.addEventListener('load', function() { 
+	FastClick.attach(document.body); 
+}, false);
+
 //Esto hace que se muestre el spinner de carga durante todas las operaciones ajax
 $(document).delegate('#reservaPage', 'pagecreate', function () { 
 	}).ajaxStart(function () { 
