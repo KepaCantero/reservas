@@ -7,9 +7,17 @@
 	border:1px solid red;
 }
 
-/*#hora label.error{
-	border:1px solid blue;
-}*/
+#fecha + label.error{
+	border:1px solid red;
+}
+
+#hora + label.error{
+	border:1px solid red;
+}
+
+#mesa + label.error{
+	border:1px solid red;
+}
 
 #formReserva input.valid {
 	border-left:8px solid green;
