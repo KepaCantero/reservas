@@ -10,6 +10,11 @@ var urlMenus = "http://kometa.pusku.com/form/getmenus.php";
 
 //EVENTOS AL CARGARSE LAS PÁGINAS
 
+//Implementación de fastclick
+window.addEventListener('load', function() { 
+	FastClick.attach(document.body); 
+}, false);
+
 /* Estos preventDefault y unbind sirven para que los botones no propaguen
  * sus clicks a los botones que salen debajo al cambiar de página. Hay
  * que meter el bind en el pageshow para que el listener vuelva a crearse
