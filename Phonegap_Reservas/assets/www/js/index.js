@@ -42,11 +42,6 @@ $('#reservaPage').bind('pageshow', function(event) {
 	 */	 
 	if (reseteoParcial == false){
 		validateFormReservas();
-		/*$("#hora").selectmenu('disable');
-		$("#mesa").selectmenu('disable');
-		$("#nombre").textinput('disable');
-		$("#email").textinput('disable');
-		$("#telefono").textinput('disable');*/
 		$("#boxHora").hide();
 		$("#boxMesa").hide();
 		$("#boxNombre").hide();
@@ -105,7 +100,11 @@ $('#mesa').bind('vclick', function(event) {
 $('#fecha').bind('change', function(event) {
 	fecha = $("#fecha").val();
 	getHoras();
-	//$("#hora").selectmenu('enable');
+	if ( $("#mesa").is(':visible') ) {
+		$('#mesa option').remove();
+		$("#mesa").append('<option data-placeholder="true">Mesa</option>');
+		$("#mesa").trigger('change');
+	}
 	$("#boxHora").show();
 });
 
@@ -115,7 +114,6 @@ $('#hora').bind('change', function(event) {
 		fecha = $("#fecha").val();
 		hora = parseInt($("#hora").val());
 		getMesas();
-		//$("#mesa").selectmenu('enable');
 		$("#boxMesa").show();
 	}
 });
@@ -123,20 +121,26 @@ $('#hora').bind('change', function(event) {
 
 $('#mesa').bind('change', function(event) {
 	if ( $('#mesa').val().length < 4 ) { //Comprueba que hay una selección y el valor no es el placeholder
-		/*$('#nombre').textinput('enable');
-		$('#email').textinput('enable');
-		$('#telefono').textinput('enable');*/
 		$('#boxNombre').show();
-		$('#boxEmail').show();
-		$('#boxTelefono').show();
-		$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.
-		//$('#formReserva').valid(); 
-		/*Con esta última línea se validan los tres inputs de texto
-		una vez se han activado. Sin esto, la validación positiva no se 
-		produce hasta pinchar en otro lado. Como pega, los tres campos se 
-		marcan como error cuando aún están vacíos. Debo buscar una solución mejor.*/		
+		$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.		
 	}
 });
+
+$('#nombre').bind('keyup', function(event) {
+	if ($('#nombre').val().length > 1 ){
+		if ( $('#nombre').valid() ) {
+			$('#boxEmail').show();
+		}
+	}
+}); 
+
+$('#email').bind('keyup', function(event) {
+	if ($('#email').val().length > 1 ){
+		if ( $('#email').valid() ) {
+			$('#boxTelefono').show();
+		}
+	}
+}); 
 
 
 $(':input').bind('keyup', function(event) {
@@ -218,6 +222,7 @@ function getHoras() {
 	//loadingSpinner('on');
 	//urlHoras = "http://kometa.pusku.com/form/gethoras.php" + "?fecha=" + fecha;
 	urlHoras = "http://kometa.pusku.com/form/gethoras.php";
+	$("#hora").val("");
 	//$.getJSON(urlHoras, function(data) {
 	$.post(urlHoras, { fecha : fecha }, function(data, textStatus) {	
 		$('#hora option').remove();
@@ -242,6 +247,7 @@ function getMesas() {
 	//loadingSpinner('on');
 	//urlMesas = "http://kometa.pusku.com/form/getmesas.php" + "?fecha=" + fecha + "&hora=" + hora;
 	urlMesas = "http://kometa.pusku.com/form/getmesas.php";
+	$("#mesa").val("");
 	//$.getJSON(urlMesas, function(data) {
 	$.post(urlMesas, { fecha : fecha, hora : hora }, function(data, textStatus) {
 		$('#mesa option').remove();
@@ -409,10 +415,12 @@ function validateFormReservas(){
 				required: "Este campo es obligatorio"
 			},
 			hora: {
-				required: "Este campo es obligatorio"
+				required: "Este campo es obligatorio",
+				number: "Elige una hora"
 			},
 			mesa: {
-				required: "Este campo es obligatorio"
+				required: "Este campo es obligatorio",
+				number: "Elige una mesa"
 			},
 			nombre: {
 				required: "Este campo es obligatorio",

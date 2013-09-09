@@ -3,19 +3,13 @@
     font: bold 15px Arial, Helvetica;
 }
 
-.placeholder {
-	border-left:8px solid red;
-    font: 15px Arial, Helvetica;
-}
-
-#formReserva select{
-	border-left:8px solid red;
-    font: bold 15px Arial, Helvetica;
-}
-
-#formReserva input.error {
+#formReserva input.error{
 	border:1px solid red;
 }
+
+/*#hora label.error{
+	border:1px solid blue;
+}*/
 
 #formReserva input.valid {
 	border-left:8px solid green;
