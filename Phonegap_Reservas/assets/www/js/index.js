@@ -10,10 +10,22 @@ var urlMenus = "http://kometa.pusku.com/form/getmenus.php";
 
 //EVENTOS AL CARGARSE LAS PÁGINAS
 
+$(document).bind("mobileinit", function(){ 
+	$.mobile.pushStateEnabled = false; 
+}); 
+
+document.addEventListener("deviceready", function(){ 
+	if (arrayMenus.length == 0 & arrayCategorias.length == 0) {
+		getCategorias();
+		getMenus();
+	}
+});
+
 //Implementación de fastclick
 window.addEventListener('load', function() { 
 	FastClick.attach(document.body); 
 }, false);
+
 
 /* Estos preventDefault y unbind sirven para que los botones no propaguen
  * sus clicks a los botones que salen debajo al cambiar de página. Hay
@@ -42,8 +54,10 @@ $('#inicioPage').bind('pageshow', function(event) {
 		$.mobile.changePage ($("#modSelecPage"));
 	});
 	
-	getCategorias();
-	getMenus();
+	if (arrayCategorias.length == 0 && arrayMenus == 0){
+		getCategorias();
+		getMenus();
+	}
 	
 });
 
@@ -102,6 +116,21 @@ $('#modSelecPage').bind('pageshow', function(event) {
 });
 
 
+$('#modificarPlatosPage').bind('pageshow', function(event) {
+	$('#inputCategoriaPlatoMod').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#inputMenuPlatoMod').unbind('vclick');
+	});
+	
+	$('#inputCategoriaPlatoMod').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#inputMenuPlatoMod').unbind('vclick');
+	});
+});
+
+
 $('#menuListaPage').bind('pagebeforeshow', function(event) {
 	getMenuItems();
 });
@@ -147,7 +176,12 @@ $('#submitPlatoMod').bind('vclick', function(event) {
 		success: function(obj){
 			cleanFormPlatos(); //Esto resetea el formulario tras hacer submit
 			alert("Plato modificado");
-			$.mobile.changePage ($("#listaModificarPage"));
+			history.back();
+			//$.mobile.changePage ($("#listaModificarPage"));
+			/*$.mobile.changePage ($("#listaModificarPage"), { 
+				reverse: false, 
+				changeHash: false 
+			});*/
 		},
 		error: function(error) {
 			alert(error);
@@ -191,6 +225,9 @@ function getMenuItems() {
 		 * de cada categoría siga el orden autonumérico (en este caso del 1 al 4,
 		 * pero si estos valores cambiaran hay que buscar otra solución.
 		 */
+			e.preventDefault(); 
+			e.stopImmediatePropagation(); 
+			$('#listaItems').children('li').unbind('vclick');
 			cleanFormPlatos();
 			$("#nombreDetalle").html("<div id='nombreDetalle'>" + menuItems[$(this).index() - $(this).attr('categoriaid')].nombreItem + "</div>");
 			$("#descDetalle").html("<div id='descDetalle'>" + menuItems[$(this).index() - $(this).attr('categoriaid')].descItem + "</div>");
@@ -246,20 +283,27 @@ function getItemsModificar() {
 		//Esto pasa los valores del item pinchado al formulario de 
 		//modificación de plato.
 		$('#listaItemsModificar').children('li').bind('vclick', function(e) { 
+			e.preventDefault(); 
+			e.stopImmediatePropagation(); 
+			$('#listaItemsModificar').children('li').unbind('vclick');
 			cleanFormPlatos();
 			$("#inputNombrePlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].nombreItem);
 			$("#inputDescPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].descItem);
 			$("#inputPrecioPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].precioItem);
 			$("#inputCategoriaPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].categoriaID);
+			$("#inputCategoriaPlatoMod").trigger("change");
 			$("#inputMenuPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuID);
+			$("#inputMenuPlatoMod").trigger("change");
 			modificarID = itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuItemID;
-		//Esto devuelve a la página de elegir los platos a modificar sin
-		//guardar en la historia la página de modificación, así al dar
+		//Esto lleva a la página de elegir los platos a modificar sin
+		//guardar en la historia la página de selección, así al dar
 		//hacia atrás lleva a la página de inicio	
-			$.mobile.changePage ($("#modificarPlatosPage"), { 
+			/*$.mobile.changePage ($("#modificarPlatosPage"), { 
 				reverse: false, 
 				changeHash: false 
-			}); 
+			});*/
+			$.mobile.changePage ($("#modificarPlatosPage"));
+			 
 		});
 		
 		//$("#listaItemsModificar").listview("refresh");
@@ -283,6 +327,8 @@ function getCategorias() {
 		//El segundo parámetro (el que es null) es la info que se le pasa al post 
 		$('#inputCategoriaPlato option').remove();
 		$("#inputCategoriaPlato").append('<option data-placeholder="true">Categoría</option>');
+		$('#inputCategoriaPlatoMod option').remove();
+		$("#inputCategoriaPlatoMod").append('<option data-placeholder="true">Categoría</option>');
 		var categorias = data.items;		
 		$.each(categorias, function(index, categoria) {
 			$("#inputCategoriaPlato").append('<option value=' + categoria.categoriaID +
@@ -296,23 +342,6 @@ function getCategorias() {
 		$("#inputCategoriaPlato").trigger("change");
 		$("#inputCategoriaPlatoMod").trigger("change");
 	}, "json");
-	
-	/*$.getJSON(urlCategorias, function(data) {		
-		$('#inputCategoriaPlato option').remove();
-		$("#inputCategoriaPlato").append('<option data-placeholder="true">Categoría</option>');
-		var categorias = data.items;		
-		$.each(categorias, function(index, categoria) {
-			$("#inputCategoriaPlato").append('<option value=' + categoria.categoriaID +
-			'>' + categoria.nombreCategoria + 
-			'</option>');
-			$("#inputCategoriaPlatoMod").append('<option value=' + categoria.categoriaID +
-			'>' + categoria.nombreCategoria + 
-			'</option>');
-			arrayCategorias[index] = categoria.nombreCategoria;
-		});
-		$("#inputCategoriaPlato").trigger("change");
-		$("#inputCategoriaPlatoMod").trigger("change");
-	});*/
 }
 
 
@@ -321,6 +350,8 @@ function getMenus() {
 	$.post(urlMenus, null, function(data, textStatus) {
 		$('#inputMenuPlato option').remove();
 		$("#inputMenuPlato").append('<option data-placeholder="true">Menú</option>');
+		$('#inputMenuPlatoMod option').remove();
+		$("#inputMenuPlatoMod").append('<option data-placeholder="true">Menú</option>');
 		var menus = data.items;		
 		$.each(menus, function(index, menu) {
 			$("#inputMenuPlato").append('<option value=' + menu.menuID +
@@ -334,24 +365,6 @@ function getMenus() {
 		$("#inputMenuPlato").trigger("change");
 		$("#inputMenuPlatoMod").trigger("change");
 	}, "json");
-	
-	
-	/*$.getJSON(urlMenus, function(data) {		
-		$('#inputMenuPlato option').remove();
-		$("#inputMenuPlato").append('<option data-placeholder="true">Menú</option>');
-		var menus = data.items;		
-		$.each(menus, function(index, menu) {
-			$("#inputMenuPlato").append('<option value=' + menu.menuID +
-				'>' + menu.nombreMenu + 
-				'</option>');
-			$("#inputMenuPlatoMod").append('<option value=' + menu.menuID +
-				'>' + menu.nombreMenu + 
-				'</option>');
-			arrayMenus[index] = menu.nombreMenu;
-		});
-		$("#inputMenuPlato").trigger("change");
-		$("#inputMenuPlatoMod").trigger("change");
-	});*/
 }
 
 
@@ -362,6 +375,15 @@ function cleanFormPlatos(){
 	$("#inputNombrePlatoMod").val("");
 	$("#inputDescPlatoMod").val("");
 	$("#inputPrecioPlatoMod").val("");
-	getCategorias();
-	getMenus();
+	//getCategorias();
+	//getMenus();
+	$("#inputCategoriaPlato").val(-1);
+	$("#inputCategoriaPlatoMod").val(-1);
+	$("#inputMenuPlato").val(-1);
+	$("#inputMenuPlatoMod").val(-1);
+	$("#inputCategoriaPlato").trigger("change");
+	$("#inputCategoriaPlatoMod").trigger("change");
+	$("#inputMenuPlato").trigger("change");
+	$("#inputMenuPlatoMod").trigger("change");
+	
 }
