@@ -71,10 +71,11 @@ $('#reservaPage').bind('pageshow', function(event) {
  * debería funcionar.
  */
 $('#resetPage').bind('pagebeforeshow', function(event) {
-	$.mobile.changePage ($("#reservaPage"), { 
+	/*$.mobile.changePage ($("#reservaPage"), { 
 		reverse: false, 
 		changeHash: false 
-	});
+	});*/
+	history.back();
 });
 
 
@@ -219,50 +220,50 @@ $('#botonReservar').bind('vclick', function(event) {
 //FUNCIONES
 
 function getHoras() {
-	//loadingSpinner('on');
-	//urlHoras = "http://kometa.pusku.com/form/gethoras.php" + "?fecha=" + fecha;
 	urlHoras = "http://kometa.pusku.com/form/gethoras.php";
 	$("#hora").val("");
-	//$.getJSON(urlHoras, function(data) {
 	$.post(urlHoras, { fecha : fecha }, function(data, textStatus) {	
 		$('#hora option').remove();
-		$("#hora").append('<option data-placeholder="true">Hora</option>');
+		var elementoHora = $("#hora");
+		elementoHora.append('<option data-placeholder="true">Hora</option>');
 		var horas = data.items;		
+		var list = "";
 		$.each(horas, function(index, hora) {
-			$("#hora").append('<option value=' + hora.horaID +
+			/*$("#hora").append('<option value=' + hora.horaID +
 			'>' + hora.hora + 
-			'</option>');
-		});
-		
-		$("#hora").trigger("change");
-		$("#hora").selectmenu("open");
+			'</option>');*/
+			list += '<option value=' + hora.horaID +
+				'>' + hora.hora + 
+				'</option>';
+		});		
+		elementoHora.append(list);
+		elementoHora.trigger("change");
+		elementoHora.selectmenu("open");
 		horaElegida = true;
-		//loadingSpinner('off');
-	//});
 	}, "json");
 }
 
 
 function getMesas() {
-	//loadingSpinner('on');
-	//urlMesas = "http://kometa.pusku.com/form/getmesas.php" + "?fecha=" + fecha + "&hora=" + hora;
 	urlMesas = "http://kometa.pusku.com/form/getmesas.php";
 	$("#mesa").val("");
-	//$.getJSON(urlMesas, function(data) {
 	$.post(urlMesas, { fecha : fecha, hora : hora }, function(data, textStatus) {
 		$('#mesa option').remove();
-		$("#mesa").append('<option data-placeholder="true">Mesa</option>');
-		var mesas = data.items;		
+		var elementoMesa = $("#mesa");
+		elementoMesa.append('<option data-placeholder="true">Mesa</option>');
+		var mesas = data.items;
+		var list = "";		
 		$.each(mesas, function(index, mesa) {
-			
-			$("#mesa").append('<option value=' + mesa.mesaID +
+			/*$("#mesa").append('<option value=' + mesa.mesaID +
 			'>' + mesa.comensales + 
-			'</option>');
+			'</option>');*/
+			list += '<option value=' + mesa.mesaID +
+				'>' + mesa.comensales + 
+				'</option>';
 		});
-		$('#mesa').trigger("change");
-		$('#mesa').selectmenu("open");
-		//loadingSpinner('off');
-	//});
+		elementoMesa.append(list);
+		elementoMesa.trigger("change");
+		elementoMesa.selectmenu("open");
 	}, "json");
 }
 
