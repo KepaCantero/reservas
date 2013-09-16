@@ -38,17 +38,18 @@ sobre un fondo gris.*/
 	text-align: justify;
 }
 
-#fotoDetalle{
+#contenedorFoto{
 	width: 100%;
+	float: left;
+}
+
+#fotoDetalle{
+	width: 200px;
+	height: 100%;
 	margin-top: 10px;
 	margin-left: auto;
 	margin-right: auto;
 	float: left;
-}
-
-.imgDetalle{
-	margin-left: auto;
-	margin-right: auto;
 }
 
 #detalleAbajo{

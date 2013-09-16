@@ -1,5 +1,9 @@
 var arrayCategorias = [];
 var arrayMenus = [];
+var jsonMenus;
+var jsonCategorias;
+var jsonMenuItems = [];
+
 var urlMenuItems;
 var urlItemsModificar;
 var menuElegido;
@@ -56,13 +60,7 @@ $('#inicioPage').bind('pageshow', function(event) {
 		event.stopImmediatePropagation(); 
 		$('#botModificarPlatos').unbind('vclick');
 		$.mobile.changePage ($("#modSelecPage"));
-	});
-	
-	if (arrayCategorias.length == 0 && arrayMenus == 0){
-		getCategorias();
-		getMenus();
-	}
-	
+	});	
 });
 
 
@@ -181,11 +179,6 @@ $('#submitPlatoMod').bind('vclick', function(event) {
 			history.back();
 			alert("Plato modificado");
 			cleanFormPlatos(); //Esto resetea el formulario tras hacer submit
-			//$.mobile.changePage ($("#listaModificarPage"));
-			/*$.mobile.changePage ($("#listaModificarPage"), { 
-				reverse: false, 
-				changeHash: false 
-			});*/
 		},
 		error: function(error) {
 			alert(error);
@@ -200,57 +193,72 @@ function getMenuItems() {
 
 	urlMenuItems = "http://kometa.pusku.com/form/getmenuitems.php";
 
+	try {
+		jsonMenuItems[menuElegido] = 
+			JSON.parse(localStorage.getItem("jsonMenuItems" + menuElegido));
+	} catch(e){
+	}
+	
 	$('#listaItems li').remove();
+	
+	if (jsonMenuItems[menuElegido] != null) {
+		listMenuItems(jsonMenuItems[menuElegido]);
+	}
 		
 	$.post(urlMenuItems, { tipomenu : menuElegido }, function(data, textStatus) {	
-	
-		var menuItems = data.items;	
-		var list = "";	
-		$.each(menuItems, function(index, menuItem) {
-			list +=
-				"<li categoria='" + arrayCategorias[menuItem.categoriaID - 1] + 
-					"' categoriaid='" + menuItem.categoriaID +
-					"'>" +
-			        "<a href=#>" +
-			        "<img class='imagen' src='img/cordova.png'>" +
-			        "<h1 style='white-space:normal; text-align: justify'>" + menuItem.nombreItem + "</h1>" +
-			        "<p style='white-space:normal; text-align: justify'>" + menuItem.descItem + "</p>" +
-			        "<h2 style='color:blue'>" + menuItem.precioItem + " €" + "</h2>" +
-			        "</a>" +
-		        "</li>";
-		});
-		var elListaItems = $('#listaItems');
-		elListaItems.append(list);
-		elListaItems.children('li').bind('vclick', function(e) {
-		/*Lo de restar categoriaid en el índice de menuItems es porque los autodividers
-		 * suman 1 al index de los items. Esta solución funciona mientras la categoriaID
-		 * de cada categoría siga el orden autonumérico (en este caso del 1 al 4,
-		 * pero si estos valores cambiaran hay que buscar otra solución.
-		 */
-			e.preventDefault(); 
-			e.stopImmediatePropagation(); 
-			$('#listaItems').children('li').unbind('vclick');
-			cleanFormPlatos();
-			$("#nombreDetalle").html("<div id='nombreDetalle'>" + menuItems[$(this).index() - $(this).attr('categoriaid')].nombreItem + "</div>");
-			$("#descDetalle").html("<div id='descDetalle'>" + menuItems[$(this).index() - $(this).attr('categoriaid')].descItem + "</div>");
-			$("#fotoDetalle").html("<div id='fotoDetalle'>" + "<img class='imgDetalle' src='img/cordova.png'>" + "</div>");
-			$("#menuDetalle").html("<div id='menuDetalle'>" + arrayMenus[menuItems[$(this).index() - $(this).attr('categoriaid')].menuID - 1] + "</div>");
-			$("#categoriaDetalle").html("<div id='categoriaDetalle'>" + arrayCategorias[menuItems[$(this).index() - $(this).attr('categoriaid')].categoriaID - 1]  + "</div>");
-			$("#precioDetalle").html("<div id='precioDetalle'>" + "Precio:\n" + menuItems[$(this).index() - $(this).attr('categoriaid')].precioItem + " €" + "</div>");
-			$.mobile.changePage ($("#detallePlatoPage"));
-		});
-		
-		/*Lo siguiente hace que la lista tenga autodividers en función
-		 * de la categoría de cada ítem.
-		 */
-		elListaItems.listview({
-            autodividers: true,
-            autodividersSelector: function (li) {
-                var out = li.attr('categoria');
-                return out;
-            }
-        }).listview('refresh');
+		if (JSON.stringify(data.items) !== JSON.stringify(jsonMenuItems[menuElegido]) ){
+			localStorage.setItem("jsonMenuItems" + menuElegido, JSON.stringify(data.items));
+			listMenuItems(data.items);
+		}
 	}, "json");
+}
+
+function listMenuItems(json){
+	var list = "";	
+	$.each(json, function(index, menuItem) {
+		list +=
+			"<li categoria='" + arrayCategorias[menuItem.categoriaID - 1] + 
+				"' categoriaid='" + menuItem.categoriaID +
+				"'>" +
+		        "<a href=#>" +
+		        "<img class='imagen' src='img/cordova.png'>" +
+		        "<h1 style='white-space:normal; text-align: justify'>" + menuItem.nombreItem + "</h1>" +
+		        "<p style='white-space:normal; text-align: justify'>" + menuItem.descItem + "</p>" +
+		        "<h2 style='color:blue'>" + menuItem.precioItem + " €" + "</h2>" +
+		        "</a>" +
+	        "</li>";
+	});
+	var elListaItems = $('#listaItems');
+	elListaItems.append(list);
+	elListaItems.children('li').bind('vclick', function(e) {
+	/*Lo de restar categoriaid en el índice de menuItems es porque los autodividers
+	 * suman 1 al index de los items. Esta solución funciona mientras la categoriaID
+	 * de cada categoría siga el orden autonumérico (en este caso del 1 al 4,
+	 * pero si estos valores cambiaran hay que buscar otra solución.
+	 */
+		e.preventDefault(); 
+		e.stopImmediatePropagation(); 
+		$('#listaItems').children('li').unbind('vclick');
+		cleanFormPlatos();
+		$("#nombreDetalle").html("<div id='nombreDetalle'>" + json[$(this).index() - $(this).attr('categoriaid')].nombreItem + "</div>");
+		$("#descDetalle").html("<div id='descDetalle'>" + json[$(this).index() - $(this).attr('categoriaid')].descItem + "</div>");
+		$("#fotoDetalle").html("<div id='fotoDetalle'>" + "<img src='img/cordova.png'>" + "</div>");
+		$("#menuDetalle").html("<div id='menuDetalle'>" + arrayMenus[json[$(this).index() - $(this).attr('categoriaid')].menuID - 1] + "</div>");
+		$("#categoriaDetalle").html("<div id='categoriaDetalle'>" + arrayCategorias[json[$(this).index() - $(this).attr('categoriaid')].categoriaID - 1]  + "</div>");
+		$("#precioDetalle").html("<div id='precioDetalle'>" + "Precio:\n" + json[$(this).index() - $(this).attr('categoriaid')].precioItem + " €" + "</div>");
+		$.mobile.changePage ($("#detallePlatoPage"));
+	});
+
+	/*Lo siguiente hace que la lista tenga autodividers en función
+	 * de la categoría de cada ítem.
+	 */
+	elListaItems.listview({
+        autodividers: true,
+        autodividersSelector: function (li) {
+            var out = li.attr('categoria');
+            return out;
+        }
+    }).listview('refresh');
 }
 
 
@@ -258,122 +266,171 @@ function getItemsModificar() {
 	
 	urlItemsModificar = "http://kometa.pusku.com/form/getitemsmodificar.php";
 
+	try {
+		jsonMenuItems[menuElegidoMod] = 
+			JSON.parse(localStorage.getItem("jsonMenuItems" + menuElegidoMod));
+	} catch(e){
+	}
+
 	$('#listaItemsModificar li').remove();
 	
-	$.post(urlItemsModificar, { tipomenumod : menuElegidoMod }, function(data, textStatus) {
-	
-		var itemsModificar = data.items;	
-		var list = "";	
-		$.each(itemsModificar, function(index, itemModificar) {
-			list +=
-				"<li categoria='" + arrayCategorias[itemModificar.categoriaID - 1] + 
-					"' categoriaid='" + itemModificar.categoriaID + 
-					"'>" +
-			        "<a href=#>" +
-			        "<img class='imagen' src='img/cordova.png'>" +
-			        "<h1 style='white-space:normal; text-align: justify'>" + itemModificar.nombreItem + "</h1>" +
-			        "<p style='white-space:normal; text-align: justify'>" + itemModificar.descItem + "</p>" +
-			        "<h2 style='color:blue'>" + itemModificar.precioItem + " €" + "</h2>" +
-			        "</a>" +
-		        "</li>";
-		});
+	if (jsonMenuItems[menuElegidoMod] != null) {
+		listItemsModificar(jsonMenuItems[menuElegidoMod]);
+	}
 		
-		var elListaItemsModificar = $("#listaItemsModificar");
-		elListaItemsModificar.append(list);
-		
-		//Esto pasa los valores del item pinchado al formulario de 
-		//modificación de plato.
-		$('#listaItemsModificar').children('li').bind('vclick', function(e) { 
-			e.preventDefault(); 
-			e.stopImmediatePropagation(); 
-			$('#listaItemsModificar').children('li').unbind('vclick');
-			cleanFormPlatos();
-			$("#inputNombrePlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].nombreItem);
-			$("#inputDescPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].descItem);
-			$("#inputPrecioPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].precioItem);
-			$("#inputCategoriaPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].categoriaID);
-			$("#inputCategoriaPlatoMod").trigger("change");
-			$("#inputMenuPlatoMod").val(itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuID);
-			$("#inputMenuPlatoMod").trigger("change");
-			modificarID = itemsModificar[$(this).index() - $(this).attr('categoriaid')].menuItemID;
-
-			$.mobile.changePage ($("#modificarPlatosPage"));
-			 
-		});
-		
-		elListaItemsModificar.listview({
-            autodividers: true,
-            autodividersSelector: function (li) {
-                var out = li.attr('categoria');
-                return out;
-            }
-        }).listview('refresh');
+	$.post(urlItemsModificar, { tipomenumod : menuElegidoMod }, function(data, textStatus) {	
+		if (JSON.stringify(data.items) !== JSON.stringify(jsonMenuItems[menuElegidoMod]) ){
+			localStorage.setItem("jsonMenuItems" + menuElegidoMod, JSON.stringify(data.items));
+			listItemsModificar(data.items);
+		}
 	}, "json");
+}
+
+function listItemsModificar(json){
+	var list = "";	
+	$.each(json, function(index, itemModificar) {
+		list +=
+			"<li categoria='" + arrayCategorias[itemModificar.categoriaID - 1] + 
+				"' categoriaid='" + itemModificar.categoriaID + 
+				"'>" +
+		        "<a href=#>" +
+		        "<img class='imagen' src='img/cordova.png'>" +
+		        "<h1 style='white-space:normal; text-align: justify'>" + itemModificar.nombreItem + "</h1>" +
+		        "<p style='white-space:normal; text-align: justify'>" + itemModificar.descItem + "</p>" +
+		        "<h2 style='color:blue'>" + itemModificar.precioItem + " €" + "</h2>" +
+		        "</a>" +
+	        "</li>";
+	});
+	
+	var elListaItemsModificar = $("#listaItemsModificar");
+	elListaItemsModificar.append(list);
+	
+	//Esto pasa los valores del item pinchado al formulario de 
+	//modificación de plato.
+	$('#listaItemsModificar').children('li').bind('vclick', function(e) { 
+		e.preventDefault(); 
+		e.stopImmediatePropagation(); 
+		$('#listaItemsModificar').children('li').unbind('vclick');
+		cleanFormPlatos();
+		$("#inputNombrePlatoMod").val(json[$(this).index() - $(this).attr('categoriaid')].nombreItem);
+		$("#inputDescPlatoMod").val(json[$(this).index() - $(this).attr('categoriaid')].descItem);
+		$("#inputPrecioPlatoMod").val(json[$(this).index() - $(this).attr('categoriaid')].precioItem);
+		$("#inputCategoriaPlatoMod").val(json[$(this).index() - $(this).attr('categoriaid')].categoriaID);
+		$("#inputCategoriaPlatoMod").trigger("change");
+		$("#inputMenuPlatoMod").val(json[$(this).index() - $(this).attr('categoriaid')].menuID);
+		$("#inputMenuPlatoMod").trigger("change");
+		modificarID = json[$(this).index() - $(this).attr('categoriaid')].menuItemID;
+
+		$.mobile.changePage ($("#modificarPlatosPage"));
+		 
+	});
+	
+	elListaItemsModificar.listview({
+        autodividers: true,
+        autodividersSelector: function (li) {
+            var out = li.attr('categoria');
+            return out;
+        }
+    }).listview('refresh');
 }
 
 
 function getCategorias() {
 	
+	try {
+		jsonCategorias = JSON.parse(localStorage.getItem("jsonCategorias"));
+		//alert(jsonCategorias[2].nombreCategoria);
+	} catch(e){
+	}
+	
+	$('#inputCategoriaPlato option').remove();
+	$('#inputCategoriaPlatoMod option').remove();
+	
+	if (jsonCategorias != null) {
+		listCategorias(jsonCategorias);
+	}
+	
 	$.post(urlCategorias, null, function(data, textStatus) { 
 		//data contiene el JSON
 		//textStatus contiene el status: success, error, etc. 
 		//El segundo parámetro (el que es null) es la info que se le pasa al post 
-		$('#inputCategoriaPlato option').remove();
-		$("#inputCategoriaPlato").append('<option data-placeholder="true">Categoría</option>');
-		$('#inputCategoriaPlatoMod option').remove();
-		$("#inputCategoriaPlatoMod").append('<option data-placeholder="true">Categoría</option>');
-		var categorias = data.items;		
-		var list = "";
-		var listMod = "";
-		$.each(categorias, function(index, categoria) {
-			list +=
-				'<option value=' + categoria.categoriaID +
-				'>' + categoria.nombreCategoria + 
-				'</option>';
-			listMod +=
-				'<option value=' + categoria.categoriaID +
-				'>' + categoria.nombreCategoria + 
-				'</option>';
-			arrayCategorias[index] = categoria.nombreCategoria;
-		});
-		var elInputCategoriaPlato = $("#inputCategoriaPlato");
-		var elInputCategoriaPlatoMod = $("#inputCategoriaPlatoMod");
-		elInputCategoriaPlato.append(list);
-		elInputCategoriaPlatoMod.append(listMod);
-		elInputCategoriaPlato.trigger("change");
-		elInputCategoriaPlatoMod.trigger("change");
+		
+		if (JSON.stringify(data.items) !== JSON.stringify(jsonCategorias) ){
+			localStorage.setItem("jsonCategorias", JSON.stringify(data.items));
+			listCategorias(data.items);
+		}
 	}, "json");
+}
+
+function listCategorias(json) {
+	var elInputCategoriaPlato = $("#inputCategoriaPlato");
+	elInputCategoriaPlato.append('<option data-placeholder="true">Categoría</option>');
+	var elInputCategoriaPlatoMod = $("#inputCategoriaPlatoMod");
+	elInputCategoriaPlatoMod.append('<option data-placeholder="true">Categoría</option>');
+	var list = "";
+	var listMod = "";
+	$.each(json, function(index, categoria) {
+		list +=
+			'<option value=' + categoria.categoriaID +
+			'>' + categoria.nombreCategoria + 
+			'</option>';
+		listMod +=
+			'<option value=' + categoria.categoriaID +
+			'>' + categoria.nombreCategoria + 
+			'</option>';
+		arrayCategorias[index] = categoria.nombreCategoria;
+	});
+	elInputCategoriaPlato.append(list);
+	elInputCategoriaPlatoMod.append(listMod);
+	elInputCategoriaPlato.trigger("change");
+	elInputCategoriaPlatoMod.trigger("change");
 }
 
 
 function getMenus() {
+	try {
+		jsonMenus = JSON.parse(localStorage.getItem("jsonMenus"));
+	} catch(e){
+	}
+	
+	$('#inputMenuPlato option').remove();
+	$('#inputMenuPlatoMod option').remove();
+	
+	if (jsonMenus != null) {
+		listMenus(jsonMenus);
+	}
 	
 	$.post(urlMenus, null, function(data, textStatus) {
-		$('#inputMenuPlato option').remove();
-		var elInputMenuPlato = $("#inputMenuPlato");
-		elInputMenuPlato.append('<option data-placeholder="true">Menú</option>');
-		$('#inputMenuPlatoMod option').remove();
-		var elInputMenuPlatoMod = $("#inputMenuPlatoMod");
-		elInputMenuPlatoMod.append('<option data-placeholder="true">Menú</option>');
-		var menus = data.items;	
-		var list = "";
-		var listMod = "";	
-		$.each(menus, function(index, menu) {
-			list +=
-				'<option value=' + menu.menuID +
-				'>' + menu.nombreMenu + 
-				'</option>';
-			listMod +=
-				'<option value=' + menu.menuID +
-				'>' + menu.nombreMenu + 
-				'</option>';
-			arrayMenus[index] = menu.nombreMenu;
-		});
-		elInputMenuPlato.append(list);
-		elInputMenuPlatoMod.append(listMod);
-		elInputMenuPlato.trigger("change");
-		elInputMenuPlatoMod.trigger("change");
+		//Compara si el json ya guardado no es igual al recibido
+		if (JSON.stringify(data.items) !== JSON.stringify(jsonMenus) ){
+			localStorage.setItem("jsonMenus", JSON.stringify(data.items));
+			listMenus(data.items);
+		}
 	}, "json");
+}
+
+function listMenus(json){
+	var elInputMenuPlato = $("#inputMenuPlato");
+	elInputMenuPlato.append('<option data-placeholder="true">Menú</option>');
+	var elInputMenuPlatoMod = $("#inputMenuPlatoMod");
+	elInputMenuPlatoMod.append('<option data-placeholder="true">Menú</option>');
+	var list = "";
+	var listMod = "";	
+	$.each(json, function(index, menu) {
+		list +=
+			'<option value=' + menu.menuID +
+			'>' + menu.nombreMenu + 
+			'</option>';
+		listMod +=
+			'<option value=' + menu.menuID +
+			'>' + menu.nombreMenu + 
+			'</option>';
+		arrayMenus[index] = menu.nombreMenu;
+	});
+	elInputMenuPlato.append(list);
+	elInputMenuPlatoMod.append(listMod);
+	elInputMenuPlato.trigger("change");
+	elInputMenuPlatoMod.trigger("change");
 }
 
 
@@ -396,5 +453,4 @@ function cleanFormPlatos(){
 	elInputCategoriaPlatoMod.trigger("change");
 	elInputMenuPlato.trigger("change");
 	elInputMenuPlatoMod.trigger("change");
-	
 }
