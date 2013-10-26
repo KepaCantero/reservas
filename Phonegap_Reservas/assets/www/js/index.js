@@ -52,7 +52,6 @@ $('#reservaPage').bind('pageshow', function(event) {
 		reseteoParcial = false;
 	}
 	
-	
 	/*Digan lo que digan los ejemplos por ahÃ­, lo que va en el segundo parÃ©ntesis debe ser "mobile-datebox"
 	y no solo "datebox". Esto se debe a un cambio introducido en JQuery Mobile 1.2 o algo asÃ­.*/
 	/*var fechas = ["2013-08-10",'2013-08-20', '2013-08-30'];
@@ -71,11 +70,11 @@ $('#reservaPage').bind('pageshow', function(event) {
  * deber�a funcionar.
  */
 $('#resetPage').bind('pagebeforeshow', function(event) {
-	/*$.mobile.changePage ($("#reservaPage"), { 
+	//history.back();
+	$.mobile.changePage ($("#reservaPage"), { 
 		reverse: false, 
 		changeHash: false 
-	});*/
-	history.back();
+	});
 });
 
 
@@ -163,9 +162,7 @@ $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
 });*/
 
 
-//$('#formReserva').submit(function() {
 $('#botonReservar').bind('vclick', function(event) { 
-	//loadingSpinner('on');
 	if ( $('#formReserva').valid() ){
 		var request = $.ajax({
 			beforeSend: function() { $.mobile.showPageLoadingMsg(); }, 
@@ -185,7 +182,6 @@ $('#botonReservar').bind('vclick', function(event) {
 					addToCalendar();
 					cleanFormReservas();
 					blackdatesPuestas = false; //Esto hace que tras el reinicio se esatablezcan las blackdates y se abra el calendario
-					//loadingSpinner('off');
 				} else {
 					alert(obj); //Esto muestra los errores de validaci�n en PHP, es solo para desarrollo
 					reseteoParcial = true;
@@ -193,7 +189,6 @@ $('#botonReservar').bind('vclick', function(event) {
 						reverse: false, 
 						changeHash: false 
 					});
-					//loadingSpinner('off');
 				}
 			},
 			error: function(error) {
@@ -203,7 +198,6 @@ $('#botonReservar').bind('vclick', function(event) {
 					reverse: false, 
 					changeHash: false 
 				});
-				//loadingSpinner('off');
 			}
 		});
 	} else {
@@ -212,7 +206,6 @@ $('#botonReservar').bind('vclick', function(event) {
 			reverse: false, 
 			changeHash: false 
 		});
-		//loadingSpinner('off');
 	}	
 });
 
@@ -229,9 +222,6 @@ function getHoras() {
 		var horas = data.items;		
 		var list = "";
 		$.each(horas, function(index, hora) {
-			/*$("#hora").append('<option value=' + hora.horaID +
-			'>' + hora.hora + 
-			'</option>');*/
 			list += '<option value=' + hora.horaID +
 				'>' + hora.hora + 
 				'</option>';
@@ -254,9 +244,6 @@ function getMesas() {
 		var mesas = data.items;
 		var list = "";		
 		$.each(mesas, function(index, mesa) {
-			/*$("#mesa").append('<option value=' + mesa.mesaID +
-			'>' + mesa.comensales + 
-			'</option>');*/
 			list += '<option value=' + mesa.mesaID +
 				'>' + mesa.comensales + 
 				'</option>';
@@ -299,9 +286,7 @@ function getMesas() {
 
 
 function setBlackDates(){
-	//loadingSpinner('on');
 	var urlBlackDates = "http://kometa.pusku.com/form/getblackdates-miguel.php";
-	//$.getJSON(urlBlackDates, function(data) {
 	$.post(urlBlackDates, null, function(data, textStatus) {		
 		var datos = data.items;		
 		$.each(datos, function(index, dato) {
@@ -317,17 +302,17 @@ function setBlackDates(){
 		$('#fecha').data('mobile-datebox').options.blackDates = blackdates;
 		
 		$('#fecha').datebox('open'); //Abre el datebox tras cargar las blackdates
-		//loadingSpinner('off');
-	//});
 	}, "json");
 }
 
 
 function addToCalendar() {
-	//var nombre= $("#nombre").val();
-    var fecha= $("#fecha").val();
-    var mesa= $("#mesa").val();
-    var hora= $("#hora").val(); 
+	//var nombre = $("#nombre").val();
+    var fecha = $("#fecha").val();
+    /*var mesa = $("#mesa").val();
+    var hora = $("#hora").val();*/
+    var mesa = $("#mesa option:selected").text();
+    var hora = $("#hora option:selected").text();
 	window.MainActivity.addEventToCalendarString(fecha,hora,mesa);
 }
 
