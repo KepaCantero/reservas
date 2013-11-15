@@ -12,6 +12,7 @@ var modificarID;
 var urlCategorias = "http://kometa.pusku.com/form/getcategorias.php";
 var urlMenus = "http://kometa.pusku.com/form/getmenus.php";
 
+
 //EVENTOS AL CARGARSE LAS PÁGINAS
 
 //Esto hace que se muestre el spinner de carga durante todas las operaciones ajax
@@ -199,15 +200,15 @@ function getMenuItems() {
 	} catch(e){
 	}
 	
-	$('#listaItems li').remove();
-	
 	if (jsonMenuItems[menuElegido] != null) {
+		$('#listaItems li').remove();
 		listMenuItems(jsonMenuItems[menuElegido]);
 	}
 		
 	$.post(urlMenuItems, { tipomenu : menuElegido }, function(data, textStatus) {	
 		if (JSON.stringify(data.items) !== JSON.stringify(jsonMenuItems[menuElegido]) ){
 			localStorage.setItem("jsonMenuItems" + menuElegido, JSON.stringify(data.items));
+			$('#listaItems li').remove();
 			listMenuItems(data.items);
 		}
 	}, "json");
@@ -242,7 +243,7 @@ function listMenuItems(json){
 		cleanFormPlatos();
 		$("#nombreDetalle").html("<div id='nombreDetalle'>" + json[$(this).index() - $(this).attr('categoriaid')].nombreItem + "</div>");
 		$("#descDetalle").html("<div id='descDetalle'>" + json[$(this).index() - $(this).attr('categoriaid')].descItem + "</div>");
-		$("#fotoDetalle").html("<div id='fotoDetalle'>" + "<img src='img/cordova.png'>" + "</div>");
+		$("#contenedorFoto").html("<div id='contenedorFoto'>" + "<img src='img/cordova.png'>" + "</div>");
 		$("#menuDetalle").html("<div id='menuDetalle'>" + arrayMenus[json[$(this).index() - $(this).attr('categoriaid')].menuID - 1] + "</div>");
 		$("#categoriaDetalle").html("<div id='categoriaDetalle'>" + arrayCategorias[json[$(this).index() - $(this).attr('categoriaid')].categoriaID - 1]  + "</div>");
 		$("#precioDetalle").html("<div id='precioDetalle'>" + "Precio:\n" + json[$(this).index() - $(this).attr('categoriaid')].precioItem + " €" + "</div>");
@@ -271,16 +272,16 @@ function getItemsModificar() {
 			JSON.parse(localStorage.getItem("jsonMenuItems" + menuElegidoMod));
 	} catch(e){
 	}
-
-	$('#listaItemsModificar li').remove();
 	
 	if (jsonMenuItems[menuElegidoMod] != null) {
+		$('#listaItemsModificar li').remove();
 		listItemsModificar(jsonMenuItems[menuElegidoMod]);
 	}
 		
 	$.post(urlItemsModificar, { tipomenumod : menuElegidoMod }, function(data, textStatus) {	
 		if (JSON.stringify(data.items) !== JSON.stringify(jsonMenuItems[menuElegidoMod]) ){
 			localStorage.setItem("jsonMenuItems" + menuElegidoMod, JSON.stringify(data.items));
+			$('#listaItemsModificar li').remove();
 			listItemsModificar(data.items);
 		}
 	}, "json");

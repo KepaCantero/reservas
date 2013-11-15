@@ -1,4 +1,4 @@
-package org.apache.cordova.example;
+package org.kometa.menus;
 
 import android.os.Bundle;
 import android.webkit.WebSettings;
