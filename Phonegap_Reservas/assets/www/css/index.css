@@ -1,3 +1,33 @@
+.encabezadoPaso {
+	width: 100%;
+	height: 2em;
+	float: left;
+	border-radius: 10px;
+	background-color: #DBDBDB;
+	margin-bottom: 1em;
+}
+
+.encabezadoIzq {
+	width: 20%;
+	height: 2em;
+	float: left;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+	color: red;
+	line-height: 1.5em;
+}
+
+.encabezadoDch {
+	width: 80%;
+	height: 2em;
+	float: left;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: blue;
+	line-height: 1.4em;
+}
+
 #formReserva input {
 	border-left:8px solid red;
     font: bold 15px Arial, Helvetica;
@@ -29,6 +59,139 @@
 
 #botonReservar{
 	border-left: none!important;	
+}
+
+
+/*--------------*/
+/*    PASO 2    */
+/*--------------*/
+
+#listaNiveles li{
+	font-family: "customfont";
+	font-size: 1.3em;
+	line-height: 4em;
+}
+
+.contLi {
+	width: 100%;
+	height: 4em;
+	overflow: hidden;
+}
+
+/*.li-izq {
+	width: 20%;
+	font-size: 1.3em;
+	line-height: 4em;
+	background-color: red;
+	float: left;
+}*/
+
+.li-ctr {
+	width: 60%;
+	font-size: 1em;
+	line-height: 4em;
+	text-align: center;
+	float: left;
+}
+
+.liCtrArr {
+	width: 100%;
+	line-height: 2em;
+	color: green;
+	float: left;
+}
+
+.liCtrAb {
+	width: 100%;
+	line-height: 2em;
+	color: blue;
+	float: left;
+}
+
+.liDchArrMenos {
+	width: 10%;
+	line-height: 4em;
+	float: left;
+}
+
+.liDchArrMas {
+	width: 10%;
+	line-height: 4em;
+	float: left;
+}
+
+.liDchAb {
+	width: 20%;
+	float: left;
+	line-height: 4em;
+	text-align: center;
+}
+
+/*#listaIntMenus li{
+	font-size: 1.3em;
+	line-height: 2em;
+}
+
+.liInt {
+	width: 100%;
+	height: 4em;
+	float: left;
+}
+
+.liIzq {
+	width: 20%;
+	background-color: green;
+	float: left;	
+}
+
+.liCtr {
+	width: 60%;
+	float: left;
+}
+
+.liCtrArr {
+	width: 100%;
+	float: left;
+	background-color: red;
+}
+
+.liCtrAb {
+	width: 100%;
+	float: left;
+	background-color: blue;
+}
+
+.liDch {
+	width: 20%;
+	float: left;
+}
+
+.liDchArrMenos {
+	width: 50%;
+	float: left;
+	background-color: silver;
+}
+
+.liDchArrMas {
+	width: 50%;
+	float: left;
+	background-color: purple;
+}
+
+.liDchAb {
+	width: 100%;
+	float: left;
+	background-color: yellow;
+}*/
+
+/**************/
+/*BOTÓN PAYPAL*/
+/**************/
+
+#botPaypal {
+	width: 100%;
+	text-align: center;
+	margin-top: 30px;
 }
 
 /*--------------------*/

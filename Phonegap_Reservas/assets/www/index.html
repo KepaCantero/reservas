@@ -69,56 +69,195 @@
 			</div>
 
 			<div data-role="content">
-				<form id="formReserva">
-					<label for="fecha">Fecha</label>
-					<!--<input id="fecha" name="fecha" placeholder="Fecha" data-theme=c>-->
-					<input id="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c required data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
-
-					<div id="boxHora">
-						<label for="hora">Hora</label>
-						<!--<input id="hora" name="hora" placeholder="Hora" data-theme=c>-->
-						<select id="hora" name="hora" data-native-menu=false data-theme=c required>
-							<option data-placeholder="true">Hora</option>
-						</select>
-					</div>
-					
-					<div id="boxMesa">
-						<label for="mesa">Mesa</label>
-						<!--<input id="mesa" name="mesa" placeholder="Mesa" data-theme=c>-->
-						<select id="mesa" name="mesa" data-native-menu=false data-theme=c required>
-							<option data-placeholder="true">Mesa</option>
-						</select>
-					</div>
-
-					<div id="boxNombre">
-						<label id="labelNombre" for="nombre">Nombre</label>
-						<input id="nombre" name="nombre" type="text" maxlength="30" placeholder="Nombre" data-theme=c required>
-					</div>
-					
-					<div id="boxEmail">
-						<label id="labelEmail" for="email">Email</label>
-						<input id="email" name="email" type="email" maxlength="50" placeholder="Email" data-theme=c required>
-					</div>	
-					
-					<div id="boxTelefono">
-						<label id="labelTelefono" for="telefono">Teléfono</label>
-						<input id="telefono" name="telefono" type="number" maxlength="11" placeholder="Teléfono" data-theme=c required>
-					</div>				
-					
-					<div id="divSubmit">
-						<input id="botonReservar" data-theme=a type="button" value="Reservar">
-					</div>
-				</form>
 				
+				<div id="pasoReserva">
+					
+					<div id="encabezadoReserva" class="encabezadoPaso">
+						<div id="encReservaIzq" class="encabezadoIzq">
+							1
+						</div>
+						<div id="encReservaDch" class="encabezadoDch">
+							RESERVA
+						</div>
+					</div>
+					
+					<form id="formReserva">
+						<label for="fecha">Fecha</label>
+						<!--<input id="fecha" name="fecha" placeholder="Fecha" data-theme=c>-->
+						<input id="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c required data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
+	
+						<div id="boxHora">
+							<label for="hora">Hora</label>
+							<!--<input id="hora" name="hora" placeholder="Hora" data-theme=c>-->
+							<select id="hora" name="hora" data-native-menu=false data-theme=c required>
+								<option data-placeholder="true">Hora</option>
+							</select>
+						</div>
+						
+						<div id="boxMesa">
+							<label for="mesa">Mesa</label>
+							<!--<input id="mesa" name="mesa" placeholder="Mesa" data-theme=c>-->
+							<select id="mesa" name="mesa" data-native-menu=false data-theme=c required>
+								<option data-placeholder="true">Mesa</option>
+							</select>
+						</div>
+	
+						<div id="boxNombre">
+							<label id="labelNombre" for="nombre">Nombre</label>
+							<input id="nombre" name="nombre" type="text" maxlength="30" placeholder="Nombre" data-theme=c required>
+						</div>
+						
+						<div id="boxEmail">
+							<label id="labelEmail" for="email">Email</label>
+							<input id="email" name="email" type="email" maxlength="50" placeholder="Email" data-theme=c required>
+						</div>	
+						
+						<div id="boxTelefono">
+							<label id="labelTelefono" for="telefono">Teléfono</label>
+							<input id="telefono" name="telefono" type="number" maxlength="11" placeholder="Teléfono" data-theme=c required>
+						</div>				
+						
+						<!--<div id="divSubmit">
+							<input id="botonReservar" data-theme=a type="button" value="Reservar">
+						</div>-->
+					</form>
+				</div>
+				
+				<div id="pasoMenus">
+					<div id="encabezadoMenus" class="encabezadoPaso">
+						<div id="encIzqMenus" class="encabezadoIzq">
+							2
+						</div>
+						<div id="encDchMenus" class="encabezadoDch">
+							MEN&Uacute;S
+						</div>
+					</div>
+					
+					<div id="radioMenus" data-role=controlgroup>
+						<label for="radio1Menu">Quiero elegir men&uacute;.</label>
+						<input type=radio id="radio1Menu" name="radioMenu" value="si"/>
+						<label for="radio2Menu">No gracias, no quiero elegir men&uacute;.</label>
+						<input type=radio id="radio2Menu" name="radioMenu" value="no"/>
+					</div>
+					
+					<div id="listaExtMenus">
+						<ul id="listaNiveles" data-role="listview" data-inset="true">
+					        <li id="li-1" maila="1" >  
+					        	<div class="contLi">
+						        	<div id="li-ctr-1" class="li-ctr">
+						        		<div id="liCtrArr1" class="liCtrArr">
+											MEN&Uacute; 1
+										</div>
+										<div id="liCtrAb1" class="liCtrAb">
+											10 €
+										</div>
+						        	</div>
+					        		<div id="liDchArrMenos1" class="liDchArrMenos">
+										<a href="#" data-role=button data-icon=minus data-iconpos=notext class="botonMenos" keyAttrMenos="menu1"></a>
+									</div>
+									<div id="liDchAb1" keyAttr="menu1" class="liDchAb">
+										0
+									</div>
+									<div id="liDchArrMas1" class="liDchArrMas">
+										<a href="#" data-role=button data-icon=plus data-iconpos=notext class="botonMas" keyAttrMas="menu1"></a>
+									</div>
+					        	</div>
+					        </li>
+					        <li id="li-2" maila="2" >  
+					        	<div class="contLi">
+						        	<div id="li-ctr-2" class="li-ctr">
+						        		<div id="liCtrArr2" class="liCtrArr">
+											MEN&Uacute; 2
+										</div>
+										<div id="liCtrAb2" class="liCtrAb">
+											20 €
+										</div>
+						        	</div>
+					        		<div id="liDchArrMenos2" class="liDchArrMenos">
+										<a href="#" data-role=button data-icon=minus data-iconpos=notext class="botonMenos" keyAttrMenos="menu2"></a>
+									</div>
+									<div id="liDchAb2" keyAttr="menu2" class="liDchAb">
+										0
+									</div>
+									<div id="liDchArrMas2" class="liDchArrMas">
+										<a href="#" data-role=button data-icon=plus data-iconpos=notext class="botonMas" keyAttrMas="menu2"></a>
+									</div>
+					        	</div>
+					        </li>
+					        <li id="li-3" maila="3" >  
+					        	<div class="contLi">
+						        	<div id="li-ctr-3" class="li-ctr">
+						        		<div id="liCtrArr3" class="liCtrArr">
+											MEN&Uacute; 3
+										</div>
+										<div id="liCtrAb3" class="liCtrAb">
+											30 €
+										</div>
+						        	</div>
+						        	<div id="liDchArrMenos3" class="liDchArrMenos">
+										<a href="#" data-role=button data-icon=minus data-iconpos=notext class="botonMenos" keyAttrMenos="menu3"></a>
+									</div>
+									<div id="liDchAb3" keyAttr="menu3" class="liDchAb">
+										0
+									</div>
+									<div id="liDchArrMas3" class="liDchArrMas">
+										<a href="#" data-role=button data-icon=plus data-iconpos=notext class="botonMas" keyAttrMas="menu3"></a>
+									</div>
+					        	</div>
+					        </li>
+					    </ul>
+				   </div>	
+					
+					<div id="boxBotonConfirmar">
+						<a id="botonConfirmar" href="#" data-role=button>CONFIRMAR RESERVA</a>
+					</div>
+				</div>
 			</div>
+		</div>
 
+		<div id="confSinPagoPage" data-role="page">
+			<div data-role=content>
+				<div id="encabConfSinPagoPage" class="encabezadoPaso">
+					<div id="encIzqConfSinPagoPage" class="encabezadoIzq">
+						3
+					</div>
+					<div id="encDchConfSinPagoPage" class="encabezadoDch">
+						RESERVAS
+					</div>
+				</div>
+				<div id="textoConfSinPagoPage">
+					
+				</div>
+			</div>
+		</div>
+		
+		<div id="confPagoPage" data-role="page">
+			<div data-role=content>
+				<div id="encabConfPagoPage" class="encabezadoPaso">
+					<div id="encIzqConfPagoPage" class="encabezadoIzq">
+						3
+					</div>
+					<div id="encDchConfPagoPage" class="encabezadoDch">
+						RESERVAS
+					</div>
+				</div>
+				<div id="textoConfPagoPage">
+					
+				</div>
+				
+				<div id="botPaypal">
+	    			<a href="#">
+	    				<img id="imgBotPaypal" src="img/bot_pagar_ahora.png">
+	    			</a>
+				</div>
+			</div>
 		</div>
 
 		<!--Esta div la creo para que el botón de submit se resetee tras enviar
  			la info. He probado sin éxito un montón de sistemas con los que se supone que
  			debería funcionar.-->
-		<div id="resetPage" data-role="page">
-		</div>
+		<!--<div id="resetPage" data-role="page">
+		</div>-->
 
 		<script src="js/index.js"></script>
 

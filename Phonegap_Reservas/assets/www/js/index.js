@@ -7,7 +7,15 @@ var blackdates = [];
 var reseteoParcial = false;
 var blackdatesPuestas = false; //Controla cuándo deben buscarse las blackdates y abrir el calendario
 
-//EVENTOS AL CARGARSE LAS PÃƒï¿½GINAS
+var carro = {
+    "menu1": {"item_name": "menu1", "amount": "10.00", "quantity": "0"},
+    "menu2": {"item_name": "menu2", "amount": "20.00", "quantity": "0"},
+    "menu3": {"item_name": "menu3", "amount": "30.00", "quantity": "0"}
+};
+
+/////////////////////////////////////////
+//BEGIN EVENTOS AL CARGARSE LAS PÁGINAS//
+/////////////////////////////////////////
 
 //Implementación de fastclick
 window.addEventListener('load', function() { 
@@ -30,6 +38,9 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 		blackdatesPuestas = true;
 		setBlackDates(); //Carga las blackdates y abre el calendario
 	}
+
+	vaciarCarro();
+	
 });
 
 
@@ -41,16 +52,28 @@ $('#reservaPage').bind('pageshow', function(event) {
 	 * se produce un montón de parpadeo. La otra opción es que el botón se quede azul.
 	 */	 
 	if (reseteoParcial == false){
+		//Elementos del paso 1 (Reservas)
+		cleanFormReservas();
 		validateFormReservas();
 		$("#boxHora").hide();
 		$("#boxMesa").hide();
 		$("#boxNombre").hide();
 		$("#boxEmail").hide();
 		$("#boxTelefono").hide();
-		$("#botonReservar").button('disable');
+		//Elementos del paso 2 (Menús)
+		$("#radioMenus").hide();
+		$("#listaExtMenus").hide();
+		$("#boxBotonConfirmar").hide();
+		$("#encIzqMenus").css("color", "#B3B3B3");
+		$("#encDchMenus").css("color", "#B3B3B3");
+		$(".liDchAb").html("0");
+		
+		resetRadio();
+		
 	} else {
 		reseteoParcial = false;
 	}
+	
 	
 	/*Digan lo que digan los ejemplos por ahÃƒÂ­, lo que va en el segundo parÃƒÂ©ntesis debe ser "mobile-datebox"
 	y no solo "datebox". Esto se debe a un cambio introducido en JQuery Mobile 1.2 o algo asÃƒÂ­.*/
@@ -65,37 +88,57 @@ $('#reservaPage').bind('pageshow', function(event) {
 });
 
 
+$('#confSinPagoPage').bind('pageshow', function(event) {
+	$("#textoConfSinPagoPage").html(
+		"Ha realizado una reserva para <span style='font-weight:bold'>" + $("#mesa option:selected").text() + 
+		"</span> para el día <span style='font-weight:bold'>" + $("#fecha").val() + 
+		"</span> a las <span style='font-weight:bold'>" + $("#hora option:selected").text() +
+		"</span> a nombre de <span style='font-weight:bold'>" + $("#nombre").val() + ".\n\n" +
+		"</span> Confirme esta reserva con el email de confirmación que recibirá en la dirección <span style='font-weight:bold'>" +
+		$("#email").val() + "</span>." 
+	);
+	reseteoParcial = false;
+});
+
+$('#confPagoPage').bind('pageshow', function(event) {
+	$("#textoConfPagoPage").html(
+		"Ha realizado una reserva para <span style='font-weight:bold'>" + $("#mesa option:selected").text() + 
+		"</span> para el día <span style='font-weight:bold'>" + $("#fecha").val() + 
+		"</span> a las <span style='font-weight:bold'>" + $("#hora option:selected").text() +
+		"</span> a nombre de <span style='font-weight:bold'>" + $("#nombre").val() + ".\n\n" +
+		"</span> Confirme esta reserva con el email de confirmación que recibirá en la dirección <span style='font-weight:bold'>" +
+		$("#email").val() + "</span>." 
+	);
+	reseteoParcial = false;
+	
+});
+
 /*Esta pequeña chapuza la hago para que el botón de submit se resetee tras enviar
  * la info. He probado sin éxito un montón de sistemas con los que se supone que
  * debería funcionar.
  */
-$('#resetPage').bind('pagebeforeshow', function(event) {
+/*$('#resetPage').bind('pagebeforeshow', function(event) {
 	//history.back();
 	$.mobile.changePage ($("#reservaPage"), { 
 		reverse: false, 
 		changeHash: false 
 	});
-});
+});*/
+
+///////////////////////////////////////
+//END EVENTOS AL CARGARSE LAS PÁGINAS//
+///////////////////////////////////////
 
 
-//LISTENERS DE COMPONENTES 
+////////////////////
+//LISTENERS PASO 1//
+////////////////////
 
 /*Estos tres listeners evitan que el select de mesas se despligue indebidamente (horaElegida solo es true tras 
 	seleccionar una fecha)*/
 $('#fecha').bind('vclick', function(event) {
 	horaElegida = false;
 });
-
-
-$('#hora').bind('vclick', function(event) {
-	horaElegida = false;
-});
-
-
-$('#mesa').bind('vclick', function(event) {
-	horaElegida = false;
-}); 
-
 
 $('#fecha').bind('change', function(event) {
 	fecha = $("#fecha").val();
@@ -108,6 +151,9 @@ $('#fecha').bind('change', function(event) {
 	$("#boxHora").show();
 });
 
+$('#hora').bind('vclick', function(event) {
+	horaElegida = false;
+});
 
 $('#hora').bind('change', function(event) {
 	if (horaElegida == true){
@@ -118,6 +164,9 @@ $('#hora').bind('change', function(event) {
 	}
 });
 
+$('#mesa').bind('vclick', function(event) {
+	horaElegida = false;
+});
 
 $('#mesa').bind('change', function(event) {
 	if ( $('#mesa').val().length < 4 ) { //Comprueba que hay una selección y el valor no es el placeholder
@@ -140,18 +189,41 @@ $('#email').bind('keyup', function(event) {
 			$('#boxTelefono').show();
 		}
 	}
-}); 
+});
 
-
+//Validación paso 1 (Reserva)
 $(':input').bind('keyup', function(event) {
 	$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
 	//Y esto valida todo el formulario solo cuando ya se ha metido info en los tres text inputs.
 	if ($('#nombre').val().length > 1 && $('#email').val().length > 1 && $('#telefono').val().length > 1 ){
 		if ( $('#formReserva').valid() ) {
-			$("#botonReservar").button('enable');
+			//$("#botonReservar").button('enable');
+			$("#encIzqMenus").css("color", "red");
+			$("#encDchMenus").css("color", "blue");
+			$("#radioMenus").show();
 		}
 	}
-}); 
+});
+
+////////////////////
+//LISTENERS PASO 2//
+////////////////////
+
+$('.botonMas').bind('vclick' , function(event) {
+	sumarProducto( $(this).attr("keyAttrMas") );
+});
+
+$('.botonMenos').bind('vclick' , function(event) {
+	restarProducto( $(this).attr("keyAttrMenos") );
+});
+
+$('#imgBotPaypal').bind('vclick', function(event) {
+	pagar();
+});
+
+$('#botonConfirmar').bind('vclick', function(event) {
+	confirmarReserva("2");
+});
 
 /*$('#fecha').bind('datebox', function (e, pressed) {
 	setColours();
@@ -162,7 +234,7 @@ $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
 });*/
 
 
-$('#botonReservar').bind('vclick', function(event) { 
+/*$('#botonReservar').bind('vclick', function(event) { 
 	if ( $('#formReserva').valid() ){
 		var request = $.ajax({
 			beforeSend: function() { $.mobile.showPageLoadingMsg(); }, 
@@ -207,10 +279,17 @@ $('#botonReservar').bind('vclick', function(event) {
 			changeHash: false 
 		});
 	}	
-});
+});*/
 
- 
-//FUNCIONES
+/////////////////
+//END LISTENERS//
+/////////////////
+
+
+
+/////////////
+//FUNCIONES//
+/////////////
 
 function getHoras() {
 	urlHoras = "http://kometa.pusku.com/form/gethoras.php";
@@ -301,7 +380,7 @@ function setBlackDates(){
 		//$('#fecha').data('mobile-datebox').options.highDatesAlt = blackdates;
 		$('#fecha').data('mobile-datebox').options.blackDates = blackdates;
 		
-		$('#fecha').datebox('open'); //Abre el datebox tras cargar las blackdates
+		//$('#fecha').datebox('open'); //Abre el datebox tras cargar las blackdates
 	}, "json");
 }
 
@@ -347,12 +426,26 @@ function cleanFormReservas(){
 	
 	//Esto manda a resetPage, una página en blanco, que inmediatamente devuelve a
 	//reservaPage. Es el único modo de resetear el estilo del botón.
-	$.mobile.changePage ($("#resetPage"), { 
+	/*$.mobile.changePage ($("#resetPage"), { 
 		reverse: false, 
 		changeHash: false 
-	});
+	});*/
 }
 
+function resetRadio() {
+	$('#radioMenus').prop('checked', false);
+	
+	$('#radioMenus').bind('change', function(event) {
+	    if ($('input[name=radioMenu]:checked').val() == "si") {
+	    	$("#listaExtMenus").show();
+	    } else if ($('input[name=radioMenu]:checked').val() == "no") {
+	    	if ( !$('radio2Menu').is(':checked') ) {
+	    		confirmarReserva("1");
+	    		$('#radioMenus').unbind('change');
+	    	}
+	    }
+	});
+}
 
 function validateFormReservas(){
 	
@@ -429,4 +522,164 @@ function validateFormReservas(){
 	});
 	
 	validator.resetForm();
+}
+
+function confirmarReserva(tipoPago) {
+	if ( $('#formReserva').valid() ){
+		var request = $.ajax({
+			beforeSend: function() { $.mobile.showPageLoadingMsg(); }, 
+			complete: function() { $.mobile.hidePageLoadingMsg(); },
+			url: 'http://kometa.pusku.com/form/insert.php',
+			type: 'POST',
+			data: { nombre: $("#nombre").val(),
+			        fecha: $("#fecha").val(),
+			        mesa: $("#mesa").val(),
+			        hora: $("#hora").val(),
+			        email: $("#email").val(),
+			        telefono: $("#telefono").val()
+			       },
+			success: function(obj){
+				if (obj == ""){
+					if (tipoPago == "1") {
+						$.mobile.changePage($("#confSinPagoPage"));
+					} else if (tipoPago == "2"){
+						$.mobile.changePage($("#confPagoPage"));
+					}
+					/*alert("Reserva realizada");
+					addToCalendar();
+					cleanFormReservas();*/
+					blackdatesPuestas = false; //Esto hace que tras el reinicio se esatablezcan las blackdates y se abra el calendario
+				} else {
+					alert(obj); //Esto muestra los errores de validación en PHP, es solo para desarrollo
+					resetRadio();
+					/*reseteoParcial = true;
+					$.mobile.changePage ($("#resetPage"), { 
+						reverse: false, 
+						changeHash: false 
+					});*/
+				}
+			},
+			error: function(error) {
+				alert(error);
+				resetRadio();
+				/*reseteoParcial = true;
+				$.mobile.changePage ($("#resetPage"), { 
+					reverse: false, 
+					changeHash: false 
+				});*/
+			}
+		});
+	} else {
+		reseteoParcial = true;
+		resetRadio();
+		/*$.mobile.changePage ($("#resetPage"), { 
+			reverse: false, 
+			changeHash: false 
+		});*/
+	}
+}
+
+//////////
+//PAYPAL//
+//////////
+
+function sumarProducto(key) {
+	carro[key].quantity = parseInt(carro[key].quantity) + 1;
+	$('div[keyAttr = "' + String(key) + '"]').html(carro[key].quantity);
+	/*if (parseInt(carro[key].quantity) > 0) {
+		$('a[keyAttrMenos = "' + String(key) + '"]').button("enable");
+	}*/
+	if ( !$('#boxBotonConfirmar').is(':visible') ) {
+		$('#boxBotonConfirmar').show();
+	}
+}
+
+function restarProducto(key) {
+	if (parseInt(carro[key].quantity) > 0) {
+		carro[key].quantity = parseInt(carro[key].quantity) - 1;
+		$('div[keyAttr = "' + String(key) + '"]').html(carro[key].quantity);
+		if ( isCarroEmpty() ) {
+			$('#boxBotonConfirmar').hide();
+		}
+		
+	}
+	/*if (parseInt(carro[key].quantity) == 0) {
+		$('a[keyAttrMenos = "' + String(key) + '"]').button("disable");
+	}*/
+}
+
+function isCarroEmpty() {
+	for (var key in carro) { //Iteración por keys, da igual el orden o la cantidad de objetos.
+		var entry = carro[key];
+		//Confirmación de que el objeto encontrado tiene la propiedad a cambiar (evita errores sutiles).
+		if (entry.hasOwnProperty("quantity")) {
+			if (entry.quantity>0) {
+				return false;
+			}
+		}
+	}
+	return true;	
+}
+
+function vaciarCarro() {
+	for (var key in carro) { //Iteración por keys, da igual el orden o la cantidad de objetos.
+		var entry = carro[key];
+		//Confirmación de que el objeto encontrado tiene la propiedad a cambiar (evita errores sutiles).
+		if (entry.hasOwnProperty("quantity")) {
+			entry.quantity = 0;
+			//carro[key] = entry;
+		}
+	}
+}
+
+function pagar() {
+	//Se muestra el spinner y el mensaje de carga
+	$.mobile.showPageLoadingMsg("a","Iniciando el pago...",false);
+	
+	//La imagen del botón cambia para que esté pulsado
+	d = new Date();
+	$("#imgBotPaypal").attr("src", "img/bot_pagar_ahora_P.png?" + d.getTime());
+	
+	var url = "https://www.sandbox.paypal.com/cgi-bin/webscr/?";
+	url += 'cmd=_cart&';
+	url += 'upload=1&';
+	url += 'business=kx-business@g.com&';
+	url += 'lc=es&';
+	url += 'currency_code=EUR&';
+	url += 'button_subtype=services&';
+	url += 'no_note=0&';
+		var i = parseInt("1");
+		for (var key in carro) { //Iteración por keys, da igual el orden o la cantidad de objetos.
+			var entry = carro[key];
+			if (entry.hasOwnProperty("quantity")) {
+				if (entry.quantity != "0") {
+					//Confirmación de que el objeto encontrado tiene la propiedad a cambiar (evita errores sutiles).
+					if (entry.hasOwnProperty("item_name")) {
+						url += 'item_name_' + i + '=' + entry.item_name + '&';
+					}
+					//Confirmación de que el objeto encontrado tiene la propiedad a cambiar (evita errores sutiles).
+					if (entry.hasOwnProperty("amount")) {
+						url += 'amount_' + i + '=' + entry.amount + '&';
+					}
+					url += 'quantity_' + i + '=' + entry.quantity + '&';
+				}
+			}
+			i++;
+		}
+	//Este window.open abre el plugin inAppBrowser para poder cerrar la ventana de PayPal
+	//una vez realizado el pago.
+	var ref = window.open(encodeURI(url), '_blank', 'location=yes,closebuttoncaption=Cerrar');
+	//Este evento se dispara cuando el inAppBrowser ha empezado a cargar la url (se ha abierto)
+	ref.addEventListener('loadstart', function() { 
+		$.mobile.hidePageLoadingMsg();
+		d = new Date();
+		$("#imgBotPaypal").attr("src", "img/bot_pagar_ahora.png?" + d.getTime());
+	});
+	//Este evento se dispara cuando el inAppBrowser se ha cerrado
+	ref.addEventListener('exit', function() {
+		$.mobile.changePage ($("#reservaPage"), { 
+			reverse: false, 
+			changeHash: false 
+		});
+	});
 }
