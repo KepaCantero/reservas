@@ -24,12 +24,12 @@ window.addEventListener('load', function() {
 
 //Esto hace que se muestre el spinner de carga durante todas las operaciones ajax
 $(document).delegate('#reservaPage', 'pagecreate', function () { 
-	}).ajaxStart(function () { 
-		//$.mobile.showPageLoadingMsg(); 
-		$.mobile.loading('show');
+	}).ajaxStart(function () {  
+		//$.mobile.loading('show');
+		$.mobile.showPageLoadingMsg("a","Cargando...",false);
 	}).ajaxComplete(function () { 
-		//$.mobile.hidePageLoadingMsg();
-		$.mobile.loading('hide'); 
+		//$.mobile.loading('hide');
+		$.mobile.hidePageLoadingMsg(); 
 });
 
 
@@ -527,8 +527,8 @@ function validateFormReservas(){
 function confirmarReserva(tipoPago) {
 	if ( $('#formReserva').valid() ){
 		var request = $.ajax({
-			beforeSend: function() { $.mobile.showPageLoadingMsg(); }, 
-			complete: function() { $.mobile.hidePageLoadingMsg(); },
+			/*beforeSend: function() { $.mobile.showPageLoadingMsg(); }, 
+			complete: function() { $.mobile.hidePageLoadingMsg(); },*/
 			url: 'http://kometa.pusku.com/form/insert.php',
 			type: 'POST',
 			data: { nombre: $("#nombre").val(),
@@ -634,7 +634,7 @@ function vaciarCarro() {
 
 function pagar() {
 	//Se muestra el spinner y el mensaje de carga
-	$.mobile.showPageLoadingMsg("a","Iniciando el pago...",false);
+	//$.mobile.showPageLoadingMsg("a","Iniciando el pago...",false);
 	
 	//La imagen del botón cambia para que esté pulsado
 	d = new Date();
@@ -662,16 +662,16 @@ function pagar() {
 						url += 'amount_' + i + '=' + entry.amount + '&';
 					}
 					url += 'quantity_' + i + '=' + entry.quantity + '&';
+					i++;
 				}
 			}
-			i++;
 		}
 	//Este window.open abre el plugin inAppBrowser para poder cerrar la ventana de PayPal
 	//una vez realizado el pago.
 	var ref = window.open(encodeURI(url), '_blank', 'location=yes,closebuttoncaption=Cerrar');
 	//Este evento se dispara cuando el inAppBrowser ha empezado a cargar la url (se ha abierto)
 	ref.addEventListener('loadstart', function() { 
-		$.mobile.hidePageLoadingMsg();
+		//$.mobile.hidePageLoadingMsg();
 		d = new Date();
 		$("#imgBotPaypal").attr("src", "img/bot_pagar_ahora.png?" + d.getTime());
 	});
