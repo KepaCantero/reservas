@@ -62,7 +62,7 @@
 	</head>
 
 	<body>
-		<div id="reservaPage" data-role="page">
+		<div id="reservaPage" data-role="page" data-add-back-btn=true>
 
 			<div data-role="header">
 				<h1>Reserva</h1>
@@ -215,7 +215,12 @@
 			</div>
 		</div>
 
-		<div id="confSinPagoPage" data-role="page">
+		<div id="confSinPagoPage" data-role="page" data-add-back-btn=true>
+			
+			<div data-role="header">
+				<h1>Confirmaci&oacute;n</h1>
+			</div>
+			
 			<div data-role=content>
 				<div id="encabConfSinPagoPage" class="encabezadoPaso">
 					<div id="encIzqConfSinPagoPage" class="encabezadoIzq">
@@ -228,10 +233,20 @@
 				<div id="textoConfSinPagoPage">
 					
 				</div>
+				
+				<div>
+					<a id="botonSalirSinPago" class="botonSalir" href="#" data-role=button>SALIR AL INICIO</a>
+				</div>
+				
 			</div>
 		</div>
 		
-		<div id="confPagoPage" data-role="page">
+		<div id="confPagoPage" data-role="page" data-add-back-btn=true>
+			
+			<div data-role="header">
+				<h1>Confirmaci&oacute;n</h1>
+			</div>
+			
 			<div data-role=content>
 				<div id="encabConfPagoPage" class="encabezadoPaso">
 					<div id="encIzqConfPagoPage" class="encabezadoIzq">
@@ -250,6 +265,9 @@
 	    				<img id="imgBotPaypal" src="img/bot_pagar_ahora.png">
 	    			</a>
 				</div>
+				
+				<a id="botonSalirPago" class="botonSalir" href="#" data-role=button>SALIR AL INICIO</a>
+				
 			</div>
 		</div>
 

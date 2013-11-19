@@ -25,13 +25,16 @@ window.addEventListener('load', function() {
 //Esto hace que se muestre el spinner de carga durante todas las operaciones ajax
 $(document).delegate('#reservaPage', 'pagecreate', function () { 
 	}).ajaxStart(function () {  
-		//$.mobile.loading('show');
 		$.mobile.showPageLoadingMsg("a","Cargando...",false);
 	}).ajaxComplete(function () { 
-		//$.mobile.loading('hide');
 		$.mobile.hidePageLoadingMsg(); 
 });
-
+$(document).delegate('#confPagoPage', 'pagecreate', function () { 
+	}).ajaxStart(function () {  
+		$.mobile.showPageLoadingMsg("a","Cargando...",false);
+	}).ajaxComplete(function () { 
+		$.mobile.hidePageLoadingMsg(); 
+});
 
 $('#reservaPage').bind('pagebeforeshow', function(event) {
 	if (blackdatesPuestas == false){
@@ -41,10 +44,6 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 
 	vaciarCarro();
 	
-});
-
-
-$('#reservaPage').bind('pageshow', function(event) {
 	/*Con este if solo se resetea del todo la página si se ha introducido el registro
 	 * en la base de datos. Esto es para conseguir que si se ha pulsado el botón de
 	 * submit y hay un error de validación, el botón vuelva a su estilo normal.
@@ -68,7 +67,124 @@ $('#reservaPage').bind('pageshow', function(event) {
 		$("#encDchMenus").css("color", "#B3B3B3");
 		$(".liDchAb").html("0");
 		
-		resetRadio();
+		//if ( $("input[type='radio']").is(":checked") ){
+			//$("input[type='radio'][checked]").removeAttr("checked");
+			//$("input[type='radio']").checkboxradio("refresh");
+		if ( $('#radio1Menu').is(":checked") ) {
+			$('#radio1Menu').removeAttr("checked");
+			$('#radio1Menu').checkboxradio("refresh");
+		} else if ( $('#radio2Menu').is(":checked") ) {
+			$('#radio2Menu').removeAttr("checked");
+			$('#radio2Menu').checkboxradio("refresh");
+			$('#radioMenus').bind('change', function(event) {
+			    if ($('input[name=radioMenu]:checked').val() == "si") {
+			    	$("#listaExtMenus").show();
+			    } else if ($('input[name=radioMenu]:checked').val() == "no") {
+			    	if ( !$('radio2Menu').is(':checked') ) {
+			    		confirmarReserva("1");
+			    		$('#radioMenus').unbind('change');
+			    	}
+			    }
+		    });
+		} else {
+			$('#radioMenus').bind('change', function(event) {
+			    if ($('input[name=radioMenu]:checked').val() == "si") {
+			    	$("#listaExtMenus").show();
+			    } else if ($('input[name=radioMenu]:checked').val() == "no") {
+			    	if ( !$('radio2Menu').is(':checked') ) {
+			    		confirmarReserva("1");
+			    		$('#radioMenus').unbind('change');
+			    	}
+			    }
+		    });
+		}
+		
+	} else {
+		reseteoParcial = false;
+	}
+});
+
+$('#confSinPagoPage').bind('pagebeforeshow', function(event) {
+	$("#textoConfSinPagoPage").html(
+		"Ha realizado una reserva para <span style='font-weight:bold'>" + $("#mesa option:selected").text() + 
+		"</span> para el día <span style='font-weight:bold'>" + $("#fecha").val() + 
+		"</span> a las <span style='font-weight:bold'>" + $("#hora option:selected").text() +
+		"</span> a nombre de <span style='font-weight:bold'>" + $("#nombre").val() + ".\n \n" +
+		"</span> Confirme esta reserva con el email de confirmación que recibirá en la dirección <span style='font-weight:bold'>" +
+		$("#email").val() + "</span>." 
+	);
+	reseteoParcial = false;
+});
+
+$('#confPagoPage').bind('pagebeforeshow', function(event) {
+	$("#textoConfPagoPage").html(
+		"Ha realizado una reserva para <span style='font-weight:bold'>" + $("#mesa option:selected").text() + 
+		"</span> para el día <span style='font-weight:bold'>" + $("#fecha").val() + 
+		"</span> a las <span style='font-weight:bold'>" + $("#hora option:selected").text() +
+		"</span> a nombre de <span style='font-weight:bold'>" + $("#nombre").val() + ".\n \n" +
+		"</span> Confirme esta reserva con el email de confirmación que recibirá en la dirección <span style='font-weight:bold'>" +
+		$("#email").val() + "</span>." 
+	);
+	reseteoParcial = false;
+	
+});
+
+
+/*$('#reservaPage').bind('pageshow', function(event) {
+	/*Con este if solo se resetea del todo la página si se ha introducido el registro
+	 * en la base de datos. Esto es para conseguir que si se ha pulsado el botón de
+	 * submit y hay un error de validación, el botón vuelva a su estilo normal.
+	 * La pega de esto es que al cargar la página de reseteo y volverse a cargar esta,
+	 * se produce un montón de parpadeo. La otra opción es que el botón se quede azul.
+	 */	 
+	/*if (reseteoParcial == false){
+		//Elementos del paso 1 (Reservas)
+		cleanFormReservas();
+		validateFormReservas();
+		$("#boxHora").hide();
+		$("#boxMesa").hide();
+		$("#boxNombre").hide();
+		$("#boxEmail").hide();
+		$("#boxTelefono").hide();
+		//Elementos del paso 2 (Menús)
+		$("#radioMenus").hide();
+		$("#listaExtMenus").hide();
+		$("#boxBotonConfirmar").hide();
+		$("#encIzqMenus").css("color", "#B3B3B3");
+		$("#encDchMenus").css("color", "#B3B3B3");
+		$(".liDchAb").html("0");
+		
+		//if ( $("input[type='radio']").is(":checked") ){
+			//$("input[type='radio'][checked]").removeAttr("checked");
+			//$("input[type='radio']").checkboxradio("refresh");
+		if ( $('#radio1Menu').is(":checked") ) {
+			$('#radio1Menu').removeAttr("checked");
+			$('#radio1Menu').checkboxradio("refresh");
+		} else if ( $('#radio2Menu').is(":checked") ) {
+			$('#radio2Menu').removeAttr("checked");
+			$('#radio2Menu').checkboxradio("refresh");
+			$('#radioMenus').bind('change', function(event) {
+			    if ($('input[name=radioMenu]:checked').val() == "si") {
+			    	$("#listaExtMenus").show();
+			    } else if ($('input[name=radioMenu]:checked').val() == "no") {
+			    	if ( !$('radio2Menu').is(':checked') ) {
+			    		confirmarReserva("1");
+			    		$('#radioMenus').unbind('change');
+			    	}
+			    }
+		    });
+		} else {
+			$('#radioMenus').bind('change', function(event) {
+			    if ($('input[name=radioMenu]:checked').val() == "si") {
+			    	$("#listaExtMenus").show();
+			    } else if ($('input[name=radioMenu]:checked').val() == "no") {
+			    	if ( !$('radio2Menu').is(':checked') ) {
+			    		confirmarReserva("1");
+			    		$('#radioMenus').unbind('change');
+			    	}
+			    }
+		    });
+		}
 		
 	} else {
 		reseteoParcial = false;
@@ -78,40 +194,14 @@ $('#reservaPage').bind('pageshow', function(event) {
 	/*Digan lo que digan los ejemplos por ahÃƒÂ­, lo que va en el segundo parÃƒÂ©ntesis debe ser "mobile-datebox"
 	y no solo "datebox". Esto se debe a un cambio introducido en JQuery Mobile 1.2 o algo asÃƒÂ­.*/
 	/*var fechas = ["2013-08-10",'2013-08-20', '2013-08-30'];
-	$('#fecha').data('mobile-datebox').options.blackDates = fechas;*/
+	$('#fecha').data('mobile-datebox').options.blackDates = fechas;
 	
 	//Esta lÃƒÂ­nea la proponÃƒÂ­a el creador del DateBox para optimizar el rendimiento:
 	//$('#fecha').data('mobile-datebox').options.blackDates = $(element).data('datebox')._fixArray(fechas);
 	
 	//setColours();
 		
-});
-
-
-$('#confSinPagoPage').bind('pageshow', function(event) {
-	$("#textoConfSinPagoPage").html(
-		"Ha realizado una reserva para <span style='font-weight:bold'>" + $("#mesa option:selected").text() + 
-		"</span> para el día <span style='font-weight:bold'>" + $("#fecha").val() + 
-		"</span> a las <span style='font-weight:bold'>" + $("#hora option:selected").text() +
-		"</span> a nombre de <span style='font-weight:bold'>" + $("#nombre").val() + ".\n\n" +
-		"</span> Confirme esta reserva con el email de confirmación que recibirá en la dirección <span style='font-weight:bold'>" +
-		$("#email").val() + "</span>." 
-	);
-	reseteoParcial = false;
-});
-
-$('#confPagoPage').bind('pageshow', function(event) {
-	$("#textoConfPagoPage").html(
-		"Ha realizado una reserva para <span style='font-weight:bold'>" + $("#mesa option:selected").text() + 
-		"</span> para el día <span style='font-weight:bold'>" + $("#fecha").val() + 
-		"</span> a las <span style='font-weight:bold'>" + $("#hora option:selected").text() +
-		"</span> a nombre de <span style='font-weight:bold'>" + $("#nombre").val() + ".\n\n" +
-		"</span> Confirme esta reserva con el email de confirmación que recibirá en la dirección <span style='font-weight:bold'>" +
-		$("#email").val() + "</span>." 
-	);
-	reseteoParcial = false;
-	
-});
+//});
 
 /*Esta pequeña chapuza la hago para que el botón de submit se resetee tras enviar
  * la info. He probado sin éxito un montón de sistemas con los que se supone que
@@ -130,9 +220,9 @@ $('#confPagoPage').bind('pageshow', function(event) {
 ///////////////////////////////////////
 
 
-////////////////////
-//LISTENERS PASO 1//
-////////////////////
+//////////////////////////
+//BEGIN LISTENERS PASO 1//
+//////////////////////////
 
 /*Estos tres listeners evitan que el select de mesas se despligue indebidamente (horaElegida solo es true tras 
 	seleccionar una fecha)*/
@@ -205,9 +295,14 @@ $(':input').bind('keyup', function(event) {
 	}
 });
 
-////////////////////
-//LISTENERS PASO 2//
-////////////////////
+////////////////////////
+//END LISTENERS PASO 1//
+////////////////////////
+
+
+//////////////////////////
+//BEGIN LISTENERS PASO 2//
+//////////////////////////
 
 $('.botonMas').bind('vclick' , function(event) {
 	sumarProducto( $(this).attr("keyAttrMas") );
@@ -223,6 +318,29 @@ $('#imgBotPaypal').bind('vclick', function(event) {
 
 $('#botonConfirmar').bind('vclick', function(event) {
 	confirmarReserva("2");
+});
+
+////////////////////////
+//END LISTENERS PASO 2//
+////////////////////////
+
+
+//////////////////////////
+//BEGIN LISTENERS PASO 3//
+//////////////////////////
+
+$('#botonSalirSinPago').bind('vclick', function(event) {
+	$.mobile.changePage ($("#reservaPage"), { 
+		reverse: false, 
+		changeHash: false 
+	});
+});
+
+$('#botonSalirPago').bind('vclick', function(event) {
+	$.mobile.changePage ($("#reservaPage"), { 
+		reverse: false, 
+		changeHash: false 
+	});
 });
 
 /*$('#fecha').bind('datebox', function (e, pressed) {
@@ -281,15 +399,14 @@ $('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
 	}	
 });*/
 
-/////////////////
-//END LISTENERS//
-/////////////////
+////////////////////////
+//END LISTENERS PASO 3//
+////////////////////////
 
 
-
-/////////////
-//FUNCIONES//
-/////////////
+///////////////////
+//BEGIN FUNCIONES//
+///////////////////
 
 function getHoras() {
 	urlHoras = "http://kometa.pusku.com/form/gethoras.php";
@@ -393,58 +510,6 @@ function addToCalendar() {
     var mesa = $("#mesa option:selected").text();
     var hora = $("#hora option:selected").text();
 	window.MainActivity.addEventToCalendarString(fecha,hora,mesa);
-}
-
-
-function cleanFormReservas(){
-		//Resetea el selector de fecha
-	$("#fecha").val("");
-		//Resetea la select list "hora"
-	$('#hora option').remove();
-	$("#hora").append("<option data-placeholder='true'>Elige una hora</option>");
-	$('#hora').trigger("change");
-	horaElegida = false;
-		//Resetea la select list "mesa"
-	$('#mesa option').remove();
-	$("#mesa").append("<option data-placeholder='true'>Elige el número de comensales</option>");
-	$('#mesa').trigger("change");
-		//Resetea el input del nombre
-	$("#nombre").val("");
-	$("#nombre").removeClass('valid'); //Así se quita el borde verde tras resetear
-	$("#nombre").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
-		//Resetea el input del email
-	$("#email").val("");
-	$("#email").removeClass('valid'); //Así se quita el borde verde tras resetear
-	$("#email").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
-		//Resetea el input del teléfono
-	$("#telefono").val("");
-	$("#telefono").removeClass('valid'); //Así se quita el borde verde tras resetear
-	$("#telefono").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
-		//Deshabilita las select lists
-	/*$("#hora").selectmenu('disable');
-	$("#mesa").selectmenu('disable');*/
-	
-	//Esto manda a resetPage, una página en blanco, que inmediatamente devuelve a
-	//reservaPage. Es el único modo de resetear el estilo del botón.
-	/*$.mobile.changePage ($("#resetPage"), { 
-		reverse: false, 
-		changeHash: false 
-	});*/
-}
-
-function resetRadio() {
-	$('#radioMenus').prop('checked', false);
-	
-	$('#radioMenus').bind('change', function(event) {
-	    if ($('input[name=radioMenu]:checked').val() == "si") {
-	    	$("#listaExtMenus").show();
-	    } else if ($('input[name=radioMenu]:checked').val() == "no") {
-	    	if ( !$('radio2Menu').is(':checked') ) {
-	    		confirmarReserva("1");
-	    		$('#radioMenus').unbind('change');
-	    	}
-	    }
-	});
 }
 
 function validateFormReservas(){
@@ -579,15 +644,85 @@ function confirmarReserva(tipoPago) {
 	}
 }
 
-//////////
-//PAYPAL//
-//////////
+/////////////////
+//END FUNCIONES//
+/////////////////
+
+
+////////////////
+//BEGIN RESETS//
+////////////////
+
+function cleanFormReservas(){
+		//Resetea el selector de fecha
+	$("#fecha").val("");
+		//Resetea la select list "hora"
+	$('#hora option').remove();
+	$("#hora").append("<option data-placeholder='true'>Elige una hora</option>");
+	$('#hora').trigger("change");
+	horaElegida = false;
+		//Resetea la select list "mesa"
+	$('#mesa option').remove();
+	$("#mesa").append("<option data-placeholder='true'>Elige el número de comensales</option>");
+	$('#mesa').trigger("change");
+		//Resetea el input del nombre
+	$("#nombre").val("");
+	$("#nombre").removeClass('valid'); //Así se quita el borde verde tras resetear
+	$("#nombre").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
+		//Resetea el input del email
+	$("#email").val("");
+	$("#email").removeClass('valid'); //Así se quita el borde verde tras resetear
+	$("#email").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
+		//Resetea el input del teléfono
+	$("#telefono").val("");
+	$("#telefono").removeClass('valid'); //Así se quita el borde verde tras resetear
+	$("#telefono").removeClass('error'); //Lo mismo pero para el estilo de error (por si acaso)
+		//Deshabilita las select lists
+	/*$("#hora").selectmenu('disable');
+	$("#mesa").selectmenu('disable');*/
+	
+	//Esto manda a resetPage, una página en blanco, que inmediatamente devuelve a
+	//reservaPage. Es el único modo de resetear el estilo del botón.
+	/*$.mobile.changePage ($("#resetPage"), { 
+		reverse: false, 
+		changeHash: false 
+	});*/
+}
+
+function resetRadio() {
+	/*$('#radioMenus').prop('checked', false);
+	$('#radioMenus').checkboxradio("refresh");*/
+	$("input[type='radio'][checked]").removeAttr("checked");
+	//$("input[type='radio']").checkboxradio("refresh");
+	$('#radioMenus').checkboxradio("refresh");
+	
+	$('#radioMenus').bind('change', function(event) {
+	    if ($('input[name=radioMenu]:checked').val() == "si") {
+	    	$("#listaExtMenus").show();
+	    } else if ($('input[name=radioMenu]:checked').val() == "no") {
+	    	if ( !$('radio2Menu').is(':checked') ) {
+	    		confirmarReserva("1");
+	    		$('#radioMenus').unbind('change');
+	    	}
+	    }
+	});
+}
+
+//////////////
+//END RESETS//
+//////////////
+
+
+////////////////
+//BEGIN PAYPAL//
+////////////////
 
 function sumarProducto(key) {
 	carro[key].quantity = parseInt(carro[key].quantity) + 1;
 	$('div[keyAttr = "' + String(key) + '"]').html(carro[key].quantity);
 	/*if (parseInt(carro[key].quantity) > 0) {
 		$('a[keyAttrMenos = "' + String(key) + '"]').button("enable");
+		$('a[keyAttrMenos = "' + String(key) + '"]').button("refresh");
 	}*/
 	if ( !$('#boxBotonConfirmar').is(':visible') ) {
 		$('#boxBotonConfirmar').show();
@@ -605,6 +740,7 @@ function restarProducto(key) {
 	}
 	/*if (parseInt(carro[key].quantity) == 0) {
 		$('a[keyAttrMenos = "' + String(key) + '"]').button("disable");
+		$('a[keyAttrMenos = "' + String(key) + '"]').button("refresh");
 	}*/
 }
 
@@ -683,3 +819,6 @@ function pagar() {
 		});
 	});
 }
+//////////////
+//END PAYPAL//
+//////////////

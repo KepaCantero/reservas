@@ -184,14 +184,23 @@
 	background-color: yellow;
 }*/
 
-/**************/
-/*BOTÓN PAYPAL*/
-/**************/
+/********/
+/*PASO 3*/
+/********/
+
+.botonSalir {
+	margin-top: 2em;
+}
 
 #botPaypal {
 	width: 100%;
 	text-align: center;
-	margin-top: 30px;
+	margin-top: 2em;
+}
+
+#imgBotPaypal {
+	width: 95%;
+	height: auto;
 }
 
 /*--------------------*/
@@ -218,26 +227,26 @@
 	-webkit-transform:translate3d(0,0,0)
 }
 
-/*DÃ­as no correspondientes al mes*/
+/*Días no correspondientes al mes*/
 .ui-datebox-griddate-empty{
 	border:1px solid transparent;
 	color:#dbdbdb
 }
 
-/*DÃ­as del mes no seleccionables*/
+/*Días del mes no seleccionables*/
 .ui-datebox-griddate-disable{
 	color:#dbdbdb;
 	border:1px solid transparent;
 }
 
-/*Etiqueta de los dÃ­as de la semana (L, M, X...)*/
+/*Etiqueta de los días de la semana (L, M, X...)*/
 .ui-datebox-griddate-label{
 	height:15px!important;
 	line-height:15px!important;
 	color:black
 }
 
-/*Botones del calendario de los dÃ­as festivos(o los que sean)*/
+/*Botones del calendario de los días festivos(o los que sean)*/
 .ui-btn-up-verde { 
     background-color:green; 
     background-image:none;
