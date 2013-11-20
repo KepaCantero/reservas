@@ -64,7 +64,7 @@
 	<body>
 		<div id="reservaPage" data-role="page" data-add-back-btn=true>
 
-			<div data-role="header">
+			<div data-role="header" data-theme="b">
 				<h1>Reserva</h1>
 			</div>
 
@@ -72,19 +72,21 @@
 				
 				<div id="pasoReserva">
 					
-					<div id="encabezadoReserva" class="encabezadoPaso">
-						<div id="encReservaIzq" class="encabezadoIzq">
-							1
-						</div>
-						<div id="encReservaDch" class="encabezadoDch">
-							RESERVA
+					<div class="boxConf">
+						<div id="encabezadoReserva" class="encabezadoPaso">
+							<div id="encReservaIzq" class="encabezadoIzq">
+								1
+							</div>
+							<div id="encReservaDch" class="encabezadoDch">
+								RESERVA
+							</div>
 						</div>
 					</div>
 					
 					<form id="formReserva">
 						<label for="fecha">Fecha</label>
 						<!--<input id="fecha" name="fecha" placeholder="Fecha" data-theme=c>-->
-						<input id="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c required data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
+						<input id="fecha" class="fecha" name="fecha" type="date" data-role="datebox" placeholder="Fecha" data-theme=c required data-options='{"mode": "calbox", "useFocus": true, "afterToday": true, "calHighPicked":false, "calHighToday":false, "theme": true, "themeHeader": "a", "themeDate": "c", "themeDateHigh": "rojo", "themeDateHighAlt": "verde"}'>
 	
 						<div id="boxHora">
 							<label for="hora">Hora</label>
@@ -104,17 +106,17 @@
 	
 						<div id="boxNombre">
 							<label id="labelNombre" for="nombre">Nombre</label>
-							<input id="nombre" name="nombre" type="text" maxlength="30" placeholder="Nombre" data-theme=c required>
+							<input id="nombre" name="nombre" type="text" maxlength="30" placeholder="Nombre" data-theme=b required>
 						</div>
 						
 						<div id="boxEmail">
 							<label id="labelEmail" for="email">Email</label>
-							<input id="email" name="email" type="email" maxlength="50" placeholder="Email" data-theme=c required>
+							<input id="email" name="email" type="email" maxlength="50" placeholder="Email" data-theme=b required>
 						</div>	
 						
 						<div id="boxTelefono">
 							<label id="labelTelefono" for="telefono">Teléfono</label>
-							<input id="telefono" name="telefono" type="number" maxlength="11" placeholder="Teléfono" data-theme=c required>
+							<input id="telefono" name="telefono" type="number" maxlength="10" placeholder="Teléfono" data-theme=b required>
 						</div>				
 						
 						<!--<div id="divSubmit">
@@ -124,12 +126,14 @@
 				</div>
 				
 				<div id="pasoMenus">
-					<div id="encabezadoMenus" class="encabezadoPaso">
-						<div id="encIzqMenus" class="encabezadoIzq">
-							2
-						</div>
-						<div id="encDchMenus" class="encabezadoDch">
-							MEN&Uacute;S
+					<div class="boxConf">
+						<div id="encabezadoMenus">
+							<div id="encIzqMenus" class="encabezadoIzq">
+								2
+							</div>
+							<div id="encDchMenus" class="encabezadoDch">
+								MEN&Uacute;S
+							</div>
 						</div>
 					</div>
 					
@@ -153,13 +157,13 @@
 										</div>
 						        	</div>
 					        		<div id="liDchArrMenos1" class="liDchArrMenos">
-										<a href="#" data-role=button data-icon=minus data-iconpos=notext class="botonMenos" keyAttrMenos="menu1"></a>
+										<a href="#" data-role=button data-icon=minus data-theme=b data-iconpos=notext class="botonMenos" keyAttrMenos="menu1"></a>
 									</div>
 									<div id="liDchAb1" keyAttr="menu1" class="liDchAb">
 										0
 									</div>
 									<div id="liDchArrMas1" class="liDchArrMas">
-										<a href="#" data-role=button data-icon=plus data-iconpos=notext class="botonMas" keyAttrMas="menu1"></a>
+										<a href="#" data-role=button data-icon=plus data-theme=b data-iconpos=notext class="botonMas" keyAttrMas="menu1"></a>
 									</div>
 					        	</div>
 					        </li>
@@ -174,13 +178,13 @@
 										</div>
 						        	</div>
 					        		<div id="liDchArrMenos2" class="liDchArrMenos">
-										<a href="#" data-role=button data-icon=minus data-iconpos=notext class="botonMenos" keyAttrMenos="menu2"></a>
+										<a href="#" data-role=button data-icon=minus data-theme=b data-iconpos=notext class="botonMenos" keyAttrMenos="menu2"></a>
 									</div>
 									<div id="liDchAb2" keyAttr="menu2" class="liDchAb">
 										0
 									</div>
 									<div id="liDchArrMas2" class="liDchArrMas">
-										<a href="#" data-role=button data-icon=plus data-iconpos=notext class="botonMas" keyAttrMas="menu2"></a>
+										<a href="#" data-role=button data-icon=plus data-theme=b data-iconpos=notext class="botonMas" keyAttrMas="menu2"></a>
 									</div>
 					        	</div>
 					        </li>
@@ -195,13 +199,13 @@
 										</div>
 						        	</div>
 						        	<div id="liDchArrMenos3" class="liDchArrMenos">
-										<a href="#" data-role=button data-icon=minus data-iconpos=notext class="botonMenos" keyAttrMenos="menu3"></a>
+										<a href="#" data-role=button data-icon=minus data-theme=b data-iconpos=notext class="botonMenos" keyAttrMenos="menu3"></a>
 									</div>
 									<div id="liDchAb3" keyAttr="menu3" class="liDchAb">
 										0
 									</div>
 									<div id="liDchArrMas3" class="liDchArrMas">
-										<a href="#" data-role=button data-icon=plus data-iconpos=notext class="botonMas" keyAttrMas="menu3"></a>
+										<a href="#" data-role=button data-icon=plus data-theme=b data-iconpos=notext class="botonMas" keyAttrMas="menu3"></a>
 									</div>
 					        	</div>
 					        </li>
@@ -209,7 +213,7 @@
 				   </div>	
 					
 					<div id="boxBotonConfirmar">
-						<a id="botonConfirmar" href="#" data-role=button>CONFIRMAR RESERVA</a>
+						<a id="botonConfirmar" href="#" data-role=button data-theme=b>CONFIRMAR RESERVA</a>
 					</div>
 				</div>
 			</div>
@@ -217,25 +221,23 @@
 
 		<div id="confSinPagoPage" data-role="page" data-add-back-btn=true>
 			
-			<div data-role="header">
+			<div data-role="header" data-theme="b">
 				<h1>Confirmaci&oacute;n</h1>
 			</div>
 			
 			<div data-role=content>
-				<div id="encabConfSinPagoPage" class="encabezadoPaso">
-					<div id="encIzqConfSinPagoPage" class="encabezadoIzq">
-						3
-					</div>
-					<div id="encDchConfSinPagoPage" class="encabezadoDch">
-						RESERVAS
+				<div class="boxConf">
+					<div id="encabConfSinPagoPage" class="encabezadoPaso">
+						<div id="encIzqConfSinPagoPage" class="encabezadoIzq">
+							3
+						</div>
+						<div id="encDchConfSinPagoPage" class="encabezadoDch">
+							RESERVAS
+						</div>
 					</div>
 				</div>
-				<div id="textoConfSinPagoPage">
+				<div id="textoConfSinPagoPage" class="textoConf">
 					
-				</div>
-				
-				<div>
-					<a id="botonSalirSinPago" class="botonSalir" href="#" data-role=button>SALIR AL INICIO</a>
 				</div>
 				
 			</div>
@@ -243,20 +245,24 @@
 		
 		<div id="confPagoPage" data-role="page" data-add-back-btn=true>
 			
-			<div data-role="header">
+			<div data-role="header" data-theme="b">
 				<h1>Confirmaci&oacute;n</h1>
 			</div>
 			
 			<div data-role=content>
-				<div id="encabConfPagoPage" class="encabezadoPaso">
-					<div id="encIzqConfPagoPage" class="encabezadoIzq">
-						3
-					</div>
-					<div id="encDchConfPagoPage" class="encabezadoDch">
-						RESERVAS
+				
+				<div class="boxConf">
+					<div id="encabConfPagoPage" class="encabezadoPaso">
+						<div id="encIzqConfPagoPage" class="encabezadoIzq">
+							3
+						</div>
+						<div id="encDchConfPagoPage" class="encabezadoDch">
+							RESERVAS
+						</div>
 					</div>
 				</div>
-				<div id="textoConfPagoPage">
+				
+				<div id="textoConfPagoPage" class="textoConf">
 					
 				</div>
 				
@@ -265,8 +271,6 @@
 	    				<img id="imgBotPaypal" src="img/bot_pagar_ahora.png">
 	    			</a>
 				</div>
-				
-				<a id="botonSalirPago" class="botonSalir" href="#" data-role=button>SALIR AL INICIO</a>
 				
 			</div>
 		</div>

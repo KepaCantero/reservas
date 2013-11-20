@@ -63,8 +63,10 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 		$("#radioMenus").hide();
 		$("#listaExtMenus").hide();
 		$("#boxBotonConfirmar").hide();
-		$("#encIzqMenus").css("color", "#B3B3B3");
-		$("#encDchMenus").css("color", "#B3B3B3");
+		$("#encIzqMenus").css("color", "#838383");
+		$("#encDchMenus").css("color", "#838383");
+		$("#encabezadoMenus").css("border", "4px solid #838383");
+		$("#encabezadoMenus").css("background-color", "#9f9f9f");
 		$(".liDchAb").html("0");
 		
 		//if ( $("input[type='radio']").is(":checked") ){
@@ -79,6 +81,8 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 			$('#radioMenus').bind('change', function(event) {
 			    if ($('input[name=radioMenu]:checked').val() == "si") {
 			    	$("#listaExtMenus").show();
+			    	var target = $( $("#listaExtMenus") ).get(0).offsetTop;
+					$.mobile.silentScroll(target);
 			    } else if ($('input[name=radioMenu]:checked').val() == "no") {
 			    	if ( !$('radio2Menu').is(':checked') ) {
 			    		confirmarReserva("1");
@@ -90,6 +94,8 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 			$('#radioMenus').bind('change', function(event) {
 			    if ($('input[name=radioMenu]:checked').val() == "si") {
 			    	$("#listaExtMenus").show();
+			    	var target = $( $("#listaExtMenus") ).get(0).offsetTop;
+					$.mobile.silentScroll(target);
 			    } else if ($('input[name=radioMenu]:checked').val() == "no") {
 			    	if ( !$('radio2Menu').is(':checked') ) {
 			    		confirmarReserva("1");
@@ -239,6 +245,9 @@ $('#fecha').bind('change', function(event) {
 		$("#mesa").trigger('change');
 	}
 	$("#boxHora").show();
+	var target = $( $("#boxHora") ).get(0).offsetTop;
+	$.mobile.silentScroll(target);
+	
 });
 
 $('#hora').bind('vclick', function(event) {
@@ -251,6 +260,8 @@ $('#hora').bind('change', function(event) {
 		hora = parseInt($("#hora").val());
 		getMesas();
 		$("#boxMesa").show();
+		var target = $( $("#boxMesa") ).get(0).offsetTop;
+		$.mobile.silentScroll(target);
 	}
 });
 
@@ -261,6 +272,8 @@ $('#mesa').bind('vclick', function(event) {
 $('#mesa').bind('change', function(event) {
 	if ( $('#mesa').val().length < 4 ) { //Comprueba que hay una selección y el valor no es el placeholder
 		$('#boxNombre').show();
+		var target = $( $("#boxNombre") ).get(0).offsetTop;
+		$.mobile.silentScroll(target);
 		$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.		
 	}
 });
@@ -269,6 +282,8 @@ $('#nombre').bind('keyup', function(event) {
 	if ($('#nombre').val().length > 1 ){
 		if ( $('#nombre').valid() ) {
 			$('#boxEmail').show();
+			var target = $( $("#boxEmail") ).get(0).offsetTop;
+			$.mobile.silentScroll(target);
 		}
 	}
 }); 
@@ -277,6 +292,8 @@ $('#email').bind('keyup', function(event) {
 	if ($('#email').val().length > 1 ){
 		if ( $('#email').valid() ) {
 			$('#boxTelefono').show();
+			var target = $( $("#boxTelefono") ).get(0).offsetTop;
+			$.mobile.silentScroll(target);
 		}
 	}
 });
@@ -288,9 +305,13 @@ $(':input').bind('keyup', function(event) {
 	if ($('#nombre').val().length > 1 && $('#email').val().length > 1 && $('#telefono').val().length > 1 ){
 		if ( $('#formReserva').valid() ) {
 			//$("#botonReservar").button('enable');
-			$("#encIzqMenus").css("color", "red");
+			$("#encIzqMenus").css("color", "blue");
 			$("#encDchMenus").css("color", "blue");
+			$("#encabezadoMenus").css("border", "4px solid blue");
+			$("#encabezadoMenus").css("background-color", "white");
 			$("#radioMenus").show();
+			var target = $( $("#radioMenus") ).get(0).offsetTop;
+			$.mobile.silentScroll(target);
 		}
 	}
 });
@@ -329,19 +350,6 @@ $('#botonConfirmar').bind('vclick', function(event) {
 //BEGIN LISTENERS PASO 3//
 //////////////////////////
 
-$('#botonSalirSinPago').bind('vclick', function(event) {
-	$.mobile.changePage ($("#reservaPage"), { 
-		reverse: false, 
-		changeHash: false 
-	});
-});
-
-$('#botonSalirPago').bind('vclick', function(event) {
-	$.mobile.changePage ($("#reservaPage"), { 
-		reverse: false, 
-		changeHash: false 
-	});
-});
 
 /*$('#fecha').bind('datebox', function (e, pressed) {
 	setColours();
@@ -549,8 +557,8 @@ function validateFormReservas(){
 			}, 
 			telefono: {
 				required: true,
-				minlength: 7,
-				maxlength: 11,
+				minlength: 8,
+				maxlength: 10,
 				number: true				
 			}
 		},
@@ -579,8 +587,8 @@ function validateFormReservas(){
 			},
 			telefono: {
 				required: "Este campo es obligatorio",
-				minlength: "Introduce al menos 7 números",
-				maxlength: "Introduce un máximo de 11 números",
+				minlength: "Introduce al menos 8 números",
+				maxlength: "Introduce un máximo de 10 números",
 				number: "Introduce solo números"				
 			}
 		}
@@ -699,6 +707,8 @@ function resetRadio() {
 	$('#radioMenus').bind('change', function(event) {
 	    if ($('input[name=radioMenu]:checked').val() == "si") {
 	    	$("#listaExtMenus").show();
+	    	var target = $( $("#listaExtMenus") ).get(0).offsetTop;
+			$.mobile.silentScroll(target);
 	    } else if ($('input[name=radioMenu]:checked').val() == "no") {
 	    	if ( !$('radio2Menu').is(':checked') ) {
 	    		confirmarReserva("1");
@@ -726,6 +736,8 @@ function sumarProducto(key) {
 	}*/
 	if ( !$('#boxBotonConfirmar').is(':visible') ) {
 		$('#boxBotonConfirmar').show();
+		var target = $( $('#boxBotonConfirmar') ).get(0).offsetTop;
+		$.mobile.silentScroll(target);
 	}
 }
 

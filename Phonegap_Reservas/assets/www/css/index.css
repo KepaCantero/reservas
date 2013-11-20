@@ -1,41 +1,93 @@
-.encabezadoPaso {
+/*-------------*/
+/*   GENERAL   */
+/*-------------*/
+
+/*.ui-page { 
+	background-image: url("../img/granate.png");
+	background-repeat: repeat;    
+} 
+
+.ui-content{ 
+	background: transparent; 
+}*/
+
+
+/*--------------*/
+/*    PASO 1    */
+/*--------------*/
+
+#formReserva label {
+    font: bold 1em Arial, Helvetica;
+    color: blue;
+}
+
+#formReserva label.error {
+	font: bold 1em Arial, Helvetica;
+	color: red;
+}
+
+.boxConf {
 	width: 100%;
-	height: 2em;
 	float: left;
-	border-radius: 10px;
-	background-color: #DBDBDB;
+}
+
+.encabezadoPaso {
+	width: 65%;
+	height: 3em;
+	border-radius: 1em;
+	border: 4px solid blue;
+	background-color: white;
 	margin-bottom: 1em;
+	margin-top: 0.5em;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: middle;
+}
+
+#encabezadoMenus {
+	width: 65%;
+	height: 3em;
+	border-radius: 1em;
+	border: 4px solid blue;
+	background-color: white;
+	margin-bottom: 1em;
+	margin-top: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: middle;
 }
 
 .encabezadoIzq {
 	width: 20%;
 	height: 2em;
+	line-height: 2em;
 	float: left;
 	font-size: 1.5em;
 	font-weight: bold;
 	text-align: center;
-	color: red;
-	line-height: 1.5em;
+	color: blue;
 }
 
 .encabezadoDch {
 	width: 80%;
 	height: 2em;
+	line-height: 2em;
 	float: left;
-	font-size: 1.2em;
+	font-size: 1.5em;
+	text-align: center;
 	font-weight: bold;
 	color: blue;
-	line-height: 1.4em;
 }
 
 #formReserva input {
 	border-left:8px solid red;
-    font: bold 15px Arial, Helvetica;
+    font: bold 1.2em Arial, Helvetica;
 }
 
 #formReserva input.error{
 	border:1px solid red;
 }
+
 
 #fecha + label.error{
 	border:1px solid red;
@@ -51,14 +103,6 @@
 
 #formReserva input.valid {
 	border-left:8px solid green;
-}
-
-#divSubmit{
-	margin-top: 50px;
-}
-
-#botonReservar{
-	border-left: none!important;	
 }
 
 
@@ -77,14 +121,6 @@
 	height: 4em;
 	overflow: hidden;
 }
-
-/*.li-izq {
-	width: 20%;
-	font-size: 1.3em;
-	line-height: 4em;
-	background-color: red;
-	float: left;
-}*/
 
 .li-ctr {
 	width: 60%;
@@ -127,92 +163,55 @@
 	text-align: center;
 }
 
-/*#listaIntMenus li{
-	font-size: 1.3em;
-	line-height: 2em;
+.liDchArrMas .ui-icon {
+	background-color: transparent; 
+	box-shadow: none;
 }
 
-.liInt {
-	width: 100%;
-	height: 4em;
-	float: left;
+.liDchArrMenos .ui-icon {
+	background-color: transparent; 
+	box-shadow: none;
 }
 
-.liIzq {
-	width: 20%;
-	background-color: green;
-	float: left;	
-}
-
-.liCtr {
-	width: 60%;
-	float: left;
-}
-
-.liCtrArr {
-	width: 100%;
-	float: left;
-	background-color: red;
-}
-
-.liCtrAb {
-	width: 100%;
-	float: left;
-	background-color: blue;
-}
-
-.liDch {
-	width: 20%;
-	float: left;
-}
-
-.liDchArrMenos {
-	width: 50%;
-	float: left;
-	background-color: silver;
-}
-
-.liDchArrMas {
-	width: 50%;
-	float: left;
-	background-color: purple;
-}
-
-.liDchAb {
-	width: 100%;
-	float: left;
-	background-color: yellow;
-}*/
-
-/********/
-/*PASO 3*/
-/********/
-
-.botonSalir {
-	margin-top: 2em;
-}
+/**************/
+/*   PASO 3   */
+/**************/
 
 #botPaypal {
 	width: 100%;
 	text-align: center;
-	margin-top: 2em;
+	margin-top: 1em;
 }
 
 #imgBotPaypal {
-	width: 95%;
+	width: 100%;
+	max-width: 350px;
 	height: auto;
+	margin-top: 1em;
 }
 
-/*--------------------*/
+.textoConf {
+	background-color: white;
+	border-radius: 1em;
+	border: 4px solid blue;
+	font-size: 1.2em;
+	padding: 1em;
+	float: left;
+}
+
+
+/***************/
+/*   DATEBOX   */
+/***************/
 
 /*Input (antes de pulsar y sacar el datebox)*/ 
 .ui-input-datebox{
 	width:98%;
 	background-image:none;
 	border-left:8px solid red;
-    font: bold 15px Arial, Helvetica;
-	padding:.4em;
-	line-height:1;
+	font: bold 1em Arial, Helvetica;
+	/*padding:.4em;
+	line-height:1;*/
 	display:block;
 	padding-top:0;
 	padding-bottom:0;
