@@ -64,7 +64,7 @@
 	<body>
 		<div id="reservaPage" data-role="page" data-add-back-btn=true>
 
-			<div data-role="header" data-theme="b">
+			<div data-role="header" data-theme="a">
 				<h1>Reserva</h1>
 			</div>
 
@@ -117,11 +117,7 @@
 						<div id="boxTelefono">
 							<label id="labelTelefono" for="telefono">Teléfono</label>
 							<input id="telefono" name="telefono" type="number" maxlength="10" placeholder="Teléfono" data-theme=b required>
-						</div>				
-						
-						<!--<div id="divSubmit">
-							<input id="botonReservar" data-theme=a type="button" value="Reservar">
-						</div>-->
+						</div>		
 					</form>
 				</div>
 				
@@ -157,13 +153,15 @@
 										</div>
 						        	</div>
 					        		<div id="liDchArrMenos1" class="liDchArrMenos">
-										<a href="#" data-role=button data-icon=minus data-theme=b data-iconpos=notext class="botonMenos" keyAttrMenos="menu1"></a>
+										<input data-icon=minus data-theme=a data-iconpos=notext class="botonMenos" keyAttrMenos="menu1" type="button" value="">
+										<!--<a id="botonMenos1" href="#" data-role=button data-icon=minus data-theme=a data-iconpos=notext class="botonMenos" keyAttrMenos="menu1"></a>-->
 									</div>
 									<div id="liDchAb1" keyAttr="menu1" class="liDchAb">
 										0
 									</div>
 									<div id="liDchArrMas1" class="liDchArrMas">
-										<a href="#" data-role=button data-icon=plus data-theme=b data-iconpos=notext class="botonMas" keyAttrMas="menu1"></a>
+										<input data-icon=plus data-theme=a data-iconpos=notext class="botonMas" keyAttrMas="menu1" type="button" value="">
+										<!--<a href="#" data-role=button data-icon=plus data-theme=a data-iconpos=notext class="botonMas" keyAttrMas="menu1"></a>-->
 									</div>
 					        	</div>
 					        </li>
@@ -178,13 +176,15 @@
 										</div>
 						        	</div>
 					        		<div id="liDchArrMenos2" class="liDchArrMenos">
-										<a href="#" data-role=button data-icon=minus data-theme=b data-iconpos=notext class="botonMenos" keyAttrMenos="menu2"></a>
+										<input data-icon=minus data-theme=a data-iconpos=notext class="botonMenos" keyAttrMenos="menu2" type="button" value="">
+										<!--<a href="#" data-role=button data-icon=minus data-theme=a data-iconpos=notext class="botonMenos" keyAttrMenos="menu2"></a>-->
 									</div>
 									<div id="liDchAb2" keyAttr="menu2" class="liDchAb">
 										0
 									</div>
 									<div id="liDchArrMas2" class="liDchArrMas">
-										<a href="#" data-role=button data-icon=plus data-theme=b data-iconpos=notext class="botonMas" keyAttrMas="menu2"></a>
+										<input data-icon=plus data-theme=a data-iconpos=notext class="botonMas" keyAttrMas="menu2" type="button" value="">
+										<!--<a href="#" data-role=button data-icon=plus data-theme=a data-iconpos=notext class="botonMas" keyAttrMas="menu2"></a>-->
 									</div>
 					        	</div>
 					        </li>
@@ -199,29 +199,38 @@
 										</div>
 						        	</div>
 						        	<div id="liDchArrMenos3" class="liDchArrMenos">
-										<a href="#" data-role=button data-icon=minus data-theme=b data-iconpos=notext class="botonMenos" keyAttrMenos="menu3"></a>
+										<input data-icon=minus data-theme=a data-iconpos=notext class="botonMenos" keyAttrMenos="menu3" type="button" value="">
+										<!--<a href="#" data-role=button data-icon=minus data-theme=a data-iconpos=notext class="botonMenos" keyAttrMenos="menu3"></a>-->
 									</div>
 									<div id="liDchAb3" keyAttr="menu3" class="liDchAb">
 										0
 									</div>
 									<div id="liDchArrMas3" class="liDchArrMas">
-										<a href="#" data-role=button data-icon=plus data-theme=b data-iconpos=notext class="botonMas" keyAttrMas="menu3"></a>
+										<input data-icon=plus data-theme=a data-iconpos=notext class="botonMas" keyAttrMas="menu3" type="button" value="">
+										<!--<a href="#" data-role=button data-icon=plus data-theme=a data-iconpos=notext class="botonMas" keyAttrMas="menu3"></a>-->
 									</div>
 					        	</div>
 					        </li>
 					    </ul>
 				   </div>	
 					
-					<div id="boxBotonConfirmar">
-						<a id="botonConfirmar" href="#" data-role=button data-theme=b>CONFIRMAR RESERVA</a>
+					<div id="boxBotonConfirmarSinPago" class="boxBotonConfirmar">
+						<input id="botonConfirmarSinPago" data-theme=a type="button" value="CONFIRMAR RESERVA">
+						<!--<a id="botonConfirmarSinPago" href="#" data-role=button data-theme=a>CONFIRMAR RESERVA</a>-->
 					</div>
+					
+					<div id="boxBotonConfirmarPago" class="boxBotonConfirmar">
+						<input id="botonConfirmarPago" data-theme=a type="button" value="CONFIRMAR RESERVA">
+						<!--<a id="botonConfirmarPago" href="#" data-role=button data-theme=a>CONFIRMAR RESERVA</a>-->
+					</div>
+					
 				</div>
 			</div>
 		</div>
 
 		<div id="confSinPagoPage" data-role="page" data-add-back-btn=true>
 			
-			<div data-role="header" data-theme="b">
+			<div data-role="header" data-theme="a">
 				<h1>Confirmaci&oacute;n</h1>
 			</div>
 			
@@ -232,7 +241,7 @@
 							3
 						</div>
 						<div id="encDchConfSinPagoPage" class="encabezadoDch">
-							RESERVAS
+							CONFIRMACI&Oacute;N
 						</div>
 					</div>
 				</div>
@@ -245,7 +254,7 @@
 		
 		<div id="confPagoPage" data-role="page" data-add-back-btn=true>
 			
-			<div data-role="header" data-theme="b">
+			<div data-role="header" data-theme="a">
 				<h1>Confirmaci&oacute;n</h1>
 			</div>
 			
@@ -257,7 +266,7 @@
 							3
 						</div>
 						<div id="encDchConfPagoPage" class="encabezadoDch">
-							RESERVAS
+							CONFIRMACI&Oacute;N
 						</div>
 					</div>
 				</div>

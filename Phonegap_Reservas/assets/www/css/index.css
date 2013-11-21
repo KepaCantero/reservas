@@ -3,6 +3,7 @@
 /*-------------*/
 
 /*.ui-page { 
+	background: #fbd1d1;
 	background-image: url("../img/granate.png");
 	background-repeat: repeat;    
 } 
@@ -18,7 +19,7 @@
 
 #formReserva label {
     font: bold 1em Arial, Helvetica;
-    color: blue;
+    color: black;
 }
 
 #formReserva label.error {
@@ -32,12 +33,12 @@
 }
 
 .encabezadoPaso {
-	width: 65%;
+	width: 100%;
 	height: 3em;
-	border-radius: 1em;
-	border: 4px solid blue;
-	background-color: white;
-	margin-bottom: 1em;
+	/*border-radius: 1em;
+	border: 4px solid black;
+	background-color: white;*/
+	margin-bottom: 2em;
 	margin-top: 0.5em;
 	margin-left: auto;
 	margin-right: auto;
@@ -45,12 +46,12 @@
 }
 
 #encabezadoMenus {
-	width: 65%;
+	width: 100%;
 	height: 3em;
-	border-radius: 1em;
-	border: 4px solid blue;
-	background-color: white;
-	margin-bottom: 1em;
+	/*border-radius: 1em;
+	border: 4px solid black;
+	background-color: white;*/
+	margin-bottom: 2em;
 	margin-top: 2em;
 	margin-left: auto;
 	margin-right: auto;
@@ -64,19 +65,24 @@
 	float: left;
 	font-size: 1.5em;
 	font-weight: bold;
+	border-bottom: 4px solid red;
+	border: 2px solid red;
 	text-align: center;
-	color: blue;
+	color: white;
+	background-color: red;
 }
 
 .encabezadoDch {
-	width: 80%;
+	width: 70%;
 	height: 2em;
 	line-height: 2em;
 	float: left;
 	font-size: 1.5em;
-	text-align: center;
+	padding-left: 5%;
+	border-bottom: 4px solid red;
+	text-align: left;
 	font-weight: bold;
-	color: blue;
+	color: black;
 }
 
 #formReserva input {
@@ -93,12 +99,20 @@
 	border:1px solid red;
 }
 
+#boxHora .ui-btn-text {
+	font: bold 1.2em Arial, Helvetica;
+}
+
 #hora + label.error{
 	border:1px solid red;
 }
 
 #mesa + label.error{
 	border:1px solid red;
+}
+
+#boxMesa .ui-btn-text {
+	font: bold 1.2em Arial, Helvetica;
 }
 
 #formReserva input.valid {
@@ -118,49 +132,55 @@
 
 .contLi {
 	width: 100%;
-	height: 4em;
+	height: 3em;
 	overflow: hidden;
 }
 
 .li-ctr {
 	width: 60%;
-	font-size: 1em;
-	line-height: 4em;
-	text-align: center;
+	height: 3em;
+	text-align: left;
 	float: left;
 }
 
 .liCtrArr {
 	width: 100%;
-	line-height: 2em;
-	color: green;
+	height: 1.5em;
+	line-height: 1.5em;
+	color: black;
 	float: left;
 }
 
 .liCtrAb {
 	width: 100%;
-	line-height: 2em;
-	color: blue;
+	height: 1.5em;
+	line-height: 1.5em;
+	color: red;
 	float: left;
 }
 
 .liDchArrMenos {
 	width: 10%;
-	line-height: 4em;
+	height: 3em;
+	line-height: 3em;
 	float: left;
 }
 
 .liDchArrMas {
 	width: 10%;
-	line-height: 4em;
+	height: 3em;
+	line-height: 3em;
 	float: left;
 }
 
 .liDchAb {
 	width: 20%;
-	float: left;
-	line-height: 4em;
+	height: 3em;
+	line-height: 3em;
+	font-size: 1.2em;
+	color: red;
 	text-align: center;
+	float: left;
 }
 
 .liDchArrMas .ui-icon {
@@ -171,6 +191,10 @@
 .liDchArrMenos .ui-icon {
 	background-color: transparent; 
 	box-shadow: none;
+}
+
+.boxBotonConfirmar {
+	margin-top: 1em;
 }
 
 /**************/
@@ -191,9 +215,9 @@
 }
 
 .textoConf {
-	background-color: white;
+	/*background-color: white;
 	border-radius: 1em;
-	border: 4px solid blue;
+	border: 4px solid black;*/
 	font-size: 1.2em;
 	padding: 1em;
 	float: left;
