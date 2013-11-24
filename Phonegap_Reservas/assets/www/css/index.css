@@ -14,8 +14,41 @@
 
 
 /*--------------*/
+/*----INICIO----*/
+/*--------------*/
+
+#contentInicioPage .ui-btn-text {
+	font: bold 1.4em Arial, Helvetica;
+	line-height: 1.7em;
+}
+
+#contentMenusPage .ui-btn-text {
+	font: bold 1.4em Arial, Helvetica;
+	line-height: 1.7em;
+}
+
+#contentMenuSelecPage .ui-btn-text {
+	font: bold 1.4em Arial, Helvetica;
+	line-height: 1.7em;
+}
+
+#contentModSelecPage .ui-btn-text {
+	font: bold 1.4em Arial, Helvetica;
+	line-height: 1.7em;
+}
+
+.divBoton {
+	margin-bottom: 1.2em;
+}
+
+/*--------------*/
 /*    PASO 1    */
 /*--------------*/
+
+#contentReservaPage .ui-btn-text {
+	font: bold 1.4em Arial, Helvetica;
+	line-height: 1.7em;
+}
 
 #formReserva label {
     font: bold 1em Arial, Helvetica;
@@ -35,27 +68,23 @@
 .encabezadoPaso {
 	width: 100%;
 	height: 3em;
-	/*border-radius: 1em;
-	border: 4px solid black;
-	background-color: white;*/
 	margin-bottom: 2em;
 	margin-top: 0.5em;
 	margin-left: auto;
 	margin-right: auto;
 	vertical-align: middle;
+	/*overflow-x: hidden;*/
 }
 
 #encabezadoMenus {
 	width: 100%;
 	height: 3em;
-	/*border-radius: 1em;
-	border: 4px solid black;
-	background-color: white;*/
 	margin-bottom: 2em;
 	margin-top: 2em;
 	margin-left: auto;
 	margin-right: auto;
 	vertical-align: middle;
+	/*overflow-x: hidden;*/
 }
 
 .encabezadoIzq {
@@ -65,11 +94,11 @@
 	float: left;
 	font-size: 1.5em;
 	font-weight: bold;
-	border-bottom: 4px solid red;
-	border: 2px solid red;
+	border-bottom: 4px solid #840026;
+	border: 2px solid #840026;
 	text-align: center;
 	color: white;
-	background-color: red;
+	background-color: #840026;
 }
 
 .encabezadoDch {
@@ -79,7 +108,7 @@
 	float: left;
 	font-size: 1.5em;
 	padding-left: 5%;
-	border-bottom: 4px solid red;
+	border-bottom: 4px solid #840026;
 	text-align: left;
 	font-weight: bold;
 	color: black;
@@ -94,6 +123,9 @@
 	border:1px solid red;
 }
 
+#formReserva input.valid {
+	border-left:8px solid green;
+}
 
 #fecha + label.error{
 	border:1px solid red;
@@ -115,14 +147,15 @@
 	font: bold 1.2em Arial, Helvetica;
 }
 
-#formReserva input.valid {
-	border-left:8px solid green;
-}
-
 
 /*--------------*/
 /*    PASO 2    */
 /*--------------*/
+
+#radioMenus .ui-btn-text {
+	font: bold 1.2em Arial, Helvetica;
+	line-height: 1.7em;
+}
 
 #listaNiveles li{
 	font-family: "customfont";
@@ -155,7 +188,7 @@
 	width: 100%;
 	height: 1.5em;
 	line-height: 1.5em;
-	color: red;
+	color: #840026;
 	float: left;
 }
 
@@ -178,7 +211,7 @@
 	height: 3em;
 	line-height: 3em;
 	font-size: 1.2em;
-	color: red;
+	color: #840026;
 	text-align: center;
 	float: left;
 }
@@ -215,9 +248,6 @@
 }
 
 .textoConf {
-	/*background-color: white;
-	border-radius: 1em;
-	border: 4px solid black;*/
 	font-size: 1.2em;
 	padding: 1em;
 	float: left;
@@ -295,4 +325,175 @@ lo que evita el jodido parpadeo.*/
 sobre un fondo gris.*/
 .ui-selectmenu {
 	padding : 3px;
+}
+
+
+/*************/
+/****MENÚS****/
+/*************/
+
+.divSubmit{
+	margin-top: 1.2em;
+}
+
+.divSubmit .ui-btn-text {
+	font: bold 1.4em Arial, Helvetica;
+	line-height: 1.7em;
+}
+
+#nombreDetalle{
+	width: 100%;
+	float: left;
+	color: #840026;
+	font-size: 1.15em;
+	font-weight: bold;
+	text-align: center;
+}
+
+#descDetalle{
+	width: 100%;
+	margin-top: 10px;
+	font-size: 1.05em;
+	float: left;
+	text-align: justify;
+}
+
+#contenedorFoto{
+	width: 100%;
+	float: left;
+	text-align: center;
+}
+
+#detalleAbajo{
+	margin-top: 10px;
+}
+
+#detalleIzquierda{
+	width: 50%;
+	float: left;
+}
+
+#menuDetalle{
+	width: 100%;
+	margin-top: 10px;
+	font-size: 1.05em;
+	float: left;
+}
+
+#categoriaDetalle{
+	width: 100%;
+	font-size: 1.05em;
+	float: left;
+	margin-top: 15px;
+}
+
+#detalleDerecha{
+	width: 50%;
+	float: left;
+}
+
+#precioDetalle{
+	width: 100%;
+	margin-top: 10px;
+	font-size: 1.15em;
+	font-weight: bold;
+	color: green;
+	text-align: right;
+	float: left;
+}
+
+/***************/
+/*AÑADIR PLATOS*/
+/***************/
+
+#formMenus label {
+    font: bold 1em Arial, Helvetica;
+    color: black;
+}
+
+#formMenus label.error {
+	font: bold 1em Arial, Helvetica;
+	color: red;
+}
+
+#formMenus input {
+	border-left:8px solid red;
+    font: bold 1.2em Arial, Helvetica;
+}
+
+#formMenus input.error{
+	border:1px solid red;
+}
+
+#formMenus input.valid {
+	border-left:8px solid green;
+}
+
+#formMenus textarea {
+	border-left:8px solid red;
+    font: bold 1.1em Arial, Helvetica;
+}
+
+#formMenus textarea.error{
+	border:1px solid red;
+}
+
+#formMenus textarea.valid {
+	border-left:8px solid green;
+}
+
+#boxInputCategoriaPlato .ui-btn-text {
+	font: bold 1.2em Arial, Helvetica;
+}
+
+#boxInputMenuPlato .ui-btn-text {
+	font: bold 1.2em Arial, Helvetica;
+}
+
+/******************/
+/*MODIFICAR PLATOS*/
+/******************/
+
+#formMenusMod label {
+    font: bold 1em Arial, Helvetica;
+    color: black;
+}
+
+#formMenusMod label.error {
+	font: bold 1em Arial, Helvetica;
+	color: red;
+}
+
+#formMenusMod input {
+	border-left:8px solid red;
+    font: bold 1.2em Arial, Helvetica;
+}
+
+#formMenusMod input.error{
+	border:1px solid red;
+}
+
+#formMenusMod input.valid {
+	border-left:8px solid green;
+}
+
+#formMenusMod textarea {
+	border-left:8px solid red;
+    font: bold 1.1em Arial, Helvetica;
+}
+
+#formMenusMod textarea.error{
+	border:1px solid red;
+}
+
+#formMenusMod textarea.valid {
+	border-left:8px solid green;
+}
+
+#boxInputCategoriaPlatoMod .ui-btn-text {
+	font: bold 1.2em Arial, Helvetica;
+}
+
+#boxInputMenuPlatoMod .ui-btn-text {
+	font: bold 1.2em Arial, Helvetica;
 }

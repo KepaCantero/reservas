@@ -13,9 +13,9 @@ var carro = {
     "menu3": {"item_name": "menu3", "amount": "30.00", "quantity": "0"}
 };
 
-/////////////////////////////////////////
-//BEGIN EVENTOS AL CARGARSE LAS PÁGINAS//
-/////////////////////////////////////////
+///////////////////////////
+//BEGIN EVENTOS GENERALES//
+///////////////////////////
 
 //Implementación de fastclick
 window.addEventListener('load', function() { 
@@ -35,6 +35,32 @@ $(document).delegate('#confPagoPage', 'pagecreate', function () {
 	}).ajaxComplete(function () { 
 		$.mobile.hidePageLoadingMsg(); 
 });
+
+/////////////////////////
+//END EVENTOS GENERALES//
+/////////////////////////
+
+
+/////////////////////////////////////////
+//BEGIN EVENTOS AL CARGARSE LAS PÁGINAS//
+/////////////////////////////////////////
+
+$('#inicioPage').bind('pagebeforeshow', function(event) {
+	$('#botMenusPage').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botMenusPage').unbind('vclick');
+		$.mobile.changePage ($("#menusPage"));
+	});
+	
+	$('#botReservasPage').bind('vclick', function(event) {
+		event.preventDefault(); 
+		event.stopImmediatePropagation(); 
+		$('#botReservasPage').unbind('vclick');
+		$.mobile.changePage ($("#reservaPage"));
+	});
+});
+
 
 $('#reservaPage').bind('pagebeforeshow', function(event) {
 	if (blackdatesPuestas == false){
@@ -143,82 +169,6 @@ $('#confPagoPage').bind('pagebeforeshow', function(event) {
 	
 });
 
-
-/*$('#reservaPage').bind('pageshow', function(event) {
-	if (reseteoParcial == false){
-		//Elementos del paso 1 (Reservas)
-		cleanFormReservas();
-		validateFormReservas();
-		$("#boxHora").hide();
-		$("#boxMesa").hide();
-		$("#boxNombre").hide();
-		$("#boxEmail").hide();
-		$("#boxTelefono").hide();
-		//Elementos del paso 2 (Menús)
-		$("#radioMenus").hide();
-		$("#listaExtMenus").hide();
-		$("#boxBotonConfirmar").hide();
-		$("#encIzqMenus").css("color", "#B3B3B3");
-		$("#encDchMenus").css("color", "#B3B3B3");
-		$(".liDchAb").html("0");
-		
-		//if ( $("input[type='radio']").is(":checked") ){
-			//$("input[type='radio'][checked]").removeAttr("checked");
-			//$("input[type='radio']").checkboxradio("refresh");
-		if ( $('#radio1Menu').is(":checked") ) {
-			$('#radio1Menu').removeAttr("checked");
-			$('#radio1Menu').checkboxradio("refresh");
-		} else if ( $('#radio2Menu').is(":checked") ) {
-			$('#radio2Menu').removeAttr("checked");
-			$('#radio2Menu').checkboxradio("refresh");
-			$('#radioMenus').bind('change', function(event) {
-			    if ($('input[name=radioMenu]:checked').val() == "si") {
-			    	$("#listaExtMenus").show();
-			    } else if ($('input[name=radioMenu]:checked').val() == "no") {
-			    	if ( !$('radio2Menu').is(':checked') ) {
-			    		confirmarReserva("1");
-			    		$('#radioMenus').unbind('change');
-			    	}
-			    }
-		    });
-		} else {
-			$('#radioMenus').bind('change', function(event) {
-			    if ($('input[name=radioMenu]:checked').val() == "si") {
-			    	$("#listaExtMenus").show();
-			    } else if ($('input[name=radioMenu]:checked').val() == "no") {
-			    	if ( !$('radio2Menu').is(':checked') ) {
-			    		confirmarReserva("1");
-			    		$('#radioMenus').unbind('change');
-			    	}
-			    }
-		    });
-		}
-		
-	} else {
-		reseteoParcial = false;
-	}
-	
-	
-	//Digan lo que digan los ejemplos por ahÃƒÂ­, lo que va en el segundo parÃƒÂ©ntesis debe ser "mobile-datebox"
-	//y no solo "datebox". Esto se debe a un cambio introducido en JQuery Mobile 1.2 o algo asÃƒÂ­.
-	var fechas = ["2013-08-10",'2013-08-20', '2013-08-30'];
-	$('#fecha').data('mobile-datebox').options.blackDates = fechas;
-	
-	//Esta lÃƒÂ­nea la proponÃƒÂ­a el creador del DateBox para optimizar el rendimiento:
-	//$('#fecha').data('mobile-datebox').options.blackDates = $(element).data('datebox')._fixArray(fechas);
-	
-	//setColours();
-		
-});*/
-
-/*$('#fecha').bind('datebox', function (e, pressed) {
-	setColours();
-});
-	
-$('.ui-datebox-gridplus, .ui-datebox-gridminus').bind('click', function(){
-     setColours();
-});*/
-
 ///////////////////////////////////////
 //END EVENTOS AL CARGARSE LAS PÁGINAS//
 ///////////////////////////////////////
@@ -297,16 +247,16 @@ $('#email').bind('keyup', function(event) {
 });
 
 //Validación paso 1 (Reserva)
-$(':input').bind('keyup', function(event) {
+$('#formReserva :input').bind('keyup', function(event) {
 	$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
 	//Y esto valida todo el formulario solo cuando ya se ha metido info en los tres text inputs.
 	if ($('#nombre').val().length > 1 && $('#email').val().length > 1 && $('#telefono').val().length > 1 ){
 		if ( $('#formReserva').valid() ) {			
-			$("#encIzqMenus").css("background-color", "red");
+			$("#encIzqMenus").css("background-color", "#840026");
 			$("#encDchMenus").css("color", "black");
-			$("#encIzqMenus").css("border-bottom", "4px solid red");
-			$("#encIzqMenus").css("border", "2px solid red");
-			$("#encDchMenus").css("border-bottom", "4px solid red");
+			$("#encIzqMenus").css("border-bottom", "4px solid #840026");
+			$("#encIzqMenus").css("border", "2px solid #840026");
+			$("#encDchMenus").css("border-bottom", "4px solid #840026");
 			
 			$("#radioMenus").show();
 			var target = $( $("#radioMenus") ).get(0).offsetTop;
@@ -588,10 +538,16 @@ function confirmarReserva(tipoPago) {
 			success: function(obj){
 				if (obj == ""){
 					if (tipoPago == "1") {
-						$.mobile.changePage($("#confSinPagoPage"));
+						$.mobile.changePage ($("#confSinPagoPage"), { 
+							reverse: false, 
+							changeHash: false 
+						});
 						reseteoParcial = false;
 					} else if (tipoPago == "2"){
-						$.mobile.changePage($("#confPagoPage"));
+						$.mobile.changePage ($("#confPagoPage"), { 
+							reverse: false, 
+							changeHash: false 
+						});
 						reseteoParcial = false;
 					}
 					/*alert("Reserva realizada");
@@ -600,16 +556,14 @@ function confirmarReserva(tipoPago) {
 					blackdatesPuestas = false; //Esto hace que tras el reinicio se esatablezcan las blackdates y se abra el calendario
 				} else {
 					alert(obj); //Esto muestra los errores de validación en PHP, es solo para desarrollo
-					reseteoParcial = true;
 				}
 			},
 			error: function(error) {
 				alert(error);
-				reseteoParcial = true;
 			}
 		});
 	} else {
-		reseteoParcial = true;
+		alert("Hay errores en los datos introducidos");
 	}
 }
 
@@ -773,14 +727,10 @@ function pagar() {
 	//una vez realizado el pago.
 	var ref = window.open(encodeURI(url), '_blank', 'location=yes,closebuttoncaption=Cerrar');
 	//Este evento se dispara cuando el inAppBrowser ha empezado a cargar la url (se ha abierto)
-	ref.addEventListener('loadstart', function() { 
-		//$.mobile.hidePageLoadingMsg();
+	ref.addEventListener('loadstart', function() {
 		d = new Date();
 		$("#imgBotPaypal").attr("src", "img/bot_pagar_ahora.png?" + d.getTime());
-	});
-	//Este evento se dispara cuando el inAppBrowser se ha cerrado
-	ref.addEventListener('exit', function() {
-		$.mobile.changePage ($("#reservaPage"), { 
+		$.mobile.changePage ($("#inicioPage"), { 
 			reverse: false, 
 			changeHash: false 
 		});

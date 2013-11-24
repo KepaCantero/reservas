@@ -14,6 +14,7 @@
 		<script src="js/jqm-datebox.core.min.js"></script>
 		<script src="js/jqm-datebox.mode.calbox.min.js"></script>
 		<script src="js/jquery.validate.min.js"></script>
+		<script src="js/jquery.elastic.source.js"></script>
 		<script src="js/fastclick.js"></script>
 
 		<!--Este script debe ir aquÃ­ para que cambie la configuraciÃ³n del datepicker-->
@@ -62,13 +63,33 @@
 	</head>
 
 	<body>
-		<div id="reservaPage" data-role="page" data-add-back-btn=true>
+		
+		<div id="inicioPage" data-role="page">		
+			<div data-role=header>
+				<h1>Inicio</h1>
+			</div>	
+			<div id="contentInicioPage" data-role="content">	
+				<div class="divBoton">
+					<input id="botMenusPage" data-theme=a type=button value="MENÚS" />		
+				</div>
+				
+				<div class="divBoton">
+					<input id="botReservasPage" data-theme=a type=button value="RESERVAS" />
+				</div>
+			</div>
+		</div>
+		
+		<!---------------------->
+		<!-------RESERVAS------->
+		<!---------------------->
+		
+		<div id="reservaPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
 
 			<div data-role="header" data-theme="a">
 				<h1>Reserva</h1>
 			</div>
 
-			<div data-role="content">
+			<div id="contentReservaPage" data-role="content">
 				
 				<div id="pasoReserva">
 					
@@ -136,7 +157,7 @@
 					<div id="radioMenus" data-role=controlgroup>
 						<label for="radio1Menu">Quiero elegir men&uacute;.</label>
 						<input type=radio id="radio1Menu" name="radioMenu" value="si"/>
-						<label for="radio2Menu">No gracias, no quiero elegir men&uacute;.</label>
+						<label for="radio2Menu">No quiero elegir men&uacute;.</label>
 						<input type=radio id="radio2Menu" name="radioMenu" value="no"/>
 					</div>
 					
@@ -228,7 +249,7 @@
 			</div>
 		</div>
 
-		<div id="confSinPagoPage" data-role="page" data-add-back-btn=true>
+		<div id="confSinPagoPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
 			
 			<div data-role="header" data-theme="a">
 				<h1>Confirmaci&oacute;n</h1>
@@ -252,7 +273,7 @@
 			</div>
 		</div>
 		
-		<div id="confPagoPage" data-role="page" data-add-back-btn=true>
+		<div id="confPagoPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
 			
 			<div data-role="header" data-theme="a">
 				<h1>Confirmaci&oacute;n</h1>
@@ -284,13 +305,200 @@
 			</div>
 		</div>
 
-		<!--Esta div la creo para que el botón de submit se resetee tras enviar
- 			la info. He probado sin éxito un montón de sistemas con los que se supone que
- 			debería funcionar.-->
-		<!--<div id="resetPage" data-role="page">
-		</div>-->
 
-		<script src="js/index.js"></script>
+		<!------------------->
+		<!-------MENÚS------->
+		<!------------------->
+
+		<div id="menusPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">		
+			<div data-role=header>
+				<h1>Men&uacute;s</h1>
+			</div>	
+			<div id="contentMenusPage" data-role="content">	
+				<div class="divBoton">
+					<input id="botElegirMenus" class="boton" data-theme=a type=button value="Consultar menús" />		
+				</div>
+				
+				<div class="divBoton">
+					<input id="botCrearPlatos" class="boton" data-theme=a type=button value="Añadir platos" />
+				</div>
+				
+				<div class="divBoton">
+					<input id="botModificarPlatos" class="boton" data-theme=a type=button value="Modificar platos" />
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="menuSelecPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
+			<div data-role=header>
+				<h1>Menús a consultar</h1>
+			</div>
+			<div id="contentMenuSelecPage" data-role="content">
+				<div class="divBoton">
+					<input id="botMenuDia" class="boton" data-theme=a type=button value="Menú del día" />		
+				</div>
+				
+				<div class="divBoton">
+					<input id="botMenuEspecial" class="boton" data-theme=a type=button value="Menú especial" />		
+				</div>
+				
+				<div class="divBoton">
+					<input id="botMenuCarta" class="boton" data-theme=a type=button value="Carta" />
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="menuListaPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
+			<div data-role=header>
+				<h1>Platos</h1>
+			</div>
+			<div id="contenedorMenuLista" data-role="content">
+				<ul id="listaItems" data-role=listview data-inset="true" data-autodividers="true" data-divider-theme="a">
+				</ul>
+			</div>
+		</div>
+		
+		
+		<div id="detallePlatoPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
+			<div data-role=header>
+				<h1>Plato</h1>
+			</div>
+			<div id="contenedorDetalle" data-role="content">
+				<div id="nombreDetalle">
+				</div>
+				<div id="descDetalle">
+				</div>
+				<div id="contenedorFoto">
+				</div>
+				<div id="detalleIzquierda">
+					<div id="menuDetalle">
+					</div>
+					<div id="categoriaDetalle">
+					</div>
+				</div>
+				<div id="detalleDerecha">
+					<div id="precioDetalle">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="crearPlatosPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
+			<div data-role=header>
+				<h1>Añadir platos</h1>
+			</div>
+			<div id="contenedorCrearPlatos" data-role="content">
+				
+				<form id="formMenus">
+					
+					<label for="inputNombrePlato">Nombre del plato</label>
+					<input id="inputNombrePlato" name="inputNombrePlato" type="text" maxlength="80" placeholder="Nombre del plato" required></input>
+					
+					<label for="inputDescPlato">Descripci&oacute;n</label>
+					<textarea id="inputDescPlato" name="inputDescPlato" type="text" maxlength="250" placeholder="Descripción" required></textarea>
+					
+					<label for="inputPrecioPlato">Precio</label>
+					<input id="inputPrecioPlato" name="inputPrecioPlato" type="number" placeholder="Precio" required></input>
+					
+					<div id="boxInputCategoriaPlato">
+						<label for="inputCategoriaPlato">Categor&iacute;a</label>
+						<select id="inputCategoriaPlato" name="inputCategoriaPlato" class="needsclick" data-native-menu=false data-theme=c required>
+							<option data-placeholder="true">Categor&iacute;a</option>
+						</select>
+					</div>
+					
+					<div id="boxInputMenuPlato">
+						<label for="inputMenuPlato">Men&uacute;</label>
+						<select id="inputMenuPlato" name="inputMenuPlato" class="needsclick" data-native-menu=false data-theme=c required>
+							<option data-placeholder="true">Men&uacute;</option>
+						</select>
+					</div>
+										
+				</form>
+				
+				<div id="divSubmit" class="divSubmit">
+					<input id="submitPlato" data-theme=a type="button" value="Añadir plato" data-theme=a></input>
+				</div>
+				
+			</div>
+		</div>
+	 
+	 
+	 	<div id="modSelecPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
+			<div data-role=header>
+				<h1>Menús a modificar</h1>
+			</div>
+			<div id="contentModSelecPage" data-role="content">
+				<div class="divBoton">
+					<input id="botMenuDiaMod" class="boton" data-theme=a type=button value="Menú del día" />		
+				</div>
+				
+				<div class="divBoton">
+					<input id="botMenuEspecialMod" class="boton" data-theme=a type=button value="Menú especial" />		
+				</div>
+				
+				<div class="divBoton">
+					<input id="botMenuCartaMod" class="boton" data-theme=a type=button value="Carta" />
+				</div>
+			</div>
+		</div>
+	 
+	 	<div id="listaModificarPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
+			<div data-role=header>
+				<h1>Modificar platos</h1>
+			</div>
+			<div id="contenedorListaModificar" data-role="content">
+				<ul id="listaItemsModificar" data-role=listview data-inset="true" data-autodividers="true" data-divider-theme="a"> <!--data-filter="true"-->
+				</ul>
+			</div>
+		</div>
+	 
+	 
+	 	<div id="modificarPlatosPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
+			<div data-role=header>
+				<h1>Modificar plato</h1>
+			</div>
+			<div id="contenedorModificarPlato" data-role="content">
+				<form id="formMenusMod">
+					
+					<label for="inputNombrePlatoMod">Nombre del plato</label>
+					<input id="inputNombrePlatoMod" name="inputNombrePlatoMod" type="text" maxlength="80" placeholder="Nombre del plato" required>
+					
+					<label for="inputDescPlatoMod">Descripci&oacute;n</label>
+					<textarea id="inputDescPlatoMod" name="inputDescPlatoMod" type="text" maxlength="250" placeholder="Descripción" required></textarea>
+					
+					<label for="inputPrecioPlatoMod">Precio</label>
+					<input id="inputPrecioPlatoMod" name="inputPrecioPlatoMod" type="number" placeholder="Precio" required>
+					
+					<div id="boxInputCategoriaPlatoMod">
+						<label for="inputCategoriaPlatoMod">Categor&iacute;a</label>
+						<select id="inputCategoriaPlatoMod" name="inputCategoriaPlatoMod" class="needsclick" data-native-menu=false data-theme=c required>
+							<option data-placeholder="true">Categor&iacute;a</option>
+						</select>
+					</div>
+					
+					<div id="boxInputMenuPlatoMod">
+						<label for="inputMenuPlatoMod">Men&uacute;</label>
+						<select id="inputMenuPlatoMod" name="inputMenuPlatoMod" class="needsclick" data-native-menu=false data-theme=c required>
+							<option data-placeholder="true">Men&uacute;</option>
+						</select>
+					</div>
+										
+				</form>
+				
+				<div id="divSubmitMod" class="divSubmit">
+					<input id="submitPlatoMod" data-theme=a type="button" value="Modificar plato"></input>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<script src="js/reservas.js"></script>
+		<script src="js/menus.js"></script>
 
 	</body>
 </html>
