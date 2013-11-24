@@ -2,6 +2,7 @@ var hora;
 var fecha;
 var urlHoras;
 var urlMesas;
+var menusMax = parseInt("0");
 var horaElegida = false;
 var blackdates = [];
 var reseteoParcial = false;
@@ -79,6 +80,7 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 	if (reseteoParcial == false) {
 		//Elementos del paso 1 (Reservas)
 		cleanFormReservas();
+		menusMax = parseInt("0");
 		validateFormReservas();
 		$("#boxHora").hide();
 		$("#boxMesa").hide();
@@ -222,7 +224,8 @@ $('#mesa').bind('change', function(event) {
 		$('#boxNombre').show();
 		var target = $( $("#boxNombre") ).get(0).offsetTop;
 		$.mobile.silentScroll(target);
-		$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.		
+		$('#nombre').focus(); //Este comando funciona en iOS pero no en Android.
+		menusMax = parseInt( $('#mesa').find(":selected").attr('personas') );		
 	}
 });
 
@@ -362,6 +365,7 @@ function getMesas() {
 		var list = "";		
 		$.each(mesas, function(index, mesa) {
 			list += '<option value=' + mesa.mesaID +
+				' personas=' + mesa.personas +
 				'>' + mesa.comensales + 
 				'</option>';
 		});
@@ -642,6 +646,9 @@ function sumarProducto(key) {
 	$('div[keyAttr = "' + String(key) + '"]').html(carro[key].quantity);
 	if (parseInt(carro[key].quantity) > 0) {
 		$('input[keyAttrMenos = "' + String(key) + '"]').button("enable");
+		if (cantidadMenus() == menusMax) {
+			$(".botonMas").button("disable");
+		}
 	}
 	if ( !$('#boxBotonConfirmarPago').is(':visible') ) {
 		$('#boxBotonConfirmarPago').show();
@@ -657,10 +664,12 @@ function restarProducto(key) {
 		if ( isCarroEmpty() ) {
 			$('#boxBotonConfirmarPago').hide();
 		}
-		
 	}
 	if (parseInt(carro[key].quantity) == 0) {
 		$('input[keyAttrMenos = "' + String(key) + '"]').button("disable");
+	}
+	if (cantidadMenus() < menusMax) {
+		$(".botonMas").button("enable");
 	}
 }
 
@@ -677,13 +686,24 @@ function isCarroEmpty() {
 	return true;	
 }
 
+function cantidadMenus() {
+	var menusElegidos = parseInt("0");
+	for (var key in carro) { //Iteración por keys, da igual el orden o la cantidad de objetos.
+		var entry = carro[key];
+		//Confirmación de que el objeto encontrado tiene la propiedad a cambiar (evita errores sutiles).
+		if (entry.hasOwnProperty("quantity")) {
+			menusElegidos += parseInt( entry.quantity );
+		}
+	}
+	return menusElegidos;
+}
+
 function vaciarCarro() {
 	for (var key in carro) { //Iteración por keys, da igual el orden o la cantidad de objetos.
 		var entry = carro[key];
 		//Confirmación de que el objeto encontrado tiene la propiedad a cambiar (evita errores sutiles).
 		if (entry.hasOwnProperty("quantity")) {
 			entry.quantity = 0;
-			//carro[key] = entry;
 		}
 	}
 }
