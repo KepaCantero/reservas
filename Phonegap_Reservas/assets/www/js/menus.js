@@ -387,7 +387,7 @@ function listMenuItems(json){
 		$("#contenedorFoto").html("<div id='contenedorFoto'>" + "<img src='img/cordova.png'>" + "</div>");
 		$("#menuDetalle").html("<div id='menuDetalle'>" + arrayMenus[json[$(this).index() - $(this).attr('categoriaid')].menuID - 1] + "</div>");
 		$("#categoriaDetalle").html("<div id='categoriaDetalle'>" + arrayCategorias[json[$(this).index() - $(this).attr('categoriaid')].categoriaID - 1]  + "</div>");
-		$("#precioDetalle").html("<div id='precioDetalle'>" + "Precio:\n" + json[$(this).index() - $(this).attr('categoriaid')].precioItem + " €" + "</div>");
+		$("#precioDetalle").html("<div id='precioDetalle'>" + "<span style='color:black'>Precio:</span><br/><br/><span style='font-size:1.3em'>" + json[$(this).index() - $(this).attr('categoriaid')].precioItem + " €" + "</div>");
 		$.mobile.changePage ($("#detallePlatoPage"));
 	});
 
