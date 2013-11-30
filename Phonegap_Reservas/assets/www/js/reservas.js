@@ -18,6 +18,10 @@ var carro = {
 //BEGIN EVENTOS GENERALES//
 ///////////////////////////
 
+$(document).bind("mobileinit", function(){
+	$.mobile.page.prototype.options.backBtnTheme = "e";
+});
+
 //Implementación de fastclick
 window.addEventListener('load', function() { 
 	FastClick.attach(document.body); 
@@ -96,10 +100,12 @@ $('#reservaPage').bind('pagebeforeshow', function(event) {
 		$("#boxBotonConfirmarSinPago").hide();
 		$("#boxBotonConfirmarPago").hide();
 		$("#encIzqMenus").css("background-color", "#9f9f9f");
-		$("#encDchMenus").css("color", "#838383");
 		$("#encIzqMenus").css("border-bottom", "4px solid #9f9f9f");
 		$("#encIzqMenus").css("border", "2px solid #9f9f9f");
+		$("#encIzqMenus").css("color", "#838383");
+		
 		$("#encDchMenus").css("border-bottom", "4px solid #9f9f9f");
+		$("#encDchMenus").css("color", "#838383");
 		
 		$(".liDchAb").html("0");		
 		
@@ -256,9 +262,10 @@ $('#formReserva :input').bind('keyup', function(event) {
 	if ($('#nombre').val().length > 1 && $('#email').val().length > 1 && $('#telefono').val().length > 1 ){
 		if ( $('#formReserva').valid() ) {			
 			$("#encIzqMenus").css("background-color", "#e95d0f");
-			$("#encDchMenus").css("color", "black");
+			$("#encIzqMenus").css("color", "white");
 			$("#encIzqMenus").css("border-bottom", "4px solid #e95d0f");
 			$("#encIzqMenus").css("border", "2px solid #e95d0f");
+			$("#encDchMenus").css("color", "black");
 			$("#encDchMenus").css("border-bottom", "4px solid #e95d0f");
 			
 			$("#radioMenus").show();
@@ -516,9 +523,10 @@ function validateFormReservas(){
 
 function hidePaso2() {	
 	$("#encIzqMenus").css("background-color", "#9f9f9f");
-	$("#encDchMenus").css("color", "#838383");
+	$("#encIzqMenus").css("color", "#838383");
 	$("#encIzqMenus").css("border-bottom", "4px solid #9f9f9f");
 	$("#encIzqMenus").css("border", "2px solid #9f9f9f");
+	$("#encDchMenus").css("color", "#838383");
 	$("#encDchMenus").css("border-bottom", "4px solid #9f9f9f");
 	resetRadio();     
 	$("#radioMenus").hide();

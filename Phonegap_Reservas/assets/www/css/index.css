@@ -44,9 +44,9 @@
 #inicioPage .ui-listview .ui-btn .ui-li { border: none; }
 #inicioPage .ui-listview .ui-btn .ui-li .ui-icon { display: none; }
 #inicioPage .ui-listview .ui-btn .ui-li .ui-link-inherit { 
-	font-size: .90em; 
+	font-size: 1em; 
 	font-weight: bold; 
-	padding: 90px 0px 0px 0px;
+	padding: 95px 0px 0px 0px;
 	text-align: center;
 	text-shadow: 2px 2px #e95d0f;
 	line-height: 100%;
@@ -295,6 +295,8 @@
 	font-size: 1.2em;
 	padding: 1em;
 	float: left;
+	background-color: #ffffff;
+	border-radius: 0.5em;
 }
 
 
@@ -378,12 +380,12 @@ sobre un fondo gris.*/
 
 #listaItems .ui-li-divider {
     font-size: 1.1em;
-    color: #e95d0f;
+    /*color: #e95d0f;*/
 }
 
 #listaItemsModificar .ui-li-divider {
     font-size: 1.1em;
-    color: #e95d0f;
+    /*color: #e95d0f;*/
 }
 
 #nombreDetalle{
