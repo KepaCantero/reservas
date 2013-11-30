@@ -65,16 +65,28 @@
 	<body>
 		
 		<div id="inicioPage" data-role="page">		
-			<div data-role=header>
+			<!--<div data-role=header>
 				<h1>Inicio</h1>
-			</div>	
+			</div>-->	
 			<div id="contentInicioPage" data-role="content">	
-				<div class="divBoton">
+				<!--<div class="divBoton">
 					<input id="botMenusPage" data-theme=a type=button value="MENÚS" />		
 				</div>
 				
 				<div class="divBoton">
 					<input id="botReservasPage" data-theme=a type=button value="RESERVAS" />
+				</div>-->
+				
+				<div id="boxBuho">
+					<img id="imgBuho" src="img/buho_cocinero_texto.png">
+				</div>
+				<div>
+					<ul data-role="listview">
+						<li class="btn_a"><a href="#reservaPage">Reservas</a></li>
+			            <li class="btn_s"><a href="#menuSelecPage">Menús</a></li>
+						<li class="btn_l"><a href="#crearPlatosPage">Nuevo<br/>plato</a></li>
+						<li class="btn_c"><a href="#modSelecPage">Cambiar<br/>platos</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -236,12 +248,12 @@
 				   </div>	
 					
 					<div id="boxBotonConfirmarSinPago" class="boxBotonConfirmar">
-						<input id="botonConfirmarSinPago" data-theme=a type="button" value="CONFIRMAR RESERVA">
+						<input id="botonConfirmarSinPago" data-theme=f type="button" value="CONFIRMAR RESERVA">
 						<!--<a id="botonConfirmarSinPago" href="#" data-role=button data-theme=a>CONFIRMAR RESERVA</a>-->
 					</div>
 					
 					<div id="boxBotonConfirmarPago" class="boxBotonConfirmar">
-						<input id="botonConfirmarPago" data-theme=a type="button" value="CONFIRMAR RESERVA">
+						<input id="botonConfirmarPago" data-theme=f type="button" value="CONFIRMAR RESERVA">
 						<!--<a id="botonConfirmarPago" href="#" data-role=button data-theme=a>CONFIRMAR RESERVA</a>-->
 					</div>
 					
@@ -332,11 +344,11 @@
 		
 		<div id="menuSelecPage" data-role="page" data-add-back-btn=true data-back-btn-text="atrás">
 			<div data-role=header>
-				<h1>Menús a consultar</h1>
+				<h1>Menús</h1>
 			</div>
 			<div id="contentMenuSelecPage" data-role="content">
 				<div class="divBoton">
-					<input id="botMenuDia" class="boton" data-theme=a type=button value="Menú del día" />		
+					<input id="botMenuDia" class="boton" data-theme=c type=button value="Menú del día" />		
 				</div>
 				
 				<div class="divBoton">
@@ -344,7 +356,7 @@
 				</div>
 				
 				<div class="divBoton">
-					<input id="botMenuCarta" class="boton" data-theme=a type=button value="Carta" />
+					<input id="botMenuCarta" class="boton" data-theme=f type=button value="Carta" />
 				</div>
 			</div>
 		</div>
@@ -355,7 +367,7 @@
 				<h1>Platos</h1>
 			</div>
 			<div id="contenedorMenuLista" data-role="content">
-				<ul id="listaItems" data-role=listview data-inset="true" data-autodividers="true" data-divider-theme="a">
+				<ul id="listaItems" data-role=listview data-autodividers="true" data-inset="true" data-divider-theme="a"><!--data-inset="true" -->
 				</ul>
 			</div>
 		</div>
@@ -420,7 +432,7 @@
 				</form>
 				
 				<div id="divSubmit" class="divSubmit">
-					<input id="submitPlato" data-theme=a type="button" value="Añadir plato" data-theme=a></input>
+					<input id="submitPlato" data-theme=f type="button" value="Añadir plato" data-theme=a></input>
 				</div>
 				
 			</div>
@@ -433,7 +445,7 @@
 			</div>
 			<div id="contentModSelecPage" data-role="content">
 				<div class="divBoton">
-					<input id="botMenuDiaMod" class="boton" data-theme=a type=button value="Menú del día" />		
+					<input id="botMenuDiaMod" class="boton" data-theme=c type=button value="Menú del día" />		
 				</div>
 				
 				<div class="divBoton">
@@ -441,7 +453,7 @@
 				</div>
 				
 				<div class="divBoton">
-					<input id="botMenuCartaMod" class="boton" data-theme=a type=button value="Carta" />
+					<input id="botMenuCartaMod" class="boton" data-theme=f type=button value="Carta" />
 				</div>
 			</div>
 		</div>
@@ -451,7 +463,7 @@
 				<h1>Modificar platos</h1>
 			</div>
 			<div id="contenedorListaModificar" data-role="content">
-				<ul id="listaItemsModificar" data-role=listview data-inset="true" data-autodividers="true" data-divider-theme="a"> <!--data-filter="true"-->
+				<ul id="listaItemsModificar" data-role=listview data-autodividers="true" data-inset="true" data-divider-theme="a"> <!--data-inset="true" data-filter="true"-->
 				</ul>
 			</div>
 		</div>
@@ -490,7 +502,7 @@
 				</form>
 				
 				<div id="divSubmitMod" class="divSubmit">
-					<input id="submitPlatoMod" data-theme=a type="button" value="Modificar plato"></input>
+					<input id="submitPlatoMod" data-theme=f type="button" value="Modificar plato"></input>
 				</div>
 				
 			</div>

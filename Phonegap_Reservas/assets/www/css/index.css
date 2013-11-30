@@ -2,20 +2,64 @@
 /*   GENERAL   */
 /*-------------*/
 
-/*.ui-page { 
+.ui-page { 
 	background: #fbd1d1;
-	background-image: url("../img/granate.png");
+	background-image: url("../img/azul.png");
 	background-repeat: repeat;    
 } 
 
 .ui-content{ 
 	background: transparent; 
-}*/
+}
 
 
 /*--------------*/
 /*----INICIO----*/
 /*--------------*/
+
+#boxBuho {
+	width: 100%;
+	text-align: center;
+	margin-bottom: 2em;
+}
+
+#imgBuho {
+	max-width: 85%;
+	max-height: 125px;
+	padding-bottom: 0.5em;
+	border-bottom: 4px solid #e95d0f;
+}
+
+/*******EJEMPLO DE ADOBE************/
+
+#inicioPage .ui-listview { text-align: center;}
+#inicioPage .ui-listview .ui-btn {
+	width: 90px;
+	display: inline-block;
+	background: url("../img/home_buttons_mios.png") no-repeat 0px 0px;
+	border: none;
+	margin: 0px 20px 20px 20px;
+}
+
+#inicioPage .ui-listview .ui-btn .ui-li { border: none; }
+#inicioPage .ui-listview .ui-btn .ui-li .ui-icon { display: none; }
+#inicioPage .ui-listview .ui-btn .ui-li .ui-link-inherit { 
+	font-size: .90em; 
+	font-weight: bold; 
+	padding: 90px 0px 0px 0px;
+	text-align: center;
+	text-shadow: 2px 2px #e95d0f;
+	line-height: 100%;
+	overflow: visible;
+	
+}
+
+#inicioPage .ui-listview .ui-btn.btn_a { background-position: 0px 0px; }
+#inicioPage .ui-listview .ui-btn.btn_s { background-position: -90px 0px; }
+#inicioPage .ui-listview .ui-btn.btn_l { background-position: -180px 0px; }
+#inicioPage .ui-listview .ui-btn.btn_c { background-position: -270px 0px; }
+
+/*************************/
 
 #contentInicioPage .ui-btn-text {
 	font: bold 1.4em Arial, Helvetica;
@@ -94,11 +138,11 @@
 	float: left;
 	font-size: 1.5em;
 	font-weight: bold;
-	border-bottom: 4px solid #840026;
-	border: 2px solid #840026;
+	border-bottom: 4px solid #e95d0f;
+	border: 2px solid #e95d0f;
 	text-align: center;
 	color: white;
-	background-color: #840026;
+	background-color: #e95d0f;
 }
 
 .encabezadoDch {
@@ -108,7 +152,7 @@
 	float: left;
 	font-size: 1.5em;
 	padding-left: 5%;
-	border-bottom: 4px solid #840026;
+	border-bottom: 4px solid #e95d0f;
 	text-align: left;
 	font-weight: bold;
 	color: black;
@@ -188,7 +232,7 @@
 	width: 100%;
 	height: 1.5em;
 	line-height: 1.5em;
-	color: #840026;
+	color: #e95d0f;
 	float: left;
 }
 
@@ -211,7 +255,7 @@
 	height: 3em;
 	line-height: 3em;
 	font-size: 1.2em;
-	color: #840026;
+	color: #e95d0f;
 	text-align: center;
 	float: left;
 }
@@ -332,19 +376,20 @@ sobre un fondo gris.*/
 /****MENÚS****/
 /*************/
 
-.divSubmit{
-	margin-top: 1.2em;
+#listaItems .ui-li-divider {
+    font-size: 1.1em;
+    color: #e95d0f;
 }
 
-.divSubmit .ui-btn-text {
-	font: bold 1.4em Arial, Helvetica;
-	line-height: 1.7em;
+#listaItemsModificar .ui-li-divider {
+    font-size: 1.1em;
+    color: #e95d0f;
 }
 
 #nombreDetalle{
 	width: 100%;
 	float: left;
-	color: #840026;
+	color: #e95d0f;
 	font-size: 1.15em;
 	font-weight: bold;
 	text-align: center;
@@ -449,6 +494,16 @@ sobre un fondo gris.*/
 #boxInputMenuPlato .ui-btn-text {
 	font: bold 1.2em Arial, Helvetica;
 }
+
+.divSubmit{
+	margin-top: 1.2em;
+}
+
+.divSubmit .ui-btn-text {
+	font: bold 1.4em Arial, Helvetica;
+	line-height: 1.7em;
+}
+
 
 /******************/
 /*MODIFICAR PLATOS*/

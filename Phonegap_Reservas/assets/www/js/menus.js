@@ -17,12 +17,12 @@ var urlMenus = "http://kometa.pusku.com/form/getmenus.php";
 //BEGIN EVENTOS AL CARGARSE LAS PÁGINAS//
 /////////////////////////////////////////
 
-/*document.addEventListener("deviceready", function(){ 
+document.addEventListener("deviceready", function(){ 
 	if (arrayMenus.length == 0 & arrayCategorias.length == 0) {
 		getCategorias();
 		getMenus();
 	}
-});*/
+});
 
 
 /* Estos preventDefault y unbind sirven para que los botones no propaguen
@@ -31,12 +31,7 @@ var urlMenus = "http://kometa.pusku.com/form/getmenus.php";
  * cada vez que se muestra el botón.
  */
 $('#menusPage').bind('pageshow', function(event) {
-	
-	if (arrayMenus.length == 0 & arrayCategorias.length == 0) {
-		getCategorias();
-		getMenus();
-	}
-	
+		
 	$('#botElegirMenus').bind('vclick', function(event) {
 		event.preventDefault(); 
 		event.stopImmediatePropagation(); 
@@ -367,12 +362,12 @@ function listMenuItems(json){
 			"<li categoria='" + arrayCategorias[menuItem.categoriaID - 1] + 
 				"' categoriaid='" + menuItem.categoriaID +
 				"'>" +
-		        "<a href=#>" +
-		        "<img class='imagen' src='img/cordova.png'>" +
+		        //"<a href=#>" +
+		        "<img src='img/cordova.png'>" +
 		        "<h1 style='white-space:normal; text-align: justify'>" + menuItem.nombreItem + "</h1>" +
 		        "<p style='white-space:normal; text-align: justify'>" + menuItem.descItem + "</p>" +
-		        "<h2 style='color:#840026'>" + menuItem.precioItem + " €" + "</h2>" +
-		        "</a>" +
+		        "<h2 style='color:#e95d0f'>" + menuItem.precioItem + " €" + "</h2>" +
+		        //"</a>" +
 	        "</li>";
 	});
 	var elListaItems = $('#listaItems');
@@ -440,12 +435,12 @@ function listItemsModificar(json){
 			"<li categoria='" + arrayCategorias[itemModificar.categoriaID - 1] + 
 				"' categoriaid='" + itemModificar.categoriaID + 
 				"'>" +
-		        "<a href=#>" +
-		        "<img class='imagen' src='img/cordova.png'>" +
+		        //"<a href=#>" +
+		        "<img src='img/cordova.png'>" +
 		        "<h1 style='white-space:normal; text-align: justify'>" + itemModificar.nombreItem + "</h1>" +
 		        "<p style='white-space:normal; text-align: justify'>" + itemModificar.descItem + "</p>" +
-		        "<h2 style='color:#840026'>" + itemModificar.precioItem + " €" + "</h2>" +
-		        "</a>" +
+		        "<h2 style='color:#e95d0f'>" + itemModificar.precioItem + " €" + "</h2>" +
+		        //"</a>" +
 	        "</li>";
 	});
 	

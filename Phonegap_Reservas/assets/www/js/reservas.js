@@ -255,11 +255,11 @@ $('#formReserva :input').bind('keyup', function(event) {
 	//Y esto valida todo el formulario solo cuando ya se ha metido info en los tres text inputs.
 	if ($('#nombre').val().length > 1 && $('#email').val().length > 1 && $('#telefono').val().length > 1 ){
 		if ( $('#formReserva').valid() ) {			
-			$("#encIzqMenus").css("background-color", "#840026");
+			$("#encIzqMenus").css("background-color", "#e95d0f");
 			$("#encDchMenus").css("color", "black");
-			$("#encIzqMenus").css("border-bottom", "4px solid #840026");
-			$("#encIzqMenus").css("border", "2px solid #840026");
-			$("#encDchMenus").css("border-bottom", "4px solid #840026");
+			$("#encIzqMenus").css("border-bottom", "4px solid #e95d0f");
+			$("#encIzqMenus").css("border", "2px solid #e95d0f");
+			$("#encDchMenus").css("border-bottom", "4px solid #e95d0f");
 			
 			$("#radioMenus").show();
 			var target = $( $("#radioMenus") ).get(0).offsetTop;
