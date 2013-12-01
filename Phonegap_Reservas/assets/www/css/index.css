@@ -401,8 +401,10 @@ sobre un fondo gris.*/
 	float: left;
 	color: #e95d0f;
 	font-size: 1.2em;
+	line-height: 1.5em;
 	font-weight: bold;
 	text-align: center;
+	border-bottom: 2px solid black;
 }
 
 #descDetalle{
@@ -410,6 +412,7 @@ sobre un fondo gris.*/
 	font-size: 1.1em;
 	float: left;
 	text-align: justify;
+	margin-top: 0.2em;
 }
 
 #contenedorFoto{
@@ -457,6 +460,7 @@ sobre un fondo gris.*/
 	color: #e95d0f;
 	text-align: center;
 	float: left;
+	line-height: 1.5em;
 }
 
 /***************/
