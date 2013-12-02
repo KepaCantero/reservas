@@ -401,10 +401,10 @@ sobre un fondo gris.*/
 	float: left;
 	color: #e95d0f;
 	font-size: 1.2em;
-	line-height: 1.5em;
+	line-height: 1.7em;
 	font-weight: bold;
 	text-align: center;
-	border-bottom: 2px solid black;
+	border-bottom: 1px solid black;
 }
 
 #descDetalle{
