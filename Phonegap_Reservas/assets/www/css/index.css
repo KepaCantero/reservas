@@ -170,35 +170,38 @@
     outline: 0;
     */
    font: bold 1.2em Arial, Helvetica;
-  	-moz-box-shadow: 0 0 12px          #ff0808 !important;
+  	/*-moz-box-shadow: 0 0 12px          #ff0808 !important;
     -webkit-box-shadow: 0 0 12px       #ff0808 !important;
-    box-shadow: 0 0 12px               #ff0808 !important; 
+    box-shadow: 0 0 12px               #ff0808 !important; */
 }
 
    	
-#formReserva input.ui-input-text{
-    
-    /*background-image:url('img/lens_icon.png');
+/*#formReserva input.ui-input-text{
+    background-image:url('img/lens_icon.png');
 	background-repeat:no-repeat;
 	background-position:left center;outline:0;
-	*/
-    
-}
+}*/
 
-#formReserva input.error{
-	/*border:1px solid red;*/
+/*.ui-btn-shadow {
+	-moz-box-shadow: 0 0 12px          #ff0808 !important;
+    -webkit-box-shadow: 0 0 12px       #ff0808 !important;
+    box-shadow: 0 0 12px               #ff0808 !important;  
+}*/
+
+/*#formReserva input.error{
+	border:1px solid red;
 	-moz-box-shadow: 0 0 12px          #ff0808 !important;
     -webkit-box-shadow: 0 0 12px       #ff0808 !important;
     box-shadow: 0 0 12px               #ff0808 !important;  
 }
 
 #formReserva input.valid {
-	/*border-left:8px solid green;*/
+	border-left:8px solid green;
 	-moz-box-shadow: 0 0 12px          #7bf006 !important;
     -webkit-box-shadow: 0 0 12px       #7bf006 !important;
     box-shadow: 0 0 12px               #7bf006 !important; 
+}*/
 
-}
 #fecha + label.error{
 	border:1px solid red;
 }

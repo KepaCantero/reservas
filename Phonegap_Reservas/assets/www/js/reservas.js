@@ -257,7 +257,18 @@ $('#email').bind('keyup', function(event) {
 
 //Validación paso 1 (Reserva)
 $('#formReserva :input').bind('keyup', function(event) {
-	$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
+	//$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
+	
+	if ( $(event.currentTarget).valid() ) {
+		$(event.currentTarget).parent().css( "-moz-box-shadow", "0 0 12px green !important" );
+		$(event.currentTarget).parent().css( "-webkit-box-shadow", "0 0 12px green !important" );
+		$(event.currentTarget).parent().css( "-box-shadow", "0 0 12px green !important" );
+	} else if ( !$(event.currentTarget).valid() ) {
+		$(event.currentTarget).parent().css( "-moz-box-shadow", "0 0 12px red !important" );
+		$(event.currentTarget).parent().css( "-webkit-box-shadow", "0 0 12px red !important" );
+		$(event.currentTarget).parent().css( "-box-shadow", "0 0 12px red !important" );
+	}
+	
 	//Y esto valida todo el formulario solo cuando ya se ha metido info en los tres text inputs.
 	if ($('#nombre').val().length > 1 && $('#email').val().length > 1 && $('#telefono').val().length > 1 ){
 		if ( $('#formReserva').valid() ) {			
