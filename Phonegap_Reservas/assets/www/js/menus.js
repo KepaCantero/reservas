@@ -123,7 +123,35 @@ $('#modificarPlatosPage').bind('pagebeforeshow', function(event) {
 });
 
 $('#modificarPlatosPage').bind('pageshow', function(event) {
-	$('#formMenusMod').valid();
+	if ( $('#inputNombrePlatoMod').valid() ) {
+		$('#inputNombrePlatoMod').parent().css( "-moz-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputNombrePlatoMod').parent().css( "-webkit-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputNombrePlatoMod').parent().css( "-box-shadow", "0 0 0.4em 0.25em green !important" );
+	} else if ( !$('#inputNombrePlatoMod').valid() ) {
+		$('#inputNombrePlatoMod').parent().css( "-moz-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputNombrePlatoMod').parent().css( "-webkit-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputNombrePlatoMod').parent().css( "-box-shadow", "0 0 0.4em 0.25em red !important" );
+	}
+	
+	if ( $('#inputDescPlatoMod').valid() ) {
+		$('#inputDescPlatoMod').css( "-moz-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputDescPlatoMod').css( "-webkit-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputDescPlatoMod').css( "-box-shadow", "0 0 0.4em 0.25em green !important" );
+	} else if ( !$('#inputDescPlatoMod').valid() ) {
+		$('#inputDescPlatoMod').css( "-moz-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputDescPlatoMod').css( "-webkit-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputDescPlatoMod').css( "-box-shadow", "0 0 0.4em 0.25em red !important" );
+	}
+	
+	if ( $('#inputPrecioPlatoMod').valid() ) {
+		$('#inputPrecioPlatoMod').parent().css( "-moz-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputPrecioPlatoMod').parent().css( "-webkit-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputPrecioPlatoMod').parent().css( "-box-shadow", "0 0 0.4em 0.25em green !important" );
+	} else if ( !$('#inputPrecioPlatoMod').valid() ) {
+		$('#inputPrecioPlatoMod').parent().css( "-moz-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputPrecioPlatoMod').parent().css( "-webkit-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputPrecioPlatoMod').parent().css( "-box-shadow", "0 0 0.4em 0.25em red !important" );
+	}
 });
 
 $('#menuListaPage').bind('pagebeforeshow', function(event) {
@@ -146,8 +174,49 @@ $('#listaModificarPage').bind('pagebeforeshow', function(event) {
 
 /*CREAR PLATOS*/
 
-$('#formMenus :input').bind('keyup', function(event) {
-	$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
+$('#formMenus input[type=text], #formMenus input[type=number]').bind('keyup', function(event) {
+	//$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
+	
+	if ( $(event.currentTarget).valid() ) {//Esto valida los text inputs uno a uno.
+		$(event.currentTarget).parent().css( "-moz-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$(event.currentTarget).parent().css( "-webkit-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$(event.currentTarget).parent().css( "-box-shadow", "0 0 0.4em 0.25em green !important" );
+	} else if ( !$(event.currentTarget).valid() ) {
+		$(event.currentTarget).parent().css( "-moz-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$(event.currentTarget).parent().css( "-webkit-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$(event.currentTarget).parent().css( "-box-shadow", "0 0 0.4em 0.25em red !important" );
+	}
+	
+	//Y esto valida todo el formulario solo cuando ya se ha metido info en todos los elementos del formulario.
+	if ($('#inputNombrePlato').val().length > 0 && $('#inputDescPlato').val().length > 0 && $('#inputPrecioPlato').val().length > 0 && $('#inputCategoriaPlato').val().length < 4 && $('#inputMenuPlato').val().length < 4 ){
+		if ( $('#formMenus').valid() ) {
+			if ( $('#submitPlato').hasClass('ui-btn-hidden') ) {
+				$('#submitPlato').button('enable');
+			}
+		} else {
+			if ( $('#submitPlato').hasClass('ui-btn-hidden') ) {
+				$('#submitPlato').button('disable');
+			}
+		}
+	} else {
+		if ( $('#submitPlato').hasClass('ui-btn-hidden') ) {
+			$('#submitPlato').button('disable');
+		}
+	}
+});
+
+$('#inputDescPlato').bind('keyup', function(event) {
+	
+	if ( $('#inputDescPlato').valid() ) {//Esto valida los text inputs uno a uno.
+		$('#inputDescPlato').css( "-moz-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputDescPlato').css( "-webkit-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputDescPlato').css( "-box-shadow", "0 0 0.4em 0.25em green !important" );
+	} else if ( !$('#inputDescPlato').valid() ) {
+		$('#inputDescPlato').css( "-moz-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputDescPlato').css( "-webkit-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputDescPlato').css( "-box-shadow", "0 0 0.4em 0.25em red !important" );
+	}
+	
 	//Y esto valida todo el formulario solo cuando ya se ha metido info en todos los elementos del formulario.
 	if ($('#inputNombrePlato').val().length > 0 && $('#inputDescPlato').val().length > 0 && $('#inputPrecioPlato').val().length > 0 && $('#inputCategoriaPlato').val().length < 4 && $('#inputMenuPlato').val().length < 4 ){
 		if ( $('#formMenus').valid() ) {
@@ -234,8 +303,48 @@ $('#submitPlato').bind('vclick', function(event) {
 
 /*MODIFICAR PLATOS*/
 
-$('#formMenusMod :input').bind('keyup', function(event) {
-	$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
+$('#formMenusMod input[type=text], #formMenusMod input[type=number]').bind('keyup', function(event) {
+	//$(event.currentTarget).valid(); //Esto valida los text inputs uno a uno.
+	
+	if ( $(event.currentTarget).valid() ) {
+		$(event.currentTarget).parent().css( "-moz-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$(event.currentTarget).parent().css( "-webkit-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$(event.currentTarget).parent().css( "-box-shadow", "0 0 0.4em 0.25em green !important" );
+	} else if ( !$(event.currentTarget).valid() ) {
+		$(event.currentTarget).parent().css( "-moz-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$(event.currentTarget).parent().css( "-webkit-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$(event.currentTarget).parent().css( "-box-shadow", "0 0 0.4em 0.25em red !important" );
+	}
+	
+	//Y esto valida todo el formulario solo cuando ya se ha metido info en todos los elementos del formulario.
+	if ($('#inputNombrePlatoMod').val().length > 0 && $('#inputDescPlatoMod').val().length > 0 && $('#inputPrecioPlatoMod').val().length > 0 && $('#inputCategoriaPlatoMod').val().length < 4 && $('#inputMenuPlatoMod').val().length < 4 ){
+		if ( $('#formMenusMod').valid() ) {
+			if ( $('#submitPlatoMod').hasClass('ui-btn-hidden') ) {
+				$('#submitPlatoMod').button('enable');
+			}
+		} else {
+			if ( $('#submitPlatoMod').hasClass('ui-btn-hidden') ) {
+				$('#submitPlatoMod').button('disable');
+			}
+		}
+	} else {
+		if ( $('#submitPlatoMod').hasClass('ui-btn-hidden') ) {
+			$('#submitPlatoMod').button('disable');
+		}
+	}
+});
+
+$('#inputDescPlatoMod').bind('keyup', function(event) {
+	if ( $('#inputDescPlatoMod').valid() ) {
+		$('#inputDescPlatoMod').css( "-moz-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputDescPlatoMod').css( "-webkit-box-shadow", "0 0 0.4em 0.25em green !important" );
+		$('#inputDescPlatoMod').css( "-box-shadow", "0 0 0.4em 0.25em green !important" );
+	} else if ( !$('#inputDescPlatoMod').valid() ) {
+		$('#inputDescPlatoMod').css( "-moz-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputDescPlatoMod').css( "-webkit-box-shadow", "0 0 0.4em 0.25em red !important" );
+		$('#inputDescPlatoMod').css( "-box-shadow", "0 0 0.4em 0.25em red !important" );
+	}
+	
 	//Y esto valida todo el formulario solo cuando ya se ha metido info en todos los elementos del formulario.
 	if ($('#inputNombrePlatoMod').val().length > 0 && $('#inputDescPlatoMod').val().length > 0 && $('#inputPrecioPlatoMod').val().length > 0 && $('#inputCategoriaPlatoMod').val().length < 4 && $('#inputMenuPlatoMod').val().length < 4 ){
 		if ( $('#formMenusMod').valid() ) {

@@ -3,7 +3,7 @@
 /*-------------*/
 
 .ui-page { 
-	background: #fbd1d1;
+	background: black;
 	background-image: url("../img/azul.png");
 	background-repeat: repeat;    
 } 
@@ -509,30 +509,30 @@ sobre un fondo gris.*/
 }
 
 #formMenus input {
-	border-left:8px solid red;
+	/*border-left:8px solid red;*/
     font: bold 1.2em Arial, Helvetica;
 }
 
-#formMenus input.error{
+/*#formMenus input.error{
 	border:1px solid red;
 }
 
 #formMenus input.valid {
 	border-left:8px solid green;
-}
+}*/
 
 #formMenus textarea {
-	border-left:8px solid red;
+	/*border-left:8px solid red;*/
     font: bold 1.1em Arial, Helvetica;
 }
 
-#formMenus textarea.error{
+/*#formMenus textarea.error{
 	border:1px solid red;
 }
 
 #formMenus textarea.valid {
 	border-left:8px solid green;
-}
+}*/
 
 #boxInputCategoriaPlato .ui-btn-text {
 	font: bold 1.2em Arial, Helvetica;
@@ -567,30 +567,30 @@ sobre un fondo gris.*/
 }
 
 #formMenusMod input {
-	border-left:8px solid red;
+	/*border-left:8px solid red;*/
     font: bold 1.2em Arial, Helvetica;
 }
 
-#formMenusMod input.error{
+/*#formMenusMod input.error{
 	border:1px solid red;
 }
 
 #formMenusMod input.valid {
 	border-left:8px solid green;
-}
+}*/
 
 #formMenusMod textarea {
-	border-left:8px solid red;
+	/*border-left:8px solid red;*/
     font: bold 1.1em Arial, Helvetica;
 }
 
-#formMenusMod textarea.error{
+/*#formMenusMod textarea.error{
 	border:1px solid red;
 }
 
 #formMenusMod textarea.valid {
 	border-left:8px solid green;
-}
+}*/
 
 #boxInputCategoriaPlatoMod .ui-btn-text {
 	font: bold 1.2em Arial, Helvetica;
